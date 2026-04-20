@@ -1,4 +1,6 @@
-export const media = {
+import { withBase } from '../utils/paths';
+
+const rawMedia = {
   heroes: {
     home: '/images/hero-home-video-poster.svg',
     about: '/images/hero-about.svg',
@@ -52,3 +54,10 @@ export const media = {
     carePrayer: '/images/ministry-care-prayer.svg'
   }
 };
+
+const addBaseToGroup = (group: Record<string, string>) =>
+  Object.fromEntries(Object.entries(group).map(([key, value]) => [key, withBase(value)]));
+
+export const media = Object.fromEntries(
+  Object.entries(rawMedia).map(([groupName, groupValues]) => [groupName, addBaseToGroup(groupValues)])
+) as typeof rawMedia;

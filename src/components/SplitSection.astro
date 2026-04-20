@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/paths';
+
 interface Props {
   eyebrow?: string;
   title: string;
@@ -26,7 +28,7 @@ const { eyebrow, title, text, image, imageAlt, points = [], reverse = false, cta
           ))}
         </ul>
       )}
-      {cta && <a class="btn btn-ghost" href={cta.href}>{cta.label}</a>}
+      {cta && <a class="btn btn-ghost" href={withBase(cta.href)}>{cta.label}</a>}
     </div>
     <div class="photo-frame">
       <img class="media-cover" src={image} alt={imageAlt} loading="lazy" />

@@ -13,6 +13,7 @@ import VisitPlanningBlock from '../components/VisitPlanningBlock.astro';
 import ServiceInfoBlock from '../components/ServiceInfoBlock.astro';
 import { churchMeta } from '../data/site';
 import { media } from '../data/media';
+import { withBase } from '../utils/paths';
 import {
   messages,
   events,
@@ -91,7 +92,7 @@ const featuredEvent = events.find((event) => event.featured) ?? events[0];
             <MessageCard {...message} />
           ))}
       </CardGrid>
-      <a href="/messages" class="btn btn-secondary">Browse All Messages</a>
+      <a href={withBase('/messages')} class="btn btn-secondary">Browse All Messages</a>
     </div>
   </section>
 
@@ -108,7 +109,7 @@ const featuredEvent = events.find((event) => event.featured) ?? events[0];
           <li>Leadership that is accessible and people-focused</li>
           <li>A church culture that values both truth and grace</li>
         </ul>
-        <a class="btn btn-ghost" href="/about">Learn More About Our Church</a>
+        <a class="btn btn-ghost" href={withBase('/about')}>Learn More About Our Church</a>
       </div>
       <div class="card pastor-card">
         <img
@@ -123,7 +124,7 @@ const featuredEvent = events.find((event) => event.featured) ?? events[0];
             Our leadership heart is simple: create a church where people can know Jesus deeply and build a strong,
             purpose-filled life.
           </p>
-          <a class="btn btn-secondary" href="/staff">Meet Our Team</a>
+          <a class="btn btn-secondary" href={withBase('/staff')}>Meet Our Team</a>
         </div>
       </div>
     </div>
@@ -141,7 +142,7 @@ const featuredEvent = events.find((event) => event.featured) ?? events[0];
           <article class="card simple-card">
             <h3>{step.title}</h3>
             <p>{step.description}</p>
-            <a href="/next-steps" class="btn btn-ghost">{step.cta}</a>
+            <a href={withBase('/next-steps')} class="btn btn-ghost">{step.cta}</a>
           </article>
         ))}
       </div>
@@ -181,7 +182,7 @@ const featuredEvent = events.find((event) => event.featured) ?? events[0];
             <EventCard {...event} />
           ))}
       </CardGrid>
-      <a href="/events" class="btn btn-secondary">View All Events</a>
+      <a href={withBase('/events')} class="btn btn-secondary">View All Events</a>
     </div>
   </section>
 

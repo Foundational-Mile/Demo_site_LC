@@ -1,5 +1,6 @@
 ---
 import { churchMeta, footerLinks } from '../data/site';
+import { withBase } from '../utils/paths';
 ---
 
 <footer class="site-footer surface-ink">
@@ -11,14 +12,14 @@ import { churchMeta, footerLinks } from '../data/site';
         <li>{churchMeta.address}</li>
         <li>{churchMeta.phone}</li>
       </ul>
-      <a href="/plan-your-visit" class="btn btn-primary">First-Time Guide</a>
+      <a href={withBase('/plan-your-visit')} class="btn btn-primary">First-Time Guide</a>
     </div>
 
     <div>
       <h3>Explore</h3>
       <ul class="stack-sm">
         {footerLinks.explore.map((link) => (
-          <li><a href={link.href}>{link.label}</a></li>
+          <li><a href={withBase(link.href)}>{link.label}</a></li>
         ))}
       </ul>
     </div>
@@ -27,7 +28,7 @@ import { churchMeta, footerLinks } from '../data/site';
       <h3>Connect</h3>
       <ul class="stack-sm">
         {footerLinks.connect.map((link) => (
-          <li><a href={link.href}>{link.label}</a></li>
+          <li><a href={withBase(link.href)}>{link.label}</a></li>
         ))}
       </ul>
     </div>
@@ -36,7 +37,7 @@ import { churchMeta, footerLinks } from '../data/site';
       <h3>Resources</h3>
       <ul class="stack-sm">
         {footerLinks.resources.map((link) => (
-          <li><a href={link.href}>{link.label}</a></li>
+          <li><a href={withBase(link.href)}>{link.label}</a></li>
         ))}
       </ul>
     </div>

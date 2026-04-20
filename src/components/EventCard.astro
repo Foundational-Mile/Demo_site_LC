@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/paths';
+
 interface Props {
   title: string;
   date: string;
@@ -21,7 +23,7 @@ const { title, date, time, location, category, description, image, featured = fa
     <p class="meta">{date} • {time}</p>
     <p class="meta">{location}</p>
     <p>{description}</p>
-    <a href="/events" class="btn btn-secondary">View Details</a>
+    <a href={withBase('/events')} class="btn btn-secondary">View Details</a>
   </div>
 </article>
 

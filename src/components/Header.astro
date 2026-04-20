@@ -1,5 +1,6 @@
 ---
 import { navLinks } from '../data/site';
+import { withBase, withoutBase } from '../utils/paths';
 
 interface Props {
   pathname: string;
@@ -12,7 +13,7 @@ const normalizePath = (value: string) => {
   return value;
 };
 
-const currentPath = normalizePath(pathname);
+const currentPath = normalizePath(withoutBase(pathname));
 
 const isActive = (href: string) => {
   const target = normalizePath(href);
@@ -28,7 +29,7 @@ const isLinkActive = (link: (typeof navLinks)[number]) => {
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="/" class="brand">
+    <a href={withBase('/')} class="brand">
       <span>Limitless</span>
       <small>Church</small>
     </a>
@@ -41,7 +42,7 @@ const isLinkActive = (link: (typeof navLinks)[number]) => {
 
           return (
             <li class={`nav-item ${hasChildren ? 'has-children' : ''}`}>
-              <a href={link.href} class={active ? 'active' : ''}>
+              <a href={withBase(link.href)} class={active ? 'active' : ''}>
                 {link.label}
                 {hasChildren && <span class="caret" aria-hidden="true">▾</span>}
               </a>
@@ -50,7 +51,7 @@ const isLinkActive = (link: (typeof navLinks)[number]) => {
                 <ul class="dropdown" aria-label={`${link.label} subpages`}>
                   {link.children?.map((child) => (
                     <li>
-                      <a href={child.href} class={isActive(child.href) ? 'active' : ''}>
+                      <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>
                         {child.label}
                       </a>
                     </li>
@@ -63,7 +64,7 @@ const isLinkActive = (link: (typeof navLinks)[number]) => {
       </ul>
     </nav>
 
-    <a class="btn btn-primary desktop-visit" href="/plan-your-visit">I'm New</a>
+    <a class="btn btn-primary desktop-visit" href={withBase('/plan-your-visit')}>I'm New</a>
 
     <details class="mobile-nav">
       <summary aria-label="Open navigation menu">Menu</summary>
@@ -76,7 +77,7 @@ const isLinkActive = (link: (typeof navLinks)[number]) => {
             if (!hasChildren) {
               return (
                 <li>
-                  <a href={link.href} class={active ? 'active' : ''}>{link.label}</a>
+                  <a href={withBase(link.href)} class={active ? 'active' : ''}>{link.label}</a>
                 </li>
               );
             }
@@ -87,7 +88,7 @@ const isLinkActive = (link: (typeof navLinks)[number]) => {
                   <summary class={active ? 'active' : ''}>{link.label}</summary>
                   <div class="mobile-group-links">
                     {link.children?.map((child) => (
-                      <a href={child.href} class={isActive(child.href) ? 'active' : ''}>
+                      <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>
                         {child.label}
                       </a>
                     ))}
@@ -97,7 +98,7 @@ const isLinkActive = (link: (typeof navLinks)[number]) => {
             );
           })}
         </ul>
-        <a class="btn btn-primary" href="/plan-your-visit">I'm New</a>
+        <a class="btn btn-primary" href={withBase('/plan-your-visit')}>I'm New</a>
       </nav>
     </details>
   </div>

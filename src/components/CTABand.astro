@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/paths';
+
 interface Props {
   eyebrow?: string;
   title: string;
@@ -19,8 +21,8 @@ const { eyebrow, title, text, primary, secondary, dark = true } = Astro.props;
       <p class="lead">{text}</p>
     </div>
     <div class="cluster">
-      <a class="btn btn-primary" href={primary.href}>{primary.label}</a>
-      {secondary && <a class="btn btn-secondary" href={secondary.href}>{secondary.label}</a>}
+      <a class="btn btn-primary" href={withBase(primary.href)}>{primary.label}</a>
+      {secondary && <a class="btn btn-secondary" href={withBase(secondary.href)}>{secondary.label}</a>}
     </div>
   </div>
 </section>

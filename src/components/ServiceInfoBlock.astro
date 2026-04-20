@@ -1,5 +1,6 @@
 ---
 import { churchMeta } from '../data/site';
+import { withBase } from '../utils/paths';
 ---
 
 <section class="service-info card">
@@ -10,7 +11,7 @@ import { churchMeta } from '../data/site';
     ))}
   </ul>
   <p>{churchMeta.address}</p>
-  <a class="btn btn-secondary" href="/plan-your-visit">Get Directions + Plan Visit</a>
+  <a class="btn btn-secondary" href={withBase('/plan-your-visit')}>Get Directions + Plan Visit</a>
 </section>
 
 <style>

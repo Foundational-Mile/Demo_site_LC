@@ -6,6 +6,7 @@ import CTABand from '../components/CTABand.astro';
 import CardGrid from '../components/CardGrid.astro';
 import { values, beliefs, staff } from '../data/content';
 import { media } from '../data/media';
+import { withBase } from '../utils/paths';
 
 const leadPastor = staff[0];
 ---
@@ -34,8 +35,8 @@ const leadPastor = staff[0];
           His teaching style is practical, biblical, and focused on real life change.
         </p>
         <div class="cluster">
-          <a class="btn btn-secondary" href="/staff">Meet Our Team</a>
-          <a class="btn btn-ghost" href="/messages">Watch A Message</a>
+          <a class="btn btn-secondary" href={withBase('/staff')}>Meet Our Team</a>
+          <a class="btn btn-ghost" href={withBase('/messages')}>Watch A Message</a>
         </div>
       </div>
       <div class="card lead-pastor-card">
@@ -69,7 +70,7 @@ const leadPastor = staff[0];
           </article>
         ))}
       </CardGrid>
-      <a class="btn btn-secondary" href="/about-values">View All 8 Values</a>
+      <a class="btn btn-secondary" href={withBase('/about-values')}>View All 8 Values</a>
     </div>
   </section>
 
@@ -105,7 +106,7 @@ const leadPastor = staff[0];
           </article>
         ))}
       </div>
-      <a class="btn btn-secondary" href="/about-essentials">Explore All Essentials</a>
+      <a class="btn btn-secondary" href={withBase('/about-essentials')}>Explore All Essentials</a>
     </div>
   </section>
 

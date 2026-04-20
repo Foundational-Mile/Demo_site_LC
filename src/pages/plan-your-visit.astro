@@ -8,6 +8,7 @@ import ServiceInfoBlock from '../components/ServiceInfoBlock.astro';
 import CTABand from '../components/CTABand.astro';
 import { visitFaqs } from '../data/content';
 import { media } from '../data/media';
+import { withBase } from '../utils/paths';
 ---
 
 <BaseLayout title="Plan Your Visit | Limitless Church">
@@ -71,7 +72,7 @@ import { media } from '../data/media';
           <li>Age-based classrooms with trained leaders</li>
           <li>Secure pick-up process and parent communication</li>
         </ul>
-        <a class="btn btn-ghost" href="/kids">See Full Kids Page</a>
+        <a class="btn btn-ghost" href={withBase('/kids')}>See Full Kids Page</a>
       </div>
       <div class="photo-frame">
         <img

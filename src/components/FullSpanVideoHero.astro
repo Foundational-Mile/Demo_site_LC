@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/paths';
+
 interface Props {
   eyebrow?: string;
   title?: string;
@@ -26,12 +28,15 @@ const {
   serviceSummary,
   location
 } = Astro.props;
+
+const resolvedPoster = withBase(poster);
+const resolvedVideoSrc = withBase(videoSrc);
 ---
 
 <section class="full-hero surface-dark" aria-label="Homepage hero">
   <div class="hero-media">
-    <video class="hero-video" autoplay muted loop playsinline poster={poster} preload="metadata" aria-label={videoAlt}>
-      <source src={videoSrc} type="video/mp4" />
+    <video class="hero-video" autoplay muted loop playsinline poster={resolvedPoster} preload="metadata" aria-label={videoAlt}>
+      <source src={resolvedVideoSrc} type="video/mp4" />
     </video>
     <div class="hero-scrim"></div>
   </div>
@@ -54,8 +59,8 @@ const {
 
           {(primaryCta || secondaryCta) && (
             <div class="cluster">
-              {primaryCta && <a class="btn btn-primary" href={primaryCta.href}>{primaryCta.label}</a>}
-              {secondaryCta && <a class="btn btn-secondary" href={secondaryCta.href}>{secondaryCta.label}</a>}
+              {primaryCta && <a class="btn btn-primary" href={withBase(primaryCta.href)}>{primaryCta.label}</a>}
+              {secondaryCta && <a class="btn btn-secondary" href={withBase(secondaryCta.href)}>{secondaryCta.label}</a>}
             </div>
           )}
         </div>

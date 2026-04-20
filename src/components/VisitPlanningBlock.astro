@@ -1,5 +1,6 @@
 ---
 import { churchMeta } from '../data/site';
+import { withBase } from '../utils/paths';
 
 interface Props {
   compact?: boolean;
@@ -27,8 +28,8 @@ const { compact = false } = Astro.props;
     </ul>
     <p>{churchMeta.address}</p>
     <div class="cluster">
-      <a class="btn btn-primary" href="/plan-your-visit">Start Visit Plan</a>
-      <a class="btn btn-secondary" href="/kids">What About Kids?</a>
+      <a class="btn btn-primary" href={withBase('/plan-your-visit')}>Start Visit Plan</a>
+      <a class="btn btn-secondary" href={withBase('/kids')}>What About Kids?</a>
     </div>
   </div>
 </section>

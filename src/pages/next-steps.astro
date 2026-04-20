@@ -5,6 +5,7 @@ import SectionIntro from '../components/SectionIntro.astro';
 import CTABand from '../components/CTABand.astro';
 import VisitPlanningBlock from '../components/VisitPlanningBlock.astro';
 import { nextSteps } from '../data/content';
+import { withBase } from '../utils/paths';
 ---
 
 <BaseLayout title="Next Steps | Limitless Church">
@@ -30,7 +31,7 @@ import { nextSteps } from '../data/content';
           <article class="card step-card">
             <h3>{step.title}</h3>
             <p>{step.description}</p>
-            <a href="/next-steps#pathway" class="btn btn-ghost">{step.cta}</a>
+            <a href={withBase('/next-steps#pathway')} class="btn btn-ghost">{step.cta}</a>
           </article>
         ))}
       </div>
