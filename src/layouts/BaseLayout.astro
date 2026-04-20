@@ -6,11 +6,13 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title,
-  description = 'Limitless Church is a life-giving church helping people encounter God, love people, and find purpose.'
+  description = 'Limitless Church is a life-giving church helping people encounter God, love people, and find purpose.',
+  noindex = false
 } = Astro.props;
 const pathname = Astro.url.pathname;
 ---
@@ -21,6 +23,7 @@ const pathname = Astro.url.pathname;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <title>{title}</title>
   </head>
   <body>

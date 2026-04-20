@@ -9,6 +9,7 @@ interface Props {
   poster: string;
   videoAlt: string;
   videoSrc?: string;
+  staticOnly?: boolean;
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
   serviceSummary?: string;
@@ -23,6 +24,7 @@ const {
   poster,
   videoAlt,
   videoSrc = '/videos/hero-home.mp4',
+  staticOnly = false,
   primaryCta,
   secondaryCta,
   serviceSummary,
@@ -31,47 +33,51 @@ const {
 
 const resolvedPoster = withBase(poster);
 const resolvedVideoSrc = withBase(videoSrc);
+const hasFrame = Boolean(serviceSummary || location);
 ---
 
-<section
-  class="full-hero surface-dark"
-  aria-label="Homepage hero"
-  style={`--hero-poster-url: url("${resolvedPoster}")`}
->
-  <div class="hero-media">
-    <video class="hero-video" autoplay muted loop playsinline poster={resolvedPoster} preload="metadata" aria-label={videoAlt}>
-      <source src={resolvedVideoSrc} type="video/mp4" />
-    </video>
-    <div class="hero-scrim"></div>
-  </div>
+{staticOnly ? (
+  <section
+    class="full-hero static-hero surface-dark"
+    aria-label="Homepage hero"
+    style={`--hero-poster-url: url("${resolvedPoster}")`}
+  >
+    <div class="hero-main">
+      <div class="hero-media">
+        <img class="hero-image" src={resolvedPoster} alt={videoAlt} loading="eager" />
+        <div class="hero-scrim"></div>
+      </div>
 
-  <div class="hero-content">
-    <div class="container hero-layout">
-      {leftPillars.length > 0 ? (
-        <div class="pillar-wrap" aria-label="Faith pillars">
-          <h1 class="pillar-heading">
-            {leftPillars.map((pillar) => (
-              <span class="pillar-line">{pillar}</span>
-            ))}
-          </h1>
-        </div>
-      ) : (
-        <div class="stack hero-stack">
-          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-          {title && <h1 class="title-xl">{title}</h1>}
-          {text && <p class="lead">{text}</p>}
-
-          {(primaryCta || secondaryCta) && (
-            <div class="cluster">
-              {primaryCta && <a class="btn btn-primary" href={withBase(primaryCta.href)}>{primaryCta.label}</a>}
-              {secondaryCta && <a class="btn btn-secondary" href={withBase(secondaryCta.href)}>{secondaryCta.label}</a>}
+      <div class="hero-content">
+        <div class="container hero-layout">
+          {leftPillars.length > 0 ? (
+            <div class="pillar-wrap" aria-label="Faith pillars">
+              <h1 class="pillar-heading">
+                {leftPillars.map((pillar) => (
+                  <span class="pillar-line">{pillar}</span>
+                ))}
+              </h1>
             </div>
-          )}
+          ) : (eyebrow || title || text || primaryCta || secondaryCta) ? (
+            <div class="stack hero-stack">
+              {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+              {title && <h1 class="title-xl">{title}</h1>}
+              {text && <p class="lead">{text}</p>}
+
+              {(primaryCta || secondaryCta) && (
+                <div class="cluster">
+                  {primaryCta && <a class="btn btn-primary" href={withBase(primaryCta.href)}>{primaryCta.label}</a>}
+                  {secondaryCta && <a class="btn btn-secondary" href={withBase(secondaryCta.href)}>{secondaryCta.label}</a>}
+                </div>
+              )}
+            </div>
+          ) : null}
         </div>
-      )}
+      </div>
     </div>
-    {(serviceSummary || location) && (
-      <div class="hero-frame">
+
+    {hasFrame && (
+      <div class="hero-frame hero-frame-static">
         <div class="container frame-inner">
           {serviceSummary && (
             <p>
@@ -88,22 +94,94 @@ const resolvedVideoSrc = withBase(videoSrc);
         </div>
       </div>
     )}
-  </div>
-  
-  <div class="sr-only">
-    {title}
-    {text}
-  </div>
 
-  <p class="video-fallback-note" aria-live="polite">
-    Showing a static hero for smoother playback on this device.
-  </p>
-</section>
+    <div class="sr-only">
+      {title}
+      {text}
+    </div>
+  </section>
+) : (
+  <section
+    class="full-hero surface-dark"
+    aria-label="Homepage hero"
+    style={`--hero-poster-url: url("${resolvedPoster}")`}
+  >
+    <div class="hero-media">
+      <video class="hero-video" autoplay muted loop playsinline poster={resolvedPoster} preload="metadata" aria-label={videoAlt}>
+        <source src={resolvedVideoSrc} type="video/mp4" />
+      </video>
+      <div class="hero-scrim"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="container hero-layout">
+        {leftPillars.length > 0 ? (
+          <div class="pillar-wrap" aria-label="Faith pillars">
+            <h1 class="pillar-heading">
+              {leftPillars.map((pillar) => (
+                <span class="pillar-line">{pillar}</span>
+              ))}
+            </h1>
+          </div>
+        ) : (eyebrow || title || text || primaryCta || secondaryCta) ? (
+          <div class="stack hero-stack">
+            {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+            {title && <h1 class="title-xl">{title}</h1>}
+            {text && <p class="lead">{text}</p>}
+
+            {(primaryCta || secondaryCta) && (
+              <div class="cluster">
+                {primaryCta && <a class="btn btn-primary" href={withBase(primaryCta.href)}>{primaryCta.label}</a>}
+                {secondaryCta && <a class="btn btn-secondary" href={withBase(secondaryCta.href)}>{secondaryCta.label}</a>}
+              </div>
+            )}
+          </div>
+        ) : null}
+      </div>
+      {hasFrame && (
+        <div class="hero-frame">
+          <div class="container frame-inner">
+            {serviceSummary && (
+              <p>
+                <strong>Service Times</strong>
+                <span>{serviceSummary}</span>
+              </p>
+            )}
+            {location && (
+              <p>
+                <strong>Location</strong>
+                <span>{location}</span>
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+    
+    <div class="sr-only">
+      {title}
+      {text}
+    </div>
+
+    <p class="video-fallback-note" aria-live="polite">
+      Showing a static hero for smoother playback on this device.
+    </p>
+  </section>
+)}
 
 <style>
   .full-hero {
     position: relative;
     min-height: clamp(480px, 72vh, 860px);
+  }
+
+  .static-hero {
+    min-height: initial;
+  }
+
+  .hero-main {
+    position: relative;
+    min-height: clamp(460px, 66vh, 760px);
   }
 
   .hero-media,
@@ -122,6 +200,15 @@ const resolvedVideoSrc = withBase(videoSrc);
     transition: opacity 260ms ease;
   }
 
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
   .hero-media {
     background-image: var(--hero-poster-url);
     background-position: center;
@@ -138,6 +225,12 @@ const resolvedVideoSrc = withBase(videoSrc);
     background:
       linear-gradient(180deg, rgba(8, 9, 12, 0.2) 0%, rgba(8, 9, 12, 0.6) 72%, rgba(8, 9, 12, 0.85) 100%),
       radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.1), transparent 40%);
+  }
+
+  .static-hero .hero-scrim {
+    background:
+      linear-gradient(180deg, rgba(8, 9, 12, 0.04) 0%, rgba(8, 9, 12, 0.18) 76%, rgba(8, 9, 12, 0.3) 100%),
+      radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.07), transparent 42%);
   }
 
   .hero-content {
@@ -189,6 +282,13 @@ const resolvedVideoSrc = withBase(videoSrc);
     background: rgba(10, 12, 17, 0.58);
     backdrop-filter: blur(7px);
     padding: 0.95rem 0;
+  }
+
+  .hero-frame-static {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
   }
 
   .frame-inner {

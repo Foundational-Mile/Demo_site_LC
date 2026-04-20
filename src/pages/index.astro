@@ -20,13 +20,20 @@ import {
 
 const featuredMessage = messages.find((message) => message.featured) ?? messages[0];
 const featuredEvent = events.find((event) => event.featured) ?? events[0];
+
+// Home hero toggle:
+// - 'video' uses /public/videos/hero-home.mp4 with pillar words
+// - 'image' uses /public/images/hero-home-banner.png with no pillar words
+const homeHeroMode: 'video' | 'image' = 'video';
+const homeHeroImage = '/images/hero-home-banner.png';
 ---
 
 <BaseLayout title="Limitless Church | Home">
   <FullSpanVideoHero
-    leftPillars={['Encounter God,', 'Love People,', 'Find Purpose.']}
-    poster={media.heroes.home}
-    videoAlt="Limitless Church worship highlight video"
+    leftPillars={homeHeroMode === 'video' ? ['Encounter God,', 'Love People,', 'Find Purpose.'] : []}
+    poster={homeHeroMode === 'video' ? media.heroes.home : homeHeroImage}
+    videoAlt="Limitless Church home hero media"
+    staticOnly={homeHeroMode === 'image'}
     serviceSummary="Sundays: 8:00, 9:30, 11:00, 12:30 PM"
     location={churchMeta.address}
   />
