@@ -129,10 +129,6 @@ const resolvedVideoSrc = withBase(videoSrc);
     background-color: #0f1219;
   }
 
-  .full-hero:not(.fallback-static) .hero-media {
-    background-image: none;
-  }
-
   .full-hero.fallback-static .hero-video {
     opacity: 0;
     pointer-events: none;
@@ -297,7 +293,6 @@ const resolvedVideoSrc = withBase(videoSrc);
       if (!(video instanceof HTMLVideoElement)) return;
 
       let hasFallback = false;
-      let waitingTimer;
 
       const setFallback = () => {
         if (hasFallback) return;
@@ -311,40 +306,7 @@ const resolvedVideoSrc = withBase(videoSrc);
         return;
       }
 
-      const playbackPromise = video.play();
-      if (playbackPromise && typeof playbackPromise.catch === 'function') {
-        playbackPromise.catch(() => setFallback());
-      }
-
       video.addEventListener('error', () => setFallback(), { once: true });
-
-      video.addEventListener('waiting', () => {
-        clearTimeout(waitingTimer);
-        waitingTimer = window.setTimeout(() => {
-          if (!video.paused) setFallback();
-        }, 1800);
-      });
-
-      const clearWait = () => {
-        clearTimeout(waitingTimer);
-      };
-
-      video.addEventListener('playing', clearWait);
-      video.addEventListener('timeupdate', clearWait);
-
-      window.setTimeout(() => {
-        if (hasFallback) return;
-        if (video.currentTime < 0.25 && video.readyState < 3) setFallback();
-      }, 4500);
-
-      window.setTimeout(() => {
-        if (hasFallback || typeof video.getVideoPlaybackQuality !== 'function') return;
-        const quality = video.getVideoPlaybackQuality();
-        if (!quality || quality.totalVideoFrames < 90) return;
-
-        const droppedRatio = quality.droppedVideoFrames / quality.totalVideoFrames;
-        if (droppedRatio > 0.2) setFallback();
-      }, 7000);
     });
   };
 
