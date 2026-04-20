@@ -33,7 +33,11 @@ const resolvedPoster = withBase(poster);
 const resolvedVideoSrc = withBase(videoSrc);
 ---
 
-<section class="full-hero surface-dark" aria-label="Homepage hero">
+<section
+  class="full-hero surface-dark"
+  aria-label="Homepage hero"
+  style={`--hero-poster-url: url("${resolvedPoster}")`}
+>
   <div class="hero-media">
     <video class="hero-video" autoplay muted loop playsinline poster={resolvedPoster} preload="metadata" aria-label={videoAlt}>
       <source src={resolvedVideoSrc} type="video/mp4" />
@@ -90,6 +94,10 @@ const resolvedVideoSrc = withBase(videoSrc);
     {title}
     {text}
   </div>
+
+  <p class="video-fallback-note" aria-live="polite">
+    Showing a static hero for smoother playback on this device.
+  </p>
 </section>
 
 <style>
@@ -111,6 +119,23 @@ const resolvedVideoSrc = withBase(videoSrc);
     height: 100%;
     object-fit: cover;
     background: #0f1219;
+    transition: opacity 260ms ease;
+  }
+
+  .hero-media {
+    background-image: var(--hero-poster-url);
+    background-position: center;
+    background-size: cover;
+    background-color: #0f1219;
+  }
+
+  .full-hero:not(.fallback-static) .hero-media {
+    background-image: none;
+  }
+
+  .full-hero.fallback-static .hero-video {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .hero-scrim {
@@ -207,6 +232,30 @@ const resolvedVideoSrc = withBase(videoSrc);
     border: 0;
   }
 
+  .video-fallback-note {
+    position: absolute;
+    right: 0.8rem;
+    top: 0.8rem;
+    z-index: 2;
+    margin: 0;
+    display: none;
+    padding: 0.45rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #dce6f8;
+    background: rgba(7, 10, 18, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(5px);
+  }
+
+  .full-hero.fallback-static .video-fallback-note {
+    display: inline-flex;
+    align-items: center;
+  }
+
   @media (max-width: 740px) {
     .full-hero {
       min-height: 520px;
@@ -224,5 +273,84 @@ const resolvedVideoSrc = withBase(videoSrc);
     .frame-inner p {
       font-size: 0.88rem;
     }
+
+    .video-fallback-note {
+      right: 0.55rem;
+      top: 0.55rem;
+      font-size: 0.64rem;
+      padding: 0.38rem 0.5rem;
+    }
   }
 </style>
+
+<script is:inline>
+  const initVideoFallback = () => {
+    const heroes = document.querySelectorAll('.full-hero');
+    if (heroes.length === 0) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const saveData = Boolean(connection && connection.saveData);
+
+    heroes.forEach((hero) => {
+      const video = hero.querySelector('.hero-video');
+      if (!(video instanceof HTMLVideoElement)) return;
+
+      let hasFallback = false;
+      let waitingTimer;
+
+      const setFallback = () => {
+        if (hasFallback) return;
+        hasFallback = true;
+        hero.classList.add('fallback-static');
+        video.pause();
+      };
+
+      if (prefersReducedMotion || saveData) {
+        setFallback();
+        return;
+      }
+
+      const playbackPromise = video.play();
+      if (playbackPromise && typeof playbackPromise.catch === 'function') {
+        playbackPromise.catch(() => setFallback());
+      }
+
+      video.addEventListener('error', () => setFallback(), { once: true });
+
+      video.addEventListener('waiting', () => {
+        clearTimeout(waitingTimer);
+        waitingTimer = window.setTimeout(() => {
+          if (!video.paused) setFallback();
+        }, 1800);
+      });
+
+      const clearWait = () => {
+        clearTimeout(waitingTimer);
+      };
+
+      video.addEventListener('playing', clearWait);
+      video.addEventListener('timeupdate', clearWait);
+
+      window.setTimeout(() => {
+        if (hasFallback) return;
+        if (video.currentTime < 0.25 && video.readyState < 3) setFallback();
+      }, 4500);
+
+      window.setTimeout(() => {
+        if (hasFallback || typeof video.getVideoPlaybackQuality !== 'function') return;
+        const quality = video.getVideoPlaybackQuality();
+        if (!quality || quality.totalVideoFrames < 90) return;
+
+        const droppedRatio = quality.droppedVideoFrames / quality.totalVideoFrames;
+        if (droppedRatio > 0.2) setFallback();
+      }, 7000);
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVideoFallback, { once: true });
+  } else {
+    initVideoFallback();
+  }
+</script>

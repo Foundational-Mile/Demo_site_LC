@@ -7,19 +7,14 @@ import CTABand from '../components/CTABand.astro';
 import CardGrid from '../components/CardGrid.astro';
 import MessageCard from '../components/MessageCard.astro';
 import EventCard from '../components/EventCard.astro';
-import MinistryCard from '../components/MinistryCard.astro';
-import TestimonialStrip from '../components/TestimonialStrip.astro';
 import VisitPlanningBlock from '../components/VisitPlanningBlock.astro';
-import ServiceInfoBlock from '../components/ServiceInfoBlock.astro';
 import { churchMeta } from '../data/site';
 import { media } from '../data/media';
 import { withBase } from '../utils/paths';
 import {
   messages,
   events,
-  ministries,
   nextSteps,
-  testimonials,
   staff
 } from '../data/content';
 
@@ -149,23 +144,6 @@ const featuredEvent = events.find((event) => event.featured) ?? events[0];
     </div>
   </section>
 
-  <section class="section surface-soft">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Care + Prayer"
-        title="You do not have to walk through hard seasons alone"
-        text="If you need prayer, pastoral support, or practical care, our team is here to stand with you."
-      />
-      <CTABand
-        dark={false}
-        title="Need someone to pray with you?"
-        text="Share a confidential prayer request and our care team will follow up with compassion and support."
-        primary={{ label: 'Request Prayer', href: '/care' }}
-        secondary={{ label: 'Explore Care', href: '/care' }}
-      />
-    </div>
-  </section>
-
   <section class="section surface-white">
     <div class="container stack-lg">
       <SectionIntro
@@ -185,33 +163,6 @@ const featuredEvent = events.find((event) => event.featured) ?? events[0];
       <a href={withBase('/events')} class="btn btn-secondary">View All Events</a>
     </div>
   </section>
-
-  <section class="section surface-white">
-    <div class="container split">
-      <div class="stack-lg">
-        <SectionIntro
-          eyebrow="Practical Info"
-          title="Need quick details before Sunday?"
-          text="Find service times, location, and first-time guest guidance in one place."
-        />
-        <ServiceInfoBlock />
-      </div>
-      <div class="stack-lg">
-        <SectionIntro
-          eyebrow="Our Ministries"
-          title="Church built for every stage"
-          text="From children and students to groups and care, every ministry exists to help people grow in Jesus and community."
-        />
-        <CardGrid columns={2}>
-          {ministries.slice(0, 4).map((ministry) => (
-            <MinistryCard {...ministry} />
-          ))}
-        </CardGrid>
-      </div>
-    </div>
-  </section>
-
-  <TestimonialStrip items={testimonials} title="Why people call Limitless home" />
 
   <CTABand
     eyebrow="Ready For Sunday?"

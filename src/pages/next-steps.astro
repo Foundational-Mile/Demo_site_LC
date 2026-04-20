@@ -4,7 +4,9 @@ import HeroSection from '../components/HeroSection.astro';
 import SectionIntro from '../components/SectionIntro.astro';
 import CTABand from '../components/CTABand.astro';
 import VisitPlanningBlock from '../components/VisitPlanningBlock.astro';
-import { nextSteps } from '../data/content';
+import CardGrid from '../components/CardGrid.astro';
+import MinistryCard from '../components/MinistryCard.astro';
+import { nextSteps, ministries } from '../data/content';
 import { withBase } from '../utils/paths';
 ---
 
@@ -54,6 +56,21 @@ import { withBase } from '../utils/paths';
         </ul>
       </div>
       <VisitPlanningBlock compact={true} />
+    </div>
+  </section>
+
+  <section class="section surface-white">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Ministry Paths"
+        title="Find where you can belong and grow"
+        text="Every ministry is designed to help you build healthy relationships, grow in faith, and serve with purpose."
+      />
+      <CardGrid columns={2}>
+        {ministries.slice(0, 4).map((ministry) => (
+          <MinistryCard {...ministry} />
+        ))}
+      </CardGrid>
     </div>
   </section>
 

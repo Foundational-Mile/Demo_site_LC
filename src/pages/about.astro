@@ -4,7 +4,8 @@ import HeroSection from '../components/HeroSection.astro';
 import SectionIntro from '../components/SectionIntro.astro';
 import CTABand from '../components/CTABand.astro';
 import CardGrid from '../components/CardGrid.astro';
-import { values, beliefs, staff } from '../data/content';
+import TestimonialStrip from '../components/TestimonialStrip.astro';
+import { values, beliefs, staff, testimonials } from '../data/content';
 import { media } from '../data/media';
 import { withBase } from '../utils/paths';
 
@@ -109,6 +110,8 @@ const leadPastor = staff[0];
       <a class="btn btn-secondary" href={withBase('/about-essentials')}>Explore All Essentials</a>
     </div>
   </section>
+
+  <TestimonialStrip items={testimonials} title="Why people call Limitless home" />
 
   <CTABand
     eyebrow="Join Us This Weekend"
