@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import FormPlaceholder from '../components/FormPlaceholder.astro';
+import ServiceInfoBlock from '../components/ServiceInfoBlock.astro';
+import CTABand from '../components/CTABand.astro';
+import { visitFaqs } from '../data/content';
+import { media } from '../data/media';
+---
+
+<BaseLayout title="Plan Your Visit | Limitless Church">
+  <HeroSection
+    eyebrow="Plan Your Visit"
+    title="Plan Your First Visit"
+    text="We will help you know where to go and what to expect."
+    image={media.heroes.visit}
+    imageAlt="Church welcome team greeting new guests"
+    primaryCta={{ label: 'Fill Out Visit Form', href: '#visit-form' }}
+    secondaryCta={{ label: 'What About Kids?', href: '/kids' }}
+  />
+
+  <section class="section surface-white">
+    <div class="container split">
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="Service Times + Location"
+          title="Everything you need before you arrive"
+          text="Plan your route, pick your service time, and arrive a little early if you are checking in kids."
+        />
+        <ServiceInfoBlock />
+        <article class="card map-card">
+          <h3>Campus Map Preview</h3>
+          <p>Map section ready for Google Maps embed, Apple Maps link, and parking map graphic.</p>
+          <div class="map-shell" role="img" aria-label="Campus map preview block"></div>
+        </article>
+      </div>
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="What To Expect"
+          title="A practical first-time guest experience"
+          text="Most guests arrive 15 minutes early, grab coffee in the lobby, and let our team help with directions. Services run around 70 minutes."
+        />
+        <ul class="list-check">
+          <li>Warm welcome team ready at every entrance</li>
+          <li>Coffee + lobby connection before and after service</li>
+          <li>Bold worship and a relevant, biblically grounded message</li>
+          <li>Clear dismissal and easy next-step opportunities</li>
+        </ul>
+        <article class="card expect-card">
+          <h3>What should I wear?</h3>
+          <p>Come as you are. Most people wear casual or smart casual attire.</p>
+          <h3>What if I come alone?</h3>
+          <p>You will not feel out of place. Let a greeter know and we will help you get connected.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-soft">
+    <div class="container split">
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="Kids"
+          title="Visiting with children? We have you covered."
+          text="Our family check-in process is simple, secure, and designed to reduce stress for parents."
+        />
+        <ul class="list-check">
+          <li>Dedicated first-time family check-in support</li>
+          <li>Age-based classrooms with trained leaders</li>
+          <li>Secure pick-up process and parent communication</li>
+        </ul>
+        <a class="btn btn-ghost" href="/kids">See Full Kids Page</a>
+      </div>
+      <div class="photo-frame">
+        <img
+          class="media-cover"
+          src={media.sections.visitKidsCheckin}
+          alt="Family checking in child at kids ministry"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section id="visit-form" class="section surface-white">
+    <div class="container split">
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="Plan Ahead"
+          title="Tell us you are coming"
+          text="Submitting this short form helps us prepare for your family and make your arrival smooth."
+        />
+        <FAQAccordion items={visitFaqs} />
+      </div>
+      <FormPlaceholder
+        title="First-Time Guest Form"
+        description="First-time guest form section ready for Church Center, Planning Center People, HubSpot, or custom endpoint."
+        buttonLabel="Submit Visit Details"
+      />
+    </div>
+  </section>
+
+  <CTABand
+    eyebrow="Still Unsure?"
+    title="We would love to answer your questions before Sunday."
+    text="Reach out directly and our team will personally help you feel ready for your first visit."
+    primary={{ label: 'Call Our Team', href: 'tel:+14175219806' }}
+    secondary={{ label: 'See Service Details', href: '#visit-form' }}
+  />
+</BaseLayout>
+
+<style>
+  .map-card,
+  .expect-card {
+    padding: 1.1rem;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .map-card p,
+  .expect-card p {
+    color: #55647d;
+  }
+
+  .map-shell {
+    min-height: 180px;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #e3e7ee 0%, #f1f3f7 100%);
+    border: 1px dashed #b2bac7;
+  }
+</style>

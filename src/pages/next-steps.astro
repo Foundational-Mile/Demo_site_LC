@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import CTABand from '../components/CTABand.astro';
+import VisitPlanningBlock from '../components/VisitPlanningBlock.astro';
+import { nextSteps } from '../data/content';
+---
+
+<BaseLayout title="Next Steps | Limitless Church">
+  <HeroSection
+    eyebrow="Next Steps"
+    title="Take Your Next Step"
+    text="Choose a clear path to grow, belong, and serve."
+    centered={true}
+    textured={true}
+    primaryCta={{ label: 'Start With New Here', href: '/plan-your-visit' }}
+    secondaryCta={{ label: 'Talk To Next Steps Team', href: '/care' }}
+  />
+
+  <section id="pathway" class="section surface-white">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Pathway"
+        title="Simple, practical, and purpose-driven"
+        text="Choose the step that matches your season. Our team can help guide you at every stage."
+      />
+      <div class="grid grid-3">
+        {nextSteps.map((step) => (
+          <article class="card step-card">
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+            <a href="/next-steps#pathway" class="btn btn-ghost">{step.cta}</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-soft">
+    <div class="container split">
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="How This Helps"
+          title="From attending to belonging"
+          text="The goal is not just participation. The goal is formation: growing in faith, serving others, and becoming part of church family."
+        />
+        <ul class="list-check">
+          <li>Know God more deeply through worship and scripture</li>
+          <li>Build meaningful friendships in groups</li>
+          <li>Discover your gifts and serve with purpose</li>
+          <li>Live your faith in everyday mission</li>
+        </ul>
+      </div>
+      <VisitPlanningBlock compact={true} />
+    </div>
+  </section>
+
+  <CTABand
+    eyebrow="Need Help Choosing?"
+    title="Let us help you pick the best next step for your season."
+    text="Next Steps handoff is ready for form, team inbox, or follow-up workflow integration."
+    primary={{ label: 'Connect With Team', href: '/care' }}
+    secondary={{ label: 'Sunday Info', href: '/plan-your-visit' }}
+  />
+</BaseLayout>
+
+<style>
+  .step-card {
+    padding: 1.1rem;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .step-card p {
+    color: #55647d;
+  }
+
+  .step-card .btn {
+    width: fit-content;
+  }
+</style>

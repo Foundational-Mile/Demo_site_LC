@@ -1,0 +1,53 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Limitless Church is a life-giving church helping people encounter God, love people, and find purpose.'
+} = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <Header pathname={pathname} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 999;
+    background: #fff;
+    color: #0f1115;
+    padding: 0.6rem 0.9rem;
+    border-radius: 0.35rem;
+    box-shadow: 0 0 0 2px rgba(16, 18, 24, 0.35);
+  }
+
+  .skip-link:focus-visible {
+    left: 0.75rem;
+    top: 0.75rem;
+  }
+</style>

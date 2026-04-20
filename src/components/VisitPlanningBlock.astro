@@ -1,0 +1,63 @@
+---
+import { churchMeta } from '../data/site';
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<section class={`visit-plan card ${compact ? 'compact' : ''}`}>
+  <div class="stack">
+    <span class="eyebrow">First Time at Limitless</span>
+    <h2 class="title-md">Planning a visit should feel easy.</h2>
+    <p>
+      From parking to kids check-in, our team is ready to help you feel at home. Save time by sending us your visit
+      details ahead of Sunday.
+    </p>
+  </div>
+
+  <div class="stack-sm">
+    <h3>Service Times</h3>
+    <ul>
+      {churchMeta.serviceTimes.map((time) => (
+        <li>{time}</li>
+      ))}
+    </ul>
+    <p>{churchMeta.address}</p>
+    <div class="cluster">
+      <a class="btn btn-primary" href="/plan-your-visit">Start Visit Plan</a>
+      <a class="btn btn-secondary" href="/kids">What About Kids?</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .visit-plan {
+    padding: clamp(1.2rem, 3vw, 2rem);
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 1rem;
+  }
+
+  .visit-plan p,
+  .visit-plan li {
+    color: #526078;
+  }
+
+  .visit-plan ul {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .compact {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 900px) {
+    .visit-plan {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

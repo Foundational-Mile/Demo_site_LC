@@ -1,0 +1,70 @@
+---
+interface Props {
+  title: string;
+  date: string;
+  time: string;
+  location: string;
+  category: string;
+  description: string;
+  image: string;
+  featured?: boolean;
+}
+
+const { title, date, time, location, category, description, image, featured = false } = Astro.props;
+---
+
+<article class={`card event-card ${featured ? 'featured' : ''}`}>
+  <img src={image} alt={`${title} event`} loading="lazy" />
+  <div class="stack-sm content">
+    <span class="badge">{category}</span>
+    <h3>{title}</h3>
+    <p class="meta">{date} • {time}</p>
+    <p class="meta">{location}</p>
+    <p>{description}</p>
+    <a href="/events" class="btn btn-secondary">View Details</a>
+  </div>
+</article>
+
+<style>
+  .event-card {
+    overflow: hidden;
+    border-top: 3px solid rgba(42, 111, 232, 0.55);
+  }
+
+  .event-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .event-card .content {
+    padding: 0.86rem;
+  }
+
+  .event-card h3 {
+    font-size: 1.38rem;
+    line-height: 1;
+  }
+
+  .event-card .meta,
+  .event-card p {
+    color: #505f76;
+  }
+
+  .event-card .meta {
+    font-size: 0.77rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .event-card .btn {
+    width: fit-content;
+    margin-top: 0.25rem;
+  }
+
+  .event-card.featured {
+    border-color: rgba(16, 18, 24, 0.2);
+    box-shadow: 0 16px 30px rgba(16, 20, 32, 0.14);
+    border-top-color: #2a6fe8;
+  }
+</style>

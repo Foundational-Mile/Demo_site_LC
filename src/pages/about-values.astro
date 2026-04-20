@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import CardGrid from '../components/CardGrid.astro';
+import CTABand from '../components/CTABand.astro';
+import { values } from '../data/content';
+---
+
+<BaseLayout title="Our Values | Limitless Church">
+  <HeroSection
+    eyebrow="Our Values"
+    title="How We Live And Lead"
+    text="These eight values shape our culture, ministry, and decision-making at Limitless Church."
+    centered={true}
+    textured={true}
+    primaryCta={{ label: 'Back To About', href: '/about' }}
+    secondaryCta={{ label: 'View Essentials', href: '/about-essentials' }}
+  />
+
+  <section class="section surface-white">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Culture"
+        title="Values That Build A Healthy Church"
+        text="These values are not slogans. They are practical commitments that guide how we worship, serve, and lead."
+      />
+      <CardGrid columns={4}>
+        {values.map((value) => (
+          <article class="card value-card">
+            <h3>{value.title}</h3>
+            <p>{value.description}</p>
+          </article>
+        ))}
+      </CardGrid>
+    </div>
+  </section>
+
+  <CTABand
+    eyebrow="There Is More"
+    title="Ready to see these values in action?"
+    text="Join us this weekend and experience the culture of Limitless in person."
+    primary={{ label: 'Plan Your Visit', href: '/plan-your-visit' }}
+    secondary={{ label: 'Back To About', href: '/about' }}
+  />
+</BaseLayout>
+
+<style>
+  .value-card {
+    padding: 1.05rem;
+    display: grid;
+    gap: 0.6rem;
+    border-top: 3px solid rgba(42, 111, 232, 0.55);
+  }
+
+  .value-card p {
+    color: #55647d;
+  }
+</style>

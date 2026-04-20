@@ -1,0 +1,52 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  text: string;
+  image: string;
+  imageAlt: string;
+  points?: string[];
+  reverse?: boolean;
+  cta?: { label: string; href: string };
+}
+
+const { eyebrow, title, text, image, imageAlt, points = [], reverse = false, cta } = Astro.props;
+---
+
+<section class="section">
+  <div class={`container split ${reverse ? 'reverse' : ''}`}>
+    <div class="stack-lg">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h2 class="title-lg">{title}</h2>
+      <p class="lead">{text}</p>
+      {points.length > 0 && (
+        <ul class="list-check">
+          {points.map((point) => (
+            <li>{point}</li>
+          ))}
+        </ul>
+      )}
+      {cta && <a class="btn btn-ghost" href={cta.href}>{cta.label}</a>}
+    </div>
+    <div class="photo-frame">
+      <img class="media-cover" src={image} alt={imageAlt} loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .reverse > :first-child {
+    order: 2;
+  }
+
+  .reverse > :last-child {
+    order: 1;
+  }
+
+  @media (max-width: 980px) {
+    .reverse > :first-child,
+    .reverse > :last-child {
+      order: initial;
+    }
+  }
+</style>

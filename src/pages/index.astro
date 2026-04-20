@@ -1,0 +1,257 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FullSpanVideoHero from '../components/FullSpanVideoHero.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import SplitSection from '../components/SplitSection.astro';
+import CTABand from '../components/CTABand.astro';
+import CardGrid from '../components/CardGrid.astro';
+import MessageCard from '../components/MessageCard.astro';
+import EventCard from '../components/EventCard.astro';
+import MinistryCard from '../components/MinistryCard.astro';
+import TestimonialStrip from '../components/TestimonialStrip.astro';
+import VisitPlanningBlock from '../components/VisitPlanningBlock.astro';
+import ServiceInfoBlock from '../components/ServiceInfoBlock.astro';
+import { churchMeta } from '../data/site';
+import { media } from '../data/media';
+import {
+  messages,
+  events,
+  ministries,
+  nextSteps,
+  testimonials,
+  staff
+} from '../data/content';
+
+const featuredMessage = messages.find((message) => message.featured) ?? messages[0];
+const featuredEvent = events.find((event) => event.featured) ?? events[0];
+---
+
+<BaseLayout title="Limitless Church | Home">
+  <FullSpanVideoHero
+    leftPillars={['Encounter God,', 'Love People,', 'Find Purpose.']}
+    poster={media.heroes.home}
+    videoAlt="Limitless Church worship highlight video"
+    serviceSummary="Sundays: 8:00, 9:30, 11:00, 12:30 PM"
+    location={churchMeta.address}
+  />
+
+  <section class="section surface-white">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="New Here"
+        title="What to expect this Sunday"
+        text="From the parking lot to the kids hallway, our team is ready to help you feel welcomed, informed, and settled in before service starts."
+      />
+      <div class="grid grid-3">
+        <article class="card expect-card">
+          <h3>Friendly Arrival</h3>
+          <p>Clear signage, guest parking, and greeters who help you get where you need to go.</p>
+        </article>
+        <article class="card expect-card">
+          <h3>Bold Worship + Practical Message</h3>
+          <p>A focused service with worship, prayer, and biblical teaching you can apply this week.</p>
+        </article>
+        <article class="card expect-card">
+          <h3>Family-Friendly Experience</h3>
+          <p>Safe check-in, age-based kids rooms, and a team that loves serving families well.</p>
+        </article>
+      </div>
+      <VisitPlanningBlock compact={true} />
+    </div>
+  </section>
+
+  <SplitSection
+    eyebrow="Limitless Kids"
+    title="Parents can breathe. Kids can thrive."
+    text="We know visiting church with kids can feel overwhelming. Our kids environments are secure, joyful, and designed to help children experience Jesus at their level."
+    points={[
+      'Simple first-time family check-in process',
+      'Background-checked leaders in every room',
+      'Age-based worship, Bible teaching, and activities',
+      'Parent support team available every Sunday'
+    ]}
+    image={media.sections.homeKids}
+    imageAlt="Children in a bright classroom environment"
+    cta={{ label: 'Explore Kids Ministry', href: '/kids' }}
+  />
+
+  <section class="section surface-soft">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Messages"
+        title="Relevant messages for real life"
+        text="Catch up on the latest message, share with a friend, or explore full series on YouTube."
+      />
+      <CardGrid columns={3}>
+        <MessageCard {...featuredMessage} featured={true} />
+        {messages
+          .filter((message) => message.title !== featuredMessage.title)
+          .slice(0, 2)
+          .map((message) => (
+            <MessageCard {...message} />
+          ))}
+      </CardGrid>
+      <a href="/messages" class="btn btn-secondary">Browse All Messages</a>
+    </div>
+  </section>
+
+  <section class="section surface-white">
+    <div class="container split">
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="About Limitless"
+          title="A church alive with faith, grounded in purpose, and built for people."
+          text="Limitless Church exists to help people encounter God and walk in transformed life. We believe church should be spiritually expectant, emotionally healthy, and practical for everyday people."
+        />
+        <ul class="list-check">
+          <li>Strong biblical teaching with modern clarity</li>
+          <li>Leadership that is accessible and people-focused</li>
+          <li>A church culture that values both truth and grace</li>
+        </ul>
+        <a class="btn btn-ghost" href="/about">Learn More About Our Church</a>
+      </div>
+      <div class="card pastor-card">
+        <img
+          src={staff[0].image}
+          alt="Portrait of lead pastor"
+          class="media-cover"
+          loading="lazy"
+        />
+        <div class="stack-sm content">
+          <h3>Led by Pastor Stone Moss</h3>
+          <p>
+            Our leadership heart is simple: create a church where people can know Jesus deeply and build a strong,
+            purpose-filled life.
+          </p>
+          <a class="btn btn-secondary" href="/staff">Meet Our Team</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-white">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Next Steps"
+        title="Your next step is clear"
+        text="Faith was never meant to be passive. Here are practical pathways to help you grow, belong, and lead."
+      />
+      <div class="grid grid-3">
+        {nextSteps.slice(0, 3).map((step) => (
+          <article class="card simple-card">
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+            <a href="/next-steps" class="btn btn-ghost">{step.cta}</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-soft">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Care + Prayer"
+        title="You do not have to walk through hard seasons alone"
+        text="If you need prayer, pastoral support, or practical care, our team is here to stand with you."
+      />
+      <CTABand
+        dark={false}
+        title="Need someone to pray with you?"
+        text="Share a confidential prayer request and our care team will follow up with compassion and support."
+        primary={{ label: 'Request Prayer', href: '/care' }}
+        secondary={{ label: 'Explore Care', href: '/care' }}
+      />
+    </div>
+  </section>
+
+  <section class="section surface-white">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Upcoming"
+        title="There is always something happening"
+        text="From worship nights to family events and groups, find the next gathering that helps you connect."
+      />
+      <CardGrid columns={3}>
+        <EventCard {...featuredEvent} featured={true} />
+        {events
+          .filter((event) => event.title !== featuredEvent.title)
+          .slice(0, 2)
+          .map((event) => (
+            <EventCard {...event} />
+          ))}
+      </CardGrid>
+      <a href="/events" class="btn btn-secondary">View All Events</a>
+    </div>
+  </section>
+
+  <section class="section surface-white">
+    <div class="container split">
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="Practical Info"
+          title="Need quick details before Sunday?"
+          text="Find service times, location, and first-time guest guidance in one place."
+        />
+        <ServiceInfoBlock />
+      </div>
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="Our Ministries"
+          title="Church built for every stage"
+          text="From children and students to groups and care, every ministry exists to help people grow in Jesus and community."
+        />
+        <CardGrid columns={2}>
+          {ministries.slice(0, 4).map((ministry) => (
+            <MinistryCard {...ministry} />
+          ))}
+        </CardGrid>
+      </div>
+    </div>
+  </section>
+
+  <TestimonialStrip items={testimonials} title="Why people call Limitless home" />
+
+  <CTABand
+    eyebrow="Ready For Sunday?"
+    title="Start your Sunday with confidence."
+    text="We will help with parking, kids check-in, and anything else you need to feel ready before you arrive."
+    primary={{ label: 'Get Sunday Details', href: '/plan-your-visit' }}
+    secondary={{ label: 'What About Kids?', href: '/kids' }}
+  />
+</BaseLayout>
+
+<style>
+  .expect-card,
+  .simple-card,
+  .pastor-card .content {
+    padding: 0.94rem;
+  }
+
+  .expect-card,
+  .simple-card {
+    display: grid;
+    gap: 0.6rem;
+    border-top: 3px solid rgba(42, 111, 232, 0.55);
+  }
+
+  .expect-card h3,
+  .simple-card h3 {
+    font-size: 1.38rem;
+    line-height: 1;
+  }
+
+  .expect-card p,
+  .simple-card p,
+  .pastor-card p {
+    color: #4f5d73;
+  }
+
+  .simple-card .btn {
+    width: fit-content;
+  }
+
+  .pastor-card {
+    overflow: hidden;
+  }
+</style>

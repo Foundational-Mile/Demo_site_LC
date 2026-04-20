@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import MessageCard from '../components/MessageCard.astro';
+import CTABand from '../components/CTABand.astro';
+import CardGrid from '../components/CardGrid.astro';
+import { messages } from '../data/content';
+import { media } from '../data/media';
+
+const featured = messages.find((message) => message.featured) ?? messages[0];
+const recents = messages.filter((message) => message.title !== featured.title);
+const filters = ['All', 'Latest Series', 'Relationships', 'Faith', 'Family', 'Prayer'];
+---
+
+<BaseLayout title="Messages | Limitless Church">
+  <HeroSection
+    eyebrow="Messages"
+    title="Watch Recent Messages"
+    text="Catch up on Sunday teaching and share a message with a friend."
+    centered={true}
+    textured={true}
+    primaryCta={{ label: 'Browse Recent Messages', href: '#browse-messages' }}
+    secondaryCta={{ label: 'See Next Steps', href: '/next-steps' }}
+  />
+
+  <section class="section surface-white">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Featured Message"
+        title={featured.title}
+        text={featured.summary}
+      />
+      <MessageCard {...featured} featured={true} />
+    </div>
+  </section>
+
+  <section id="browse-messages" class="section surface-soft">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Browse"
+        title="Recent messages"
+        text="Find what you need quickly with series and topic filters."
+      />
+      <div class="cluster filter-row" aria-label="Filter messages preview">
+        {filters.map((filter, index) => (
+          <button class={`filter-pill ${index === 0 ? 'active' : ''}`} type="button">{filter}</button>
+        ))}
+      </div>
+      <CardGrid columns={3}>
+        {recents.map((message) => (
+          <MessageCard {...message} />
+        ))}
+      </CardGrid>
+    </div>
+  </section>
+
+  <section class="section surface-white">
+    <div class="container split">
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="Teaching Heart"
+          title="Truth with clarity. Grace with conviction."
+          text="Our teaching is rooted in scripture and designed to help people walk with Jesus in real life, not just on Sundays."
+        />
+        <ul class="list-check">
+          <li>Verse-by-verse and topical teaching rhythms</li>
+          <li>Family, relationships, faith, and spiritual growth topics</li>
+          <li>Clear next steps at the end of every message</li>
+        </ul>
+      </div>
+      <div class="photo-frame">
+        <img
+          class="media-cover"
+          src={media.sections.messagesTeaching}
+          alt="Congregation listening during a message"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <CTABand
+    eyebrow="Watch + Share"
+    title="Catch up this week and invite someone to watch with you."
+    text="Full message archive and clips can connect people to hope all week long."
+    primary={{ label: 'Browse Message Archive', href: '#browse-messages' }}
+    secondary={{ label: 'Plan An In-Person Visit', href: '/plan-your-visit' }}
+  />
+</BaseLayout>
+
+<style>
+  .filter-row {
+    gap: 0.6rem;
+  }
+
+  .filter-pill {
+    border: 1px solid rgba(16, 18, 24, 0.15);
+    background: #fff;
+    color: #46536a;
+    font-weight: 700;
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .filter-pill.active {
+    border-color: rgba(16, 18, 24, 0.28);
+    color: #0f1115;
+    background: #eceff4;
+  }
+</style>

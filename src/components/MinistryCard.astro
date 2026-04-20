@@ -1,0 +1,60 @@
+---
+interface Props {
+  title: string;
+  audience: string;
+  description: string;
+  image: string;
+}
+
+const { title, audience, description, image } = Astro.props;
+---
+
+<article class="card ministry-card">
+  <img src={image} alt={`${title} ministry`} loading="lazy" />
+  <div class="stack-sm content">
+    <h3>{title}</h3>
+    <p class="audience">{audience}</p>
+    <p>{description}</p>
+    <a href="/next-steps" class="btn btn-ghost">Learn More</a>
+  </div>
+</article>
+
+<style>
+  .ministry-card {
+    overflow: hidden;
+    height: 100%;
+    border-top: 3px solid rgba(42, 111, 232, 0.55);
+  }
+
+  .ministry-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .ministry-card .content {
+    padding: 0.86rem;
+  }
+
+  .ministry-card h3 {
+    font-size: 1.35rem;
+    line-height: 1;
+  }
+
+  .audience {
+    color: #12151b;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .ministry-card p {
+    color: #505e75;
+  }
+
+  .ministry-card .btn {
+    width: fit-content;
+    margin-top: 0.28rem;
+  }
+</style>

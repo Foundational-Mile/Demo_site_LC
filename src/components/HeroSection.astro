@@ -1,0 +1,262 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  text: string;
+  image?: string;
+  imageAlt?: string;
+  videoPreview?: boolean;
+  videoLabel?: string;
+  videoHref?: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  serviceTimes?: string[];
+  location?: string;
+  centered?: boolean;
+  textured?: boolean;
+}
+
+const {
+  eyebrow,
+  title,
+  text,
+  image = '',
+  imageAlt = '',
+  videoPreview = false,
+  videoLabel = 'Welcome Video',
+  videoHref = '/messages',
+  primaryCta,
+  secondaryCta,
+  serviceTimes = [],
+  location,
+  centered = false,
+  textured = false
+} = Astro.props;
+
+const hasMedia = Boolean(image);
+---
+
+<section class={`hero section surface-dark ${textured ? 'textured' : ''}`}>
+  <div class={`container hero-grid ${centered ? 'centered' : ''} ${!hasMedia ? 'no-media' : ''}`}>
+    <div class={`stack-lg hero-copy ${centered ? 'centered' : ''}`}>
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h1 class="title-xl">{title}</h1>
+      <p class="lead">{text}</p>
+
+      {(primaryCta || secondaryCta) && (
+        <div class="cluster hero-actions">
+          {primaryCta && <a class="btn btn-primary" href={primaryCta.href}>{primaryCta.label}</a>}
+          {secondaryCta && <a class="btn btn-secondary" href={secondaryCta.href}>{secondaryCta.label}</a>}
+        </div>
+      )}
+
+      {(serviceTimes.length > 0 || location) && (
+        <div class="hero-meta">
+          {serviceTimes.length > 0 && (
+            <div>
+              <h2>Service Times</h2>
+              <ul>
+                {serviceTimes.map((time) => (
+                  <li>{time}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {location && (
+            <div>
+              <h2>Location</h2>
+              <p>{location}</p>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+
+    {hasMedia &&
+      (videoPreview ? (
+        <a class="video-shell" href={videoHref} aria-label={videoLabel}>
+          <img class="media-cover" src={image} alt={imageAlt} loading="eager" />
+          <span class="video-overlay">
+            <span class="play-icon" aria-hidden="true">▶</span>
+            <span>{videoLabel}</span>
+          </span>
+        </a>
+      ) : (
+        <div class="photo-frame">
+          <img class="media-cover" src={image} alt={imageAlt} loading="eager" />
+        </div>
+      ))}
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: clamp(3rem, 8vw, 5.5rem);
+    padding-bottom: clamp(3.2rem, 8vw, 6.3rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 87% 10%, rgba(17, 18, 24, 0.28), transparent 42%);
+    pointer-events: none;
+  }
+
+  .hero.textured {
+    background:
+      radial-gradient(circle at 14% 8%, rgba(93, 143, 242, 0.36), transparent 40%),
+      radial-gradient(circle at 88% 82%, rgba(93, 143, 242, 0.3), transparent 46%),
+      repeating-linear-gradient(
+        -36deg,
+        rgba(255, 255, 255, 0.07) 0,
+        rgba(255, 255, 255, 0.07) 2px,
+        transparent 2px,
+        transparent 16px
+      ),
+      repeating-linear-gradient(
+        36deg,
+        rgba(93, 143, 242, 0.08) 0,
+        rgba(93, 143, 242, 0.08) 2px,
+        transparent 2px,
+        transparent 20px
+      ),
+      linear-gradient(140deg, #212b3a 0%, #172030 50%, #101725 100%);
+  }
+
+  .hero.textured::before {
+    background:
+      radial-gradient(circle at 84% 14%, rgba(255, 255, 255, 0.14), transparent 32%),
+      radial-gradient(circle at 18% 88%, rgba(255, 255, 255, 0.08), transparent 38%),
+      linear-gradient(120deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 36%),
+      linear-gradient(180deg, rgba(6, 10, 17, 0.08), rgba(6, 10, 17, 0.24));
+  }
+
+  .hero.textured::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.68;
+    mix-blend-mode: soft-light;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.22) 1px, transparent 0) 0 0 / 14px 14px,
+      radial-gradient(circle at 8px 8px, rgba(93, 143, 242, 0.18) 1px, transparent 0) 0 0 / 18px 18px;
+  }
+
+  .hero-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+  }
+
+  .hero-copy {
+    max-width: 58ch;
+  }
+
+  .hero-grid.no-media {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-grid.centered {
+    justify-items: center;
+  }
+
+  .hero-copy.centered {
+    max-width: 70ch;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .hero-copy.centered .cluster {
+    justify-content: center;
+  }
+
+  .hero-copy.centered .hero-meta {
+    width: min(760px, 100%);
+  }
+
+  .hero-meta {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-meta > div {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 0.42rem;
+    padding: 0.85rem 0.95rem;
+    border-top: 2px solid #5d8ff2;
+  }
+
+  .hero-meta h2 {
+    font-size: 0.84rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+
+  .hero-meta ul,
+  .hero-meta p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .video-shell {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    display: block;
+  }
+
+  .video-shell img {
+    border-radius: 0;
+    aspect-ratio: 16 / 10;
+  }
+
+  .video-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    gap: 0.7rem;
+    justify-items: center;
+    color: #ffffff;
+    font-weight: 700;
+    background: linear-gradient(180deg, rgba(12, 15, 22, 0.08) 20%, rgba(12, 15, 22, 0.62) 100%);
+  }
+
+  .play-icon {
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(3px);
+  }
+
+  @media (max-width: 950px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-actions {
+      width: 100%;
+    }
+
+    .hero-meta {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

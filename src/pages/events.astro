@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import EventCard from '../components/EventCard.astro';
+import CTABand from '../components/CTABand.astro';
+import CardGrid from '../components/CardGrid.astro';
+import { events } from '../data/content';
+
+const featured = events.find((event) => event.featured) ?? events[0];
+const upcoming = events.filter((event) => event.title !== featured.title);
+const categories = ['All', 'Worship', 'Family', 'Youth', 'Serve', 'Care'];
+---
+
+<BaseLayout title="Events | Limitless Church">
+  <HeroSection
+    eyebrow="Events"
+    title="See What’s Coming Up"
+    text="Find upcoming events and plan your next step to connect."
+    centered={true}
+    textured={true}
+    primaryCta={{ label: 'See Upcoming Events', href: '#upcoming' }}
+    secondaryCta={{ label: 'See Visit Info', href: '/plan-your-visit' }}
+  />
+
+  <section class="section surface-white">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Featured Event"
+        title={featured.title}
+        text={featured.description}
+      />
+      <EventCard {...featured} featured={true} />
+    </div>
+  </section>
+
+  <section id="upcoming" class="section surface-soft">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Upcoming"
+        title="Plan ahead and bring someone with you"
+        text="Browse by event type and lock in your next date."
+      />
+      <div class="cluster filter-row" aria-label="Event category filters preview">
+        {categories.map((category, index) => (
+          <button class={`filter-pill ${index === 0 ? 'active' : ''}`} type="button">{category}</button>
+        ))}
+      </div>
+      <CardGrid columns={3}>
+        {upcoming.map((event) => (
+          <EventCard {...event} />
+        ))}
+      </CardGrid>
+    </div>
+  </section>
+
+  <CTABand
+    eyebrow="Stay In The Loop"
+    title="Never miss an important date"
+    text="Event calendar section ready for Church Center sync and app integration."
+    primary={{ label: 'Open Event Calendar', href: '#upcoming' }}
+    secondary={{ label: 'Download Church App', href: '/next-steps' }}
+  />
+</BaseLayout>
+
+<style>
+  .filter-row {
+    gap: 0.55rem;
+  }
+
+  .filter-pill {
+    border: 1px solid rgba(16, 18, 24, 0.15);
+    background: #fff;
+    color: #46536a;
+    font-weight: 700;
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .filter-pill.active {
+    border-color: rgba(16, 18, 24, 0.28);
+    color: #0f1115;
+    background: #eceff4;
+  }
+</style>

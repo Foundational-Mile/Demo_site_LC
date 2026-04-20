@@ -1,0 +1,46 @@
+---
+interface Item {
+  quote: string;
+  name: string;
+}
+
+interface Props {
+  items: Item[];
+  title?: string;
+}
+
+const { items, title = 'Stories of life change' } = Astro.props;
+---
+
+<section class="section surface-soft">
+  <div class="container stack-lg">
+    <h2 class="title-lg">{title}</h2>
+    <div class="grid grid-3">
+      {items.map((item) => (
+        <blockquote class="card testimonial">
+          <p>“{item.quote}”</p>
+          <cite>{item.name}</cite>
+        </blockquote>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonial {
+    padding: 1.2rem;
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .testimonial p {
+    color: #3e4b61;
+    font-size: 1.02rem;
+  }
+
+  .testimonial cite {
+    font-style: normal;
+    font-weight: 700;
+    color: #0f1115;
+  }
+</style>

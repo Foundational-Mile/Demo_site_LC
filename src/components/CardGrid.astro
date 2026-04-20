@@ -1,0 +1,21 @@
+---
+interface Props {
+  columns?: 2 | 3 | 4;
+}
+
+const { columns = 3 } = Astro.props;
+---
+
+<div class={`grid grid-${columns} card-grid`}>
+  <slot />
+</div>
+
+<style>
+  .card-grid {
+    gap: 0.9rem;
+  }
+
+  .card-grid :global(.card) {
+    height: 100%;
+  }
+</style>

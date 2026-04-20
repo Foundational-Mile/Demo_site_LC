@@ -1,0 +1,49 @@
+---
+interface Props {
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+  team?: string;
+}
+
+const { name, role, bio, image, team } = Astro.props;
+---
+
+<article class="card staff-card">
+  <img src={image} alt={`Portrait of ${name}`} loading="lazy" />
+  <div class="stack-sm content">
+    {team && <span class="badge">{team}</span>}
+    <h3>{name}</h3>
+    <p class="role">{role}</p>
+    <p>{bio}</p>
+  </div>
+</article>
+
+<style>
+  .staff-card {
+    overflow: hidden;
+    display: grid;
+  }
+
+  .staff-card img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .role {
+    color: #101218;
+    font-weight: 700;
+    margin-top: -0.2rem;
+  }
+
+  .content p {
+    color: #516078;
+    font-size: 0.95rem;
+  }
+</style>

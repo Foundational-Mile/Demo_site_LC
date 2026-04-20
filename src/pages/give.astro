@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import CTABand from '../components/CTABand.astro';
+import { giveFaqs, impactHighlights } from '../data/content';
+import { media } from '../data/media';
+---
+
+<BaseLayout title="Give | Limitless Church">
+  <HeroSection
+    eyebrow="Give"
+    title="Give With Confidence"
+    text="Your generosity supports ministry, families, and outreach every week."
+    image={media.heroes.give}
+    imageAlt="People serving community together"
+    primaryCta={{ label: 'Give Online', href: '#giving-faq' }}
+    secondaryCta={{ label: 'Giving FAQ', href: '#giving-faq' }}
+  />
+
+  <section class="section surface-white">
+    <div class="container split">
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="Why We Give"
+          title="Generosity builds what matters most"
+          text="We give because God has first been generous to us. Your giving funds ministry impact, fuels mission, and helps people find hope."
+        />
+        <ul class="list-check">
+          <li>Weekend ministry and discipleship environments</li>
+          <li>Kids and student investment for the next generation</li>
+          <li>Local outreach and compassion projects</li>
+          <li>National and global mission partnerships</li>
+        </ul>
+      </div>
+      <article class="card stewardship-card">
+        <h3>Stewardship + Trust</h3>
+        <p>
+          We are committed to financial transparency, wise stewardship, and accountability in how resources are handled.
+          Giving statements, team oversight, and clear processes are in place to build trust.
+        </p>
+        <a class="btn btn-secondary" href="#giving-faq">View Stewardship FAQ</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section surface-soft">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Impact"
+        title="What your generosity makes possible"
+        text="Here are a few examples of where giving is currently making a difference."
+      />
+      <div class="grid grid-3">
+        {impactHighlights.map((item) => (
+          <article class="card impact-card">
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="giving-faq" class="section surface-white">
+    <div class="container split">
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="Giving FAQ"
+          title="Common questions"
+          text="Simple answers to help you give with confidence."
+        />
+        <FAQAccordion items={giveFaqs} />
+      </div>
+      <CTABand
+        dark={false}
+        title="Ready to give?"
+        text="Giving section is ready for Church Center embed or secure giving portal integration."
+        primary={{ label: 'Open Giving Portal', href: '/give#giving-faq' }}
+        secondary={{ label: 'Set Up Recurring', href: '/give#giving-faq' }}
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .stewardship-card,
+  .impact-card {
+    padding: 1.2rem;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .stewardship-card p,
+  .impact-card p {
+    color: #55647d;
+  }
+
+  .stewardship-card .btn {
+    width: fit-content;
+  }
+</style>

@@ -1,0 +1,89 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  buttonLabel?: string;
+}
+
+const {
+  title = 'Visit Details Form',
+  description = 'Form section ready for Church Center, Planning Center, or custom form integration.',
+  buttonLabel = 'Submit Request'
+} = Astro.props;
+---
+
+<section class="card form-placeholder">
+  <div class="stack">
+    <h2 class="title-md">{title}</h2>
+    <p>{description}</p>
+  </div>
+
+  <form class="grid grid-2" aria-label={title}>
+    <label class="stack-sm">
+      <span>Name</span>
+      <input class="input-shell" type="text" placeholder="Your full name" />
+    </label>
+    <label class="stack-sm">
+      <span>Email</span>
+      <input class="input-shell" type="email" placeholder="you@email.com" />
+    </label>
+    <label class="stack-sm">
+      <span>Phone</span>
+      <input class="input-shell" type="tel" placeholder="(555) 555-5555" />
+    </label>
+    <label class="stack-sm">
+      <span>Planned Service</span>
+      <select class="input-shell">
+        <option>Sunday 8:00 AM</option>
+        <option>Sunday 9:30 AM</option>
+        <option>Sunday 11:00 AM</option>
+        <option>Sunday 12:30 PM</option>
+        <option>First Wednesday 7:00 PM</option>
+      </select>
+    </label>
+    <label class="stack-sm full">
+      <span>Anything we can prepare for your family?</span>
+      <textarea class="input-shell" rows="4" placeholder="Kids ages, accessibility needs, prayer requests..."></textarea>
+    </label>
+    <button class="btn btn-primary" type="submit">{buttonLabel}</button>
+  </form>
+</section>
+
+<style>
+  .form-placeholder {
+    padding: clamp(1.2rem, 3vw, 2rem);
+    display: grid;
+    gap: 1rem;
+  }
+
+  .form-placeholder p,
+  .form-placeholder span {
+    color: #55647c;
+  }
+
+  .form-placeholder label {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .form-placeholder textarea,
+  .form-placeholder select,
+  .form-placeholder input {
+    width: 100%;
+    font: inherit;
+  }
+
+  .form-placeholder .full {
+    grid-column: 1 / -1;
+  }
+
+  .form-placeholder button {
+    width: fit-content;
+  }
+
+  @media (max-width: 700px) {
+    .form-placeholder button {
+      width: 100%;
+    }
+  }
+</style>

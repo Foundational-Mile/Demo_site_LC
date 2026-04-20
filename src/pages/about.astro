@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import CTABand from '../components/CTABand.astro';
+import CardGrid from '../components/CardGrid.astro';
+import { values, beliefs, staff } from '../data/content';
+import { media } from '../data/media';
+
+const leadPastor = staff[0];
+---
+
+<BaseLayout title="About | Limitless Church">
+  <HeroSection
+    eyebrow="Who We Are"
+    title="A Life-Giving Church In Nixa, Missouri"
+    text="Limitless Church exists to help people experience God's presence, build authentic relationships, and step into purpose."
+    image={media.heroes.about}
+    imageAlt="Church lobby with people connecting"
+    primaryCta={{ label: 'Plan Your Visit', href: '/plan-your-visit' }}
+    secondaryCta={{ label: 'Read Our Values', href: '/about-values' }}
+  />
+
+  <section class="section surface-white">
+    <div class="container split">
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="Pastor Stone Moss"
+          title="Bold Faith. Big Vision. Real Local Impact."
+          text="Pastor Stone leads with a heart to see Nixa transformed by the power of Jesus and to build a church family where people grow in faith and purpose."
+        />
+        <p class="lead">
+          Alongside his family, Stone is helping build a church culture marked by faith, family, and a clear belief that there is more ahead.
+          His teaching style is practical, biblical, and focused on real life change.
+        </p>
+        <div class="cluster">
+          <a class="btn btn-secondary" href="/staff">Meet Our Team</a>
+          <a class="btn btn-ghost" href="/messages">Watch A Message</a>
+        </div>
+      </div>
+      <div class="card lead-pastor-card">
+        <img
+          class="media-cover"
+          src={leadPastor.image}
+          alt="Portrait of Pastor Stone Moss"
+          loading="lazy"
+        />
+        <div class="stack-sm content">
+          <h3>{leadPastor.name}</h3>
+          <p class="role">{leadPastor.role}</p>
+          <p>{leadPastor.bio}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-soft">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Our Values"
+        title="How We Live And Lead"
+        text="These values shape our culture, our teams, and how we serve people every week."
+      />
+      <CardGrid columns={4}>
+        {values.slice(0, 4).map((value) => (
+          <article class="card value-card">
+            <h3>{value.title}</h3>
+            <p>{value.description}</p>
+          </article>
+        ))}
+      </CardGrid>
+      <a class="btn btn-secondary" href="/about-values">View All 8 Values</a>
+    </div>
+  </section>
+
+  <section class="section surface-white">
+    <div class="container split">
+      <article class="card statement-card">
+        <h3>Our Mission</h3>
+        <p>
+          We exist to help people experience the presence of God, build authentic relationships, and step into divine purpose.
+        </p>
+      </article>
+      <article class="card statement-card">
+        <h3>Our Vision: There Is More</h3>
+        <p>
+          We believe God has more hope, more purpose, and more life ahead for every person, every family, and our city.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section surface-soft">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="The Essentials"
+        title="Core Biblical Convictions"
+        text="These core essentials guide our doctrine, teaching, and discipleship."
+      />
+      <div class="grid grid-2">
+        {beliefs.slice(0, 4).map((belief) => (
+          <article class="card belief-card">
+            <h3>{belief.heading}</h3>
+            <p>{belief.text}</p>
+          </article>
+        ))}
+      </div>
+      <a class="btn btn-secondary" href="/about-essentials">Explore All Essentials</a>
+    </div>
+  </section>
+
+  <CTABand
+    eyebrow="Join Us This Weekend"
+    title="Come experience Limitless in person."
+    text="Whether you are exploring faith or looking for a church home, we would love to welcome you."
+    primary={{ label: 'Get Sunday Details', href: '/plan-your-visit' }}
+    secondary={{ label: 'Explore Next Steps', href: '/next-steps' }}
+  />
+</BaseLayout>
+
+<style>
+  .value-card,
+  .belief-card,
+  .statement-card,
+  .lead-pastor-card .content {
+    padding: 1.05rem;
+  }
+
+  .value-card,
+  .belief-card,
+  .statement-card {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .lead-pastor-card {
+    overflow: hidden;
+    border-top: 3px solid rgba(42, 111, 232, 0.55);
+  }
+
+  .lead-pastor-card .role {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #1d56b9;
+    font-weight: 700;
+  }
+
+  .value-card p,
+  .belief-card p,
+  .statement-card p,
+  .lead-pastor-card p {
+    color: #55647d;
+  }
+
+  .statement-card {
+    border-top: 3px solid rgba(42, 111, 232, 0.55);
+  }
+</style>

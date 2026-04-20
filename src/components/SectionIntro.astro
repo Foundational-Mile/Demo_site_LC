@@ -1,0 +1,50 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  text?: string;
+  centered?: boolean;
+}
+
+const { eyebrow, title, text, centered = false } = Astro.props;
+---
+
+<div class={`stack section-intro ${centered ? 'centered' : ''}`}>
+  {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+  <h2 class="title-lg">{title}</h2>
+  {text && <p class="lead">{text}</p>}
+</div>
+
+<style>
+  .section-intro {
+    margin-bottom: clamp(1.1rem, 2.4vw, 1.9rem);
+    max-width: 66ch;
+  }
+
+  .section-intro h2 {
+    position: relative;
+    padding-bottom: 0.52rem;
+  }
+
+  .section-intro h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 5.2rem;
+    height: 0.13rem;
+    background: var(--accent);
+  }
+
+  .centered h2::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .centered {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    justify-items: center;
+  }
+</style>

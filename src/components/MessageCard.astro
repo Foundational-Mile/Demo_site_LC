@@ -1,0 +1,72 @@
+---
+interface Props {
+  title: string;
+  speaker: string;
+  date: string;
+  series: string;
+  duration: string;
+  summary: string;
+  image: string;
+  featured?: boolean;
+}
+
+const { title, speaker, date, series, duration, summary, image, featured = false } = Astro.props;
+---
+
+<article class={`card message-card ${featured ? 'featured' : ''}`}>
+  <img src={image} alt={`${title} message thumbnail`} loading="lazy" />
+  <div class="stack-sm content">
+    <div class="cluster">
+      <span class="badge">{series}</span>
+      <span class="meta">{duration}</span>
+    </div>
+    <h3>{title}</h3>
+    <p class="meta">{speaker} • {date}</p>
+    <p>{summary}</p>
+    <a class="btn btn-ghost" href="/messages">Watch Message</a>
+  </div>
+</article>
+
+<style>
+  .message-card {
+    overflow: hidden;
+    border-top: 3px solid rgba(42, 111, 232, 0.55);
+  }
+
+  .message-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .message-card .content {
+    padding: 0.86rem;
+  }
+
+  .message-card h3 {
+    font-size: 1.45rem;
+    line-height: 1;
+  }
+
+  .message-card .meta {
+    color: #59657a;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .message-card p {
+    color: #4e5b6f;
+  }
+
+  .message-card .btn {
+    margin-top: 0.3rem;
+    width: fit-content;
+  }
+
+  .message-card.featured {
+    border-color: rgba(16, 18, 24, 0.22);
+    box-shadow: 0 18px 34px rgba(16, 18, 24, 0.15);
+    border-top-color: #2a6fe8;
+  }
+</style>

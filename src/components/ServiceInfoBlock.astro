@@ -1,0 +1,37 @@
+---
+import { churchMeta } from '../data/site';
+---
+
+<section class="service-info card">
+  <h2 class="title-md">Service Times + Location</h2>
+  <ul>
+    {churchMeta.serviceTimes.map((time) => (
+      <li>{time}</li>
+    ))}
+  </ul>
+  <p>{churchMeta.address}</p>
+  <a class="btn btn-secondary" href="/plan-your-visit">Get Directions + Plan Visit</a>
+</section>
+
+<style>
+  .service-info {
+    padding: 1.25rem;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .service-info ul {
+    display: grid;
+    gap: 0.35rem;
+    color: #344358;
+    font-weight: 600;
+  }
+
+  .service-info p {
+    color: #5a6880;
+  }
+
+  .service-info .btn {
+    width: fit-content;
+  }
+</style>

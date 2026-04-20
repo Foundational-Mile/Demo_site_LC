@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import CTABand from '../components/CTABand.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import CardGrid from '../components/CardGrid.astro';
+import TestimonialStrip from '../components/TestimonialStrip.astro';
+import { kidsAgeGroups, testimonials, visitFaqs } from '../data/content';
+import { media } from '../data/media';
+---
+
+<BaseLayout title="Limitless Kids | Limitless Church">
+  <HeroSection
+    eyebrow="Limitless Kids"
+    title="A Great Place for Kids"
+    text="Safe, fun, and age-based environments for every stage."
+    image={media.heroes.kids}
+    imageAlt="Children smiling in a bright kids ministry room"
+    primaryCta={{ label: 'Plan Your Family Visit', href: '/plan-your-visit' }}
+    secondaryCta={{ label: 'Talk With Kids Team', href: '/care' }}
+  />
+
+  <section class="section surface-white">
+    <div class="container split">
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="Parent Reassurance"
+          title="You can trust what happens in every room"
+          text="Parents deserve both peace of mind and confidence. We have clear systems in place so your child is safe, known, and cared for from check-in to pick-up."
+        />
+        <ul class="list-check">
+          <li>Secure digital check-in and matching parent tags</li>
+          <li>Background-checked volunteers and team leads</li>
+          <li>Hallway safety team and emergency response protocols</li>
+          <li>Allergy notes and special accommodations support</li>
+        </ul>
+      </div>
+      <div class="photo-frame">
+        <img
+          class="media-cover"
+          src={media.sections.kidsReassurance}
+          alt="Kids leader helping children during class activity"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-soft">
+    <div class="container stack-lg">
+      <SectionIntro
+        eyebrow="Age Groups"
+        title="Every stage has a place"
+        text="We tailor each environment for developmental stage, attention span, and spiritual growth."
+      />
+      <CardGrid columns={3}>
+        {kidsAgeGroups.map((group) => (
+          <article class="card age-card">
+            <h3>{group.stage}</h3>
+            <p class="age">{group.age}</p>
+            <p>{group.detail}</p>
+          </article>
+        ))}
+      </CardGrid>
+    </div>
+  </section>
+
+  <section class="section surface-white">
+    <div class="container split">
+      <div class="photo-grid">
+        <img
+          src={media.sections.kidsWorship}
+          alt="Kids worship environment"
+          loading="lazy"
+        />
+        <img
+          src={media.sections.kidsCheckin}
+          alt="Family interacting with volunteer at check-in"
+          loading="lazy"
+        />
+      </div>
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="What Kids Experience"
+          title="Fun, discipleship, and friendships that stick"
+          text="Kids enjoy worship, Bible teaching, small group discussion, and activities that help faith make sense in daily life."
+        />
+        <ul class="list-check">
+          <li>Age-appropriate Bible lessons with practical takeaways</li>
+          <li>Worship moments kids can participate in</li>
+          <li>Small groups for relational connection and prayer</li>
+          <li>Parent take-home prompts to keep conversations going</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <TestimonialStrip items={testimonials.slice(0, 2)} title="Why parents love Limitless Kids" />
+
+  <section class="section surface-white">
+    <div class="container split">
+      <div class="stack-lg">
+        <SectionIntro
+          eyebrow="Parent FAQ"
+          title="Questions we hear often"
+          text="If you are new, these quick answers can help you feel ready before your first visit."
+        />
+        <FAQAccordion items={visitFaqs.slice(0, 4)} />
+      </div>
+      <CTABand
+        dark={false}
+        title="Ready to visit with your family?"
+        text="Tell us which service you are attending and we will help you check in quickly when you arrive."
+        primary={{ label: 'Start Family Visit', href: '/plan-your-visit' }}
+        secondary={{ label: 'View Service Times', href: '/plan-your-visit' }}
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .age-card {
+    padding: 1.15rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .age {
+    color: #101218;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .age-card p {
+    color: #55647d;
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .photo-grid img {
+    border-radius: 1rem;
+    object-fit: cover;
+    width: 100%;
+    aspect-ratio: 5 / 3;
+  }
+</style>

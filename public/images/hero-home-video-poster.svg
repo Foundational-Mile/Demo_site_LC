@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="hero-home-video-poster">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12151d"/>
+      <stop offset="100%" stop-color="#252b37"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <circle cx="1480" cy="180" r="420" fill="#ffffff" fill-opacity="0.06"/>
+  <circle cx="260" cy="980" r="520" fill="#ffffff" fill-opacity="0.04"/>
+</svg>
