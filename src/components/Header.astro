@@ -25,13 +25,18 @@ const isLinkActive = (link: (typeof navLinks)[number]) => {
   if (isActive(link.href)) return true;
   return link.children?.some((child) => isActive(child.href)) ?? false;
 };
+
+const brandLogo = withBase('/images/logo-white.png');
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href={withBase('/')} class="brand">
-      <span>Limitless</span>
-      <small>Church</small>
+    <a href={withBase('/')} class="brand" style={`--brand-logo-url: url("${brandLogo}")`}>
+      <span class="brand-logo" aria-hidden="true"></span>
+      <span class="brand-wordmark">
+        <span>Limitless</span>
+        <small>Church</small>
+      </span>
     </a>
 
     <nav class="desktop-nav" aria-label="Main">
@@ -122,8 +127,10 @@ const isLinkActive = (link: (typeof navLinks)[number]) => {
   }
 
   .brand {
-    display: grid;
-    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    line-height: 1.02;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -131,11 +138,28 @@ const isLinkActive = (link: (typeof navLinks)[number]) => {
     color: #f3f4f7;
   }
 
-  .brand span {
+  .brand-logo {
+    width: 2.45rem;
+    height: 2.45rem;
+    border-radius: 0.2rem;
+    flex: 0 0 auto;
+    background-image: var(--brand-logo-url);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.25));
+  }
+
+  .brand-wordmark {
+    display: grid;
+    align-content: center;
+  }
+
+  .brand-wordmark span {
     font-size: 1.25rem;
   }
 
-  .brand small {
+  .brand-wordmark small {
     font-size: 0.64rem;
     text-transform: uppercase;
     letter-spacing: 0.16em;
@@ -367,6 +391,15 @@ const isLinkActive = (link: (typeof navLinks)[number]) => {
   }
 
   @media (max-width: 1080px) {
+    .brand-logo {
+      width: 2.2rem;
+      height: 2.2rem;
+    }
+
+    .brand-wordmark span {
+      font-size: 1.12rem;
+    }
+
     .desktop-nav,
     .desktop-visit {
       display: none;
