@@ -17,7 +17,7 @@ import { media } from '../data/media';
     image={media.heroes.care}
     imageAlt="Two people praying together"
     primaryCta={{ label: 'Request Prayer', href: '#care-form' }}
-    secondaryCta={{ label: 'Talk To A Pastor', href: '#care-form' }}
+    secondaryCta={{ label: 'Share A Need', href: '#care-form' }}
   />
 
   <section class="section surface-white">
@@ -26,18 +26,17 @@ import { media } from '../data/media';
         <SectionIntro
           eyebrow="Our Heart"
           title="Care is ministry, not a side program"
-          text="At Limitless, we believe real church family shows up in hard moments. Care at our church is rooted in prayer, presence, and practical help."
+          text="Life can be challenging, but you do not have to walk through it alone. Our care team is here to listen, encourage, and pray with you."
         />
         <ul class="list-check">
-          <li>Confidential prayer and pastoral support</li>
-          <li>Compassionate follow-up with clear next steps</li>
-          <li>Care pathways for grief, crisis, and life transitions</li>
+          <li>Prayer and spiritual encouragement</li>
+          <li>Support through celebrations like weddings and baptisms</li>
+          <li>Care through difficult seasons like grief and loss</li>
         </ul>
       </div>
       <article class="card calm-note">
         <p>
-          “When we were in a difficult season, our church family stepped in with prayer, meals, and encouragement we
-          will never forget.”
+          “Life can be challenging, but you do not have to walk through it alone.”
         </p>
         <strong>{testimonials[2].name}</strong>
       </article>
@@ -74,7 +73,7 @@ import { media } from '../data/media';
       </div>
       <FormPlaceholder
         title="Care + Prayer Request"
-        description="Care intake section ready for Church Center form, custom CRM intake, or secure pastoral care workflow."
+        description="Share your need and our team will follow up with prayer, encouragement, and support."
         buttonLabel="Send Prayer Request"
       />
     </div>
@@ -82,10 +81,10 @@ import { media } from '../data/media';
 
   <CTABand
     eyebrow="Need Immediate Help?"
-    title="Our team can connect you with support quickly."
+    title="We are here to help."
     text="For urgent needs, call the church office directly and our pastoral team will guide next steps."
     primary={{ label: 'Call Church Office', href: 'tel:+14175219806' }}
-    secondary={{ label: 'Email Care Team', href: 'mailto:care@limitless.church' }}
+    secondary={{ label: 'Send Prayer Request', href: '/care#care-form' }}
   />
 </BaseLayout>
 

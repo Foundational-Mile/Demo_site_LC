@@ -3,5 +3,5 @@ dist/
 .astro/
 .DS_Store
 .env
-
+content_old/
 # Local large media

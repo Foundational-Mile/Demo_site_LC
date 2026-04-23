@@ -60,8 +60,6 @@ export const footerLinks = {
   ],
   resources: [
     { label: 'Give Online', href: '/give' },
-    { label: 'Download App (Coming Soon)', href: '/next-steps' },
-    { label: 'YouTube Channel', href: '/messages' },
-    { label: 'Church Center Hub (Coming Soon)', href: '/next-steps' }
+    { label: 'YouTube Channel', href: '/messages' }
   ]
 };

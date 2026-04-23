@@ -16,7 +16,7 @@ const otherStaff = staff.filter((person) => person.team !== 'Executive');
   <HeroSection
     eyebrow="Our Team"
     title="Meet Our Team"
-    text="Get to know the pastors and leaders serving Limitless Church."
+    text="Get to know the pastors and directors serving Limitless Church."
     image={media.heroes.staff}
     imageAlt="Church leadership team in conversation"
     primaryCta={{ label: 'Call The Team', href: 'tel:+14175219806' }}
@@ -28,7 +28,7 @@ const otherStaff = staff.filter((person) => person.team !== 'Executive');
       <SectionIntro
         eyebrow="Executive Leadership"
         title="Vision and pastoral oversight"
-        text="Our executive team carries the core mission, culture, and long-term direction of Limitless Church."
+        text="Our executive leaders help carry the mission, vision, and direction of Limitless Church."
       />
       <CardGrid columns={2}>
         {executive.map((person) => (
@@ -43,7 +43,7 @@ const otherStaff = staff.filter((person) => person.team !== 'Executive');
       <SectionIntro
         eyebrow="Ministry Staff"
         title="Specialized teams serving people at every stage"
-        text="From worship to family ministry, care, and operations, each team helps people experience church with excellence and warmth."
+        text="From worship and groups to youth and operations, each team helps people connect and grow."
       />
       <CardGrid columns={4}>
         {otherStaff.map((person) => (
@@ -56,7 +56,7 @@ const otherStaff = staff.filter((person) => person.team !== 'Executive');
   <CTABand
     eyebrow="Need Help Finding The Right Contact?"
     title="Tell us what you need and we will connect you with the right person."
-    text="Contact routing section is ready for ministry directory and form integration."
+    text="Call the church office and we will help connect you with the right ministry leader."
     primary={{ label: 'Call Team', href: 'tel:+14175219806' }}
     secondary={{ label: 'Explore Care', href: '/care' }}
   />

@@ -1,20 +1,20 @@
 import { media } from './media';
 
 export const reassuranceStats = [
-  { label: 'Years in Nixa', value: '3+' },
-  { label: 'Sunday Service Times', value: '4' },
-  { label: 'First Wednesday Service', value: '7:00 PM' },
-  { label: 'Address', value: 'Northview Rd' }
+  { label: 'Sunday Services', value: '8:00, 9:30, 11:00, 12:30' },
+  { label: 'First Wednesday', value: '7:00 PM' },
+  { label: 'Location', value: '400 Northview Rd' },
+  { label: 'City', value: 'Nixa, MO' }
 ];
 
 export const values = [
   {
     title: 'Influence',
-    description: 'We do not chase popularity. We aim to reflect Jesus and make lasting kingdom impact.'
+    description: 'We do not pursue popularity; we pursue impact. This starts by reflecting Jesus in everything we do.'
   },
   {
     title: 'Generosity',
-    description: 'We give on purpose, for a purpose, and invest in building God’s kingdom.'
+    description: 'We give on purpose, for a purpose. We are called to build His Kingdom, not just consume from it.'
   },
   {
     title: 'Unity',
@@ -22,15 +22,15 @@ export const values = [
   },
   {
     title: 'Excellence',
-    description: 'Details matter. How we serve is just as important as what we do.'
+    description: 'Details matter. How we do something holds the same value as why we do something.'
   },
   {
     title: 'Honor',
-    description: 'We honor God and value people, no matter title, background, or status.'
+    description: 'We revere God and value people. This is not about status.'
   },
   {
     title: 'Faith',
-    description: 'We pray big, trust God fully, and expect Him to move in powerful ways.'
+    description: 'We have faith in God, faith in people, and faith for miracles. We pray big and believe God is moving.'
   },
   {
     title: 'Fun',
@@ -38,7 +38,7 @@ export const values = [
   },
   {
     title: 'Multiplication',
-    description: 'We are called to build and grow what God has entrusted to us, not simply maintain it.'
+    description: 'Maintaining is the fruit of the world; multiplication is the fruit of the Kingdom of God.'
   }
 ];
 
@@ -78,61 +78,61 @@ export const staff = [
     team: 'Executive'
   },
   {
-    name: 'Worship Team Lead',
+    name: 'Brian Smith',
+    role: 'Executive Pastor',
+    bio: 'Brian serves on the executive leadership team and helps lead mission and ministry operations.',
+    image: media.staff.operations,
+    team: 'Executive'
+  },
+  {
+    name: 'Meagan Cook',
+    role: 'Executive Director',
+    bio: 'Meagan helps guide church-wide ministry execution and team development.',
+    image: media.staff.kids,
+    team: 'Executive'
+  },
+  {
+    name: 'Jill Bryant',
     role: 'Worship Director',
-    bio: 'Team profile ready for final staff details and ministry bio.',
+    bio: 'Jill leads worship ministry and helps create space for people to encounter God.',
     image: media.staff.worship,
     team: 'Ministry'
   },
   {
-    name: 'Kids Team Lead',
-    role: 'Kids Director',
-    bio: 'Team profile ready for final staff details and ministry bio.',
-    image: media.staff.kids,
-    team: 'Family'
-  },
-  {
-    name: 'YTH Team Lead',
-    role: 'Youth Pastor',
-    bio: 'Team profile ready for final staff details and ministry bio.',
-    image: media.staff.youth,
-    team: 'Family'
-  },
-  {
-    name: 'Care Team Lead',
-    role: 'Care Pastor',
-    bio: 'Team profile ready for final staff details and ministry bio.',
-    image: media.staff.care,
-    team: 'Care'
-  },
-  {
-    name: 'Groups Team Lead',
-    role: 'Groups Director',
-    bio: 'Team profile ready for final staff details and ministry bio.',
+    name: 'Emily Smith',
+    role: 'Small Groups Pastor',
+    bio: 'Emily leads groups ministry and helps people build real relationships in community.',
     image: media.staff.groups,
     team: 'Discipleship'
   },
   {
-    name: 'Operations Team Lead',
+    name: 'Eli Strong',
+    role: 'YTH Pastor',
+    bio: 'Eli leads Limitless YTH and serves middle and high school students each week.',
+    image: media.staff.youth,
+    team: 'Family'
+  },
+  {
+    name: 'Dennis Acox',
     role: 'Operations Director',
-    bio: 'Team profile ready for final staff details and ministry bio.',
-    image: media.staff.operations,
+    bio: 'Dennis helps steward day-to-day operations that support weekend and midweek ministry.',
+    image: media.staff.care,
     team: 'Operations'
   }
 ];
 
 export const testimonials = [
   {
-    quote: 'From day one we felt noticed, not lost in the crowd. Our kids ask all week when church is coming back.',
-    name: 'The Harris Family'
+    quote: 'A common thing we hear from parents is that their kids are excited to come back each week.',
+    name: 'Often Shared by Families'
   },
   {
-    quote: 'The messages are honest, practical, and full of hope. Limitless helped me reconnect with God after years away.',
-    name: 'Jasmine R.'
+    quote: 'Many people tell us groups helped them build real relationships and feel less alone.',
+    name: 'Often Shared in Groups'
   },
   {
-    quote: 'When our family faced a hard season, this church showed up with prayer and real support.',
-    name: 'Michael and Tori'
+    quote: 'We often hear that care and prayer support helped people through hard seasons.',
+    name: 'Often Shared in Care'
   }
 ];
 
@@ -140,114 +140,114 @@ export const messages = [
   {
     title: 'The Problem With Potential',
     speaker: 'Pastor Stone Moss',
-    date: 'April 13, 2026',
+    date: 'Recent Sunday',
     series: 'Joseph',
-    duration: '41 min',
-    summary: 'A practical message on stewarding potential with faith, obedience, and purpose.',
+    duration: 'On YouTube',
+    summary: 'Part of the Joseph series focused on trusting God with your next step.',
     image: media.messages.problemPotential,
     featured: true
   },
   {
-    title: 'You Thought It Was Over',
+    title: 'This Wasn’t My Plan',
     speaker: 'Pastor Stone Moss',
-    date: 'March 31, 2026',
-    series: 'Easter Sunday',
-    duration: '35 min',
-    summary: 'A resurrection message about hope, renewal, and God writing a new chapter.',
+    date: 'Recent Sunday',
+    series: 'Joseph',
+    duration: 'On YouTube',
+    summary: 'A Joseph series message about trusting God when life does not go as expected.',
     image: media.messages.thoughtOver
   },
   {
-    title: 'Why You’re So Anxious',
+    title: 'You Thought It Was Over',
     speaker: 'Pastor Stone Moss',
-    date: 'March 24, 2026',
-    series: 'The Way Of Jesus',
-    duration: '39 min',
-    summary: 'A biblically grounded look at anxiety, peace, and daily dependence on God.',
+    date: 'Recent Sunday',
+    series: 'Easter Sunday',
+    duration: 'On YouTube',
+    summary: 'An Easter message about hope and new life through Jesus.',
     image: media.messages.anxious
   },
   {
-    title: 'What Actually Controls Your Life?',
+    title: 'Why You\'re So Anxious',
     speaker: 'Pastor Stone Moss',
-    date: 'March 17, 2026',
+    date: 'Recent Sunday',
     series: 'The Way Of Jesus',
-    duration: '33 min',
-    summary: 'A clear challenge to surrender control and let Jesus shape your direction.',
+    duration: 'On YouTube',
+    summary: 'From The Way Of Jesus series, this message points to peace in Christ.',
     image: media.messages.controlsLife
   },
   {
-    title: 'Choices That Shape You',
+    title: 'The Jesus You Wanted vs. The Jesus You Need',
     speaker: 'Pastor Stone Moss',
-    date: 'March 10, 2026',
+    date: 'Recent Sunday',
     series: 'The Way Of Jesus',
-    duration: '37 min',
-    summary: 'How everyday decisions shape spiritual formation and long-term purpose.',
+    duration: 'On YouTube',
+    summary: 'A message on following Jesus as He is, not as we prefer Him to be.',
     image: media.messages.choicesShape
   },
   {
-    title: 'Ambassadors',
+    title: 'All For The One',
     speaker: 'Pastor Stone Moss',
-    date: 'March 3, 2026',
+    date: 'Recent Sunday',
     series: 'The Way Of Jesus',
-    duration: '44 min',
-    summary: 'A call to represent Jesus boldly and share your story with confidence.',
+    duration: 'On YouTube',
+    summary: 'A call to live on mission and carry the heart of Jesus toward people.',
     image: media.messages.ambassadors
   }
 ];
 
 export const events = [
   {
-    title: 'Limitless Night of Worship',
-    date: 'May 3, 2026',
-    time: '6:00 PM',
-    location: 'Main Auditorium',
+    title: 'First Wednesday Service',
+    date: 'First Wednesday of each month',
+    time: '7:00 PM',
+    location: 'Limitless Church',
     category: 'Worship',
-    description: 'An extended night of worship, prayer, and ministry for all ages.',
+    description: 'Join us for a midweek service of worship and time in the Word.',
     image: media.events.worshipNight,
     featured: true
   },
   {
-    title: 'New Here Lunch',
-    date: 'April 26, 2026',
-    time: '12:45 PM',
-    location: 'Next Steps Lounge',
-    category: 'New Here',
-    description: 'Meet pastors, hear the church story, and discover simple ways to connect.',
-    image: media.events.newHereLunch
-  },
-  {
-    title: 'Child Dedication Sunday',
-    date: 'May 10, 2026',
-    time: '9:00 AM + 11:00 AM',
-    location: 'Main Auditorium',
-    category: 'Family',
-    description: 'A special moment for families to dedicate their children and receive prayer.',
-    image: media.events.childDedication
-  },
-  {
-    title: 'Serve Team Rally',
-    date: 'May 17, 2026',
-    time: '5:00 PM',
-    location: 'Main Lobby',
-    category: 'Serve',
-    description: 'Vision night for current and future volunteers with team breakouts.',
+    title: 'Baptism',
+    date: 'Upcoming Sunday',
+    time: 'During Sunday services',
+    location: 'Limitless Church',
+    category: 'Next Step',
+    description: 'Baptism is a public declaration of faith in Jesus and a next step after choosing to follow Him.',
     image: media.events.serveRally
   },
   {
-    title: 'Students Summer Kickoff',
-    date: 'June 2, 2026',
-    time: '7:00 PM',
-    location: 'Youth Room',
+    title: 'Child Dedication',
+    date: 'Upcoming Sunday',
+    time: 'During Sunday services',
+    location: 'Limitless Church',
+    category: 'Family',
+    description: 'A meaningful moment where parents dedicate their child in faith with support from church family.',
+    image: media.events.childDedication
+  },
+  {
+    title: 'New Here Party',
+    date: 'First Sunday of each month',
+    time: '5:00 PM',
+    location: 'Limitless Church',
+    category: 'Next Step',
+    description: 'Learn the mission and vision of Limitless, meet the lead team, and explore how to begin serving.',
+    image: media.events.newHereLunch
+  },
+  {
+    title: 'Limitless YTH',
+    date: 'Wednesdays',
+    time: '7:00 PM (Doors open at 6:30 PM)',
+    location: 'Limitless Church',
     category: 'Youth',
-    description: 'Games, worship, and small groups for middle and high school students.',
+    description: 'Weekly youth service for 6th-12th graders to grow in faith and build real friendships.',
     image: media.events.studentsKickoff
   },
   {
-    title: 'Prayer + Care Gathering',
-    date: 'May 7, 2026',
-    time: '6:30 PM',
-    location: 'Chapel',
-    category: 'Care',
-    description: 'A gentle evening of scripture, worship, and prayer for those carrying heavy burdens.',
+    title: 'Small Groups',
+    date: 'Ongoing',
+    time: 'Various days and times',
+    location: 'Nixa area',
+    category: 'Groups',
+    description: 'Groups are where relationships are built, faith is strengthened, and life is shared together.',
     image: media.events.prayerCare
   }
 ];
@@ -255,92 +255,92 @@ export const events = [
 export const ministries = [
   {
     title: 'Limitless Kids',
-    audience: 'Birth through 5th grade',
-    description: 'Safe, energetic, age-based environments where kids learn Jesus on their level.',
+    audience: 'Infants through 5th grade',
+    description: 'Age-specific classes with secure check-in, fun worship, and engaging Bible teaching.',
     image: media.ministries.kids
   },
   {
-    title: 'Limitless Students',
-    audience: 'Middle + High School',
-    description: 'A place for students to belong, grow in truth, and build authentic friendships.',
+    title: 'Limitless YTH',
+    audience: '6th-12th grade | Wednesdays at 7:00 PM',
+    description: 'A weekly youth gathering where students connect, worship, and grow in faith.',
     image: media.ministries.students
   },
   {
-    title: 'Groups',
-    audience: 'Adults of all stages',
-    description: 'Small groups across the week designed for connection, discipleship, and care.',
+    title: 'Small Groups',
+    audience: 'Adults in every stage of life',
+    description: 'Find a group where you can connect, grow, and be encouraged in everyday life.',
     image: media.ministries.groups
   },
   {
-    title: 'Care + Prayer',
+    title: 'Care Team',
     audience: 'Anyone needing support',
-    description: 'Pastoral prayer, counseling referrals, practical support, and recovery pathways.',
+    description: 'Prayer, encouragement, and pastoral support for both celebrations and hard seasons.',
     image: media.ministries.carePrayer
   }
 ];
 
 export const kidsAgeGroups = [
   {
-    stage: 'Nursery + Toddlers',
-    age: '6 weeks to 2 years',
-    detail: 'Loving caregivers, secure check-in, and calm rooms designed for comfort and trust.'
+    stage: 'Nursery',
+    age: 'Infants + Toddlers',
+    detail: 'Loving care in a secure check-in/check-out environment designed for your youngest kids.'
   },
   {
     stage: 'Preschool',
-    age: '3 to 5 years',
-    detail: 'Interactive Bible stories, worship movement, and hands-on activities with caring leaders.'
+    age: 'Early Childhood',
+    detail: 'Fun worship, engaging Bible stories, and activities built for early learning stages.'
   },
   {
     stage: 'Elementary',
-    age: 'Kindergarten to 5th grade',
-    detail: 'High-energy worship, relevant teaching, and small-group conversation kids can apply at home.'
+    age: 'Kindergarten through 5th grade',
+    detail: 'Age-specific teaching and small-group connection that helps kids know God and love people.'
   }
 ];
 
 export const careResources = [
   {
     title: 'Prayer Team',
-    summary: 'Share a prayer request any time. Our pastors and team pray with confidentiality and care.'
+    summary: 'Receive prayer, encouragement, and spiritual support through in-person meetings or phone calls.'
   },
   {
-    title: 'Pastoral Support',
-    summary: 'Schedule a pastoral conversation for spiritual guidance, grief support, or life transitions.'
+    title: 'Marriage Mentoring',
+    summary: 'Support for marriages through biblical guidance, practical encouragement, and prayer.'
   },
   {
-    title: 'Recovery + Freedom Groups',
-    summary: 'Find ongoing support for healing, habits, relationships, and emotional restoration.'
+    title: 'Premarital Coaches',
+    summary: 'Coaching for engaged couples preparing for a strong, Christ-centered marriage.'
   },
   {
-    title: 'Practical Care Network',
-    summary: 'Meal trains, benevolence referral pathways, and family support in moments of need.'
+    title: 'Local Care Resources',
+    summary: 'Connections to local counseling, crisis intervention, addiction recovery, and assistance resources.'
   }
 ];
 
 export const nextSteps = [
   {
-    title: 'I’m New Here',
-    description: 'Start with a Sunday visit or New Here Lunch and meet people in a no-pressure setting.',
-    cta: 'Start Here'
+    title: 'New Here Party',
+    description: 'Join us the first Sunday of every month at 5:00 PM to learn our mission and meet the team.',
+    cta: 'RSVP'
   },
   {
-    title: 'Water Baptism',
-    description: 'Take your public next step of faith and celebrate your story with the church family.',
-    cta: 'Sign Up for Baptism'
+    title: 'Plan A Visit',
+    description: 'Join us this Sunday and experience worship, practical teaching, and community in Nixa.',
+    cta: 'Plan Your Visit'
   },
   {
-    title: 'Join a Group',
-    description: 'Grow spiritually and relationally through weekly community and practical discipleship.',
+    title: 'Join A Small Group',
+    description: 'Groups are where relationships are built, faith is strengthened, and life is shared together.',
     cta: 'Browse Groups'
   },
   {
-    title: 'Join the Serve Team',
-    description: 'Use your gifts to build the house and help others encounter the love of Jesus.',
-    cta: 'Start Serving'
+    title: 'Water Baptism',
+    description: 'Take your next step by publicly declaring your faith in Jesus through baptism.',
+    cta: 'Register For Baptism'
   },
   {
-    title: 'Growth Track',
-    description: 'Learn our church heartbeat, discover your gifts, and find your ministry fit.',
-    cta: 'Join Growth Track'
+    title: 'Join A Serve Team',
+    description: 'Find out how to begin serving and helping people encounter God each week.',
+    cta: 'Start Serving'
   }
 ];
 
@@ -351,7 +351,7 @@ export const visitFaqs = [
   },
   {
     question: 'How long is a service?',
-    answer: 'Our Sunday services typically run about 70 minutes with worship, prayer, and a practical message.'
+    answer: 'You can expect passionate worship and a practical, Bible-based message for real life.'
   },
   {
     question: 'Where do I park?',
@@ -363,55 +363,59 @@ export const visitFaqs = [
   },
   {
     question: 'Can I watch online first?',
-    answer: 'Absolutely. You can stream recent messages anytime to get a feel for the teaching and culture.'
+    answer: 'Yes. You can watch recent messages on YouTube to get a feel for our teaching.'
   }
 ];
 
 export const giveFaqs = [
   {
-    question: 'How can I give?',
-    answer: 'You can give securely online, through Church Center, or in person during weekend services.'
+    question: 'Are donations tax exempt?',
+    answer: 'Yes. Limitless Church has official non-profit status, and donations are tax deductible.'
   },
   {
-    question: 'Is online giving secure?',
-    answer: 'Yes. We use secure payment platforms with modern encryption and clear stewardship oversight.'
+    question: 'Will I receive a giving statement?',
+    answer: 'Yes. Donors receive an annual giving statement with total contributions.'
   },
   {
-    question: 'Where does the money go?',
-    answer: 'Giving fuels weekly ministry, kids and student discipleship, local outreach, and global mission partners.'
+    question: 'What will my giving be used for?',
+    answer: 'Giving supports the mission of Limitless Church and helps fund ministry, outreach, and discipleship.'
+  },
+  {
+    question: 'How much can I give?',
+    answer: 'You can give any amount, whether it is a tithe, offering, or one-time gift.'
   },
   {
     question: 'Can I set up recurring giving?',
-    answer: 'Yes. Recurring giving can be set weekly or monthly and edited anytime through your giving profile.'
+    answer: 'Yes. Recurring giving is available through the online giving flow.'
   }
 ];
 
 export const careFaqs = [
   {
-    question: 'Is my situation confidential?',
-    answer: 'Yes. Care conversations and prayer requests are handled with privacy, sensitivity, and pastoral discretion.'
+    question: 'What kind of support does the care team offer?',
+    answer: 'Our care team provides prayer, encouragement, and spiritual guidance for many seasons of life.'
   },
   {
-    question: 'How quickly will someone respond?',
-    answer: 'Most requests receive a first response within 24 to 48 hours, and urgent needs are prioritized quickly.'
+    question: 'Do you offer marriage support?',
+    answer: 'Yes. Marriage mentoring and premarital coaching are available through the care ministry.'
   },
   {
-    question: 'Do you offer professional counseling?',
-    answer: 'Our team provides pastoral care and can also connect you with trusted local Christian counselors.'
+    question: 'Do you share local counseling or crisis resources?',
+    answer: 'Yes. We can connect you with local counseling, crisis intervention, recovery, and assistance resources.'
   }
 ];
 
 export const impactHighlights = [
   {
-    title: 'City Outreach',
-    text: 'Monthly serve projects and local partnerships meeting practical needs across Nixa.'
+    title: 'Life-Changing Ministry',
+    text: 'Every gift supports weekend ministry and discipleship for people in every stage of life.'
   },
   {
-    title: 'Family Ministry',
-    text: 'Consistent investment into children, students, and parents through discipleship and support.'
+    title: 'Community Outreach',
+    text: 'Generosity helps local outreach efforts that serve practical needs in our community.'
   },
   {
-    title: 'Global Mission',
-    text: 'Strategic partnerships supporting church planting, relief work, and leadership development.'
+    title: 'Kingdom Impact',
+    text: 'Giving helps advance the mission to help people encounter God, love people, and find purpose.'
   }
 ];

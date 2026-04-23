@@ -9,14 +9,14 @@ import { events } from '../data/content';
 
 const featured = events.find((event) => event.featured) ?? events[0];
 const upcoming = events.filter((event) => event.title !== featured.title);
-const categories = ['All', 'Worship', 'Family', 'Youth', 'Serve', 'Care'];
+const categories = ['All', 'Worship', 'Next Step', 'Family', 'Youth', 'Groups'];
 ---
 
 <BaseLayout title="Events | Limitless Church">
   <HeroSection
     eyebrow="Events"
     title="See What’s Coming Up"
-    text="Find upcoming events and plan your next step to connect."
+    text="Find upcoming gatherings like First Wednesday, baptism, and New Here Party."
     centered={true}
     textured={true}
     primaryCta={{ label: 'See Upcoming Events', href: '#upcoming' }}
@@ -57,9 +57,9 @@ const categories = ['All', 'Worship', 'Family', 'Youth', 'Serve', 'Care'];
   <CTABand
     eyebrow="Stay In The Loop"
     title="Never miss an important date"
-    text="Event calendar section ready for Church Center sync and app integration."
+    text="Check back often for new event details and next-step opportunities for your family."
     primary={{ label: 'Open Event Calendar', href: '#upcoming' }}
-    secondary={{ label: 'Download Church App', href: '/next-steps' }}
+    secondary={{ label: 'Plan A Visit', href: '/plan-your-visit' }}
   />
 </BaseLayout>
 

@@ -10,7 +10,7 @@ import { media } from '../data/media';
 
 const featured = messages.find((message) => message.featured) ?? messages[0];
 const recents = messages.filter((message) => message.title !== featured.title);
-const filters = ['All', 'Latest Series', 'Relationships', 'Faith', 'Family', 'Prayer'];
+const filters = ['All', 'Joseph', 'The Way Of Jesus', 'Easter Sunday', 'Featured'];
 ---
 
 <BaseLayout title="Messages | Limitless Church">
@@ -40,7 +40,7 @@ const filters = ['All', 'Latest Series', 'Relationships', 'Faith', 'Family', 'Pr
       <SectionIntro
         eyebrow="Browse"
         title="Recent messages"
-        text="Find what you need quickly with series and topic filters."
+        text="Access recent sermons here and on YouTube."
       />
       <div class="cluster filter-row" aria-label="Filter messages preview">
         {filters.map((filter, index) => (
@@ -61,12 +61,12 @@ const filters = ['All', 'Latest Series', 'Relationships', 'Faith', 'Family', 'Pr
         <SectionIntro
           eyebrow="Teaching Heart"
           title="Truth with clarity. Grace with conviction."
-          text="Our teaching is rooted in scripture and designed to help people walk with Jesus in real life, not just on Sundays."
+          text="Messages from Pastor Stone Moss are designed to challenge, encourage, and equip people in real life."
         />
         <ul class="list-check">
-          <li>Verse-by-verse and topical teaching rhythms</li>
-          <li>Family, relationships, faith, and spiritual growth topics</li>
-          <li>Clear next steps at the end of every message</li>
+          <li>Passionate, faith-filled Bible teaching</li>
+          <li>Practical messages for everyday discipleship</li>
+          <li>Full recent sermon archive available on YouTube</li>
         </ul>
       </div>
       <div class="photo-frame">
@@ -83,7 +83,7 @@ const filters = ['All', 'Latest Series', 'Relationships', 'Faith', 'Family', 'Pr
   <CTABand
     eyebrow="Watch + Share"
     title="Catch up this week and invite someone to watch with you."
-    text="Full message archive and clips can connect people to hope all week long."
+    text="Watch a recent message and share it with someone who needs encouragement this week."
     primary={{ label: 'Browse Message Archive', href: '#browse-messages' }}
     secondary={{ label: 'Plan An In-Person Visit', href: '/plan-your-visit' }}
   />
