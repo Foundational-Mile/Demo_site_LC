@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { withoutBase } from '../utils/paths';
 import '../styles/global.css';
 
 interface Props {
@@ -15,7 +16,7 @@ const {
   noindex = false
 } = Astro.props;
 const pathname = Astro.url.pathname;
-const enableBladePreview = pathname === '/';
+const enableBladePreview = withoutBase(pathname) === '/';
 ---
 
 <!doctype html>
