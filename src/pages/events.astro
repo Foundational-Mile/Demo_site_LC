@@ -13,54 +13,60 @@ const categories = ['All', 'Worship', 'Next Step', 'Family', 'Youth', 'Groups'];
 ---
 
 <BaseLayout title="Events | Limitless Church">
-  <HeroSection
-    eyebrow="Events"
-    title="See What’s Coming Up"
-    text="Find upcoming gatherings like First Wednesday, baptism, and New Here Party."
-    centered={true}
-    textured={true}
-    primaryCta={{ label: 'See Upcoming Events', href: '#upcoming' }}
-    secondaryCta={{ label: 'See Visit Info', href: '/plan-your-visit' }}
-  />
+  <div class="page-field">
+    <HeroSection
+      eyebrow="Events"
+      title="See What’s Coming Up"
+      text="Find upcoming gatherings like First Wednesday, baptism, and New Here Party."
+      centered={true}
+      textured={true}
+      primaryCta={{ label: 'See Upcoming Events', href: '#upcoming' }}
+      secondaryCta={{ label: 'See Visit Info', href: '/plan-your-visit' }}
+    />
 
-  <section class="section surface-white">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Featured Event"
-        title={featured.title}
-        text={featured.description}
-      />
-      <EventCard {...featured} featured={true} />
-    </div>
-  </section>
-
-  <section id="upcoming" class="section surface-soft">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Upcoming"
-        title="Plan ahead and bring someone with you"
-        text="Browse by event type and lock in your next date."
-      />
-      <div class="cluster filter-row" aria-label="Event category filters preview">
-        {categories.map((category, index) => (
-          <button class={`filter-pill ${index === 0 ? 'active' : ''}`} type="button">{category}</button>
-        ))}
+    <section class="section page-section">
+      <div class="container">
+        <div class="page-module page-module-white page-module-stack">
+          <SectionIntro
+            eyebrow="Featured Event"
+            title={featured.title}
+            text={featured.description}
+          />
+          <EventCard {...featured} featured={true} />
+        </div>
       </div>
-      <CardGrid columns={3}>
-        {upcoming.map((event) => (
-          <EventCard {...event} />
-        ))}
-      </CardGrid>
-    </div>
-  </section>
+    </section>
 
-  <CTABand
-    eyebrow="Stay In The Loop"
-    title="Never miss an important date"
-    text="Check back often for new event details and next-step opportunities for your family."
-    primary={{ label: 'Open Event Calendar', href: '#upcoming' }}
-    secondary={{ label: 'Plan A Visit', href: '/plan-your-visit' }}
-  />
+    <section id="upcoming" class="section page-section">
+      <div class="container">
+        <div class="page-module page-module-soft page-module-stack">
+          <SectionIntro
+            eyebrow="Upcoming"
+            title="Plan ahead and bring someone with you"
+            text="Browse by event type and lock in your next date."
+          />
+          <div class="cluster filter-row" aria-label="Event category filters preview">
+            {categories.map((category, index) => (
+              <button class={`filter-pill ${index === 0 ? 'active' : ''}`} type="button">{category}</button>
+            ))}
+          </div>
+          <CardGrid columns={3}>
+            {upcoming.map((event) => (
+              <EventCard {...event} />
+            ))}
+          </CardGrid>
+        </div>
+      </div>
+    </section>
+
+    <CTABand
+      eyebrow="Stay In The Loop"
+      title="Never miss an important date"
+      text="Check back often for new event details and next-step opportunities for your family."
+      primary={{ label: 'Open Event Calendar', href: '#upcoming' }}
+      secondary={{ label: 'Plan A Visit', href: '/plan-your-visit' }}
+    />
+  </div>
 </BaseLayout>
 
 <style>

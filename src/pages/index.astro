@@ -20,6 +20,26 @@ import {
 
 const featuredMessage = messages.find((message) => message.featured) ?? messages[0];
 const featuredEvent = events.find((event) => event.featured) ?? events[0];
+const expectItems = [
+  {
+    title: 'Friendly Arrival',
+    description: 'Clear signage, guest parking, and greeters who help you get where you need to go.',
+    image: '/images/placeholder-friendly-arrival.svg',
+    imageAlt: 'Placeholder image for Friendly Arrival'
+  },
+  {
+    title: 'Bold Worship + Practical Message',
+    description: 'A focused service with worship, prayer, and biblical teaching you can apply this week.',
+    image: '/images/placeholder-bold-worship.svg',
+    imageAlt: 'Placeholder image for Bold Worship and Practical Message'
+  },
+  {
+    title: 'Family-Friendly Experience',
+    description: 'Safe check-in, age-based kids rooms, and a team that loves serving families well.',
+    image: '/images/placeholder-family-friendly.svg',
+    imageAlt: 'Placeholder image for Family-Friendly Experience'
+  }
+] as const;
 
 // Home hero toggle:
 // - 'video' uses /public/videos/hero-home.mp4 with pillar words
@@ -29,157 +49,322 @@ const homeHeroImage = '/images/hero-home-banner.png';
 ---
 
 <BaseLayout title="Limitless Church | Home">
-  <FullSpanVideoHero
-    leftPillars={homeHeroMode === 'video' ? ['Encounter God,', 'Love People,', 'Find Purpose.'] : []}
-    poster={homeHeroMode === 'video' ? media.heroes.home : homeHeroImage}
-    videoAlt="Limitless Church home hero media"
-    staticOnly={homeHeroMode === 'image'}
-    serviceSummary="Sundays: 8:00, 9:30, 11:00, 12:30 PM"
-    location={churchMeta.address}
-  />
-
-  <section class="section surface-white">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="New Here"
-        title="What to expect this Sunday"
-        text="From the parking lot to the kids hallway, our team is ready to help you feel welcomed, informed, and settled in before service starts."
-      />
-      <div class="grid grid-3">
-        <article class="card expect-card">
-          <h3>Friendly Arrival</h3>
-          <p>Clear signage, guest parking, and greeters who help you get where you need to go.</p>
-        </article>
-        <article class="card expect-card">
-          <h3>Bold Worship + Practical Message</h3>
-          <p>A focused service with worship, prayer, and biblical teaching you can apply this week.</p>
-        </article>
-        <article class="card expect-card">
-          <h3>Family-Friendly Experience</h3>
-          <p>Safe check-in, age-based kids rooms, and a team that loves serving families well.</p>
-        </article>
+  <div class="home-page">
+    <div class="section home-hero-wrap">
+      <div class="container">
+        <FullSpanVideoHero
+          contained={true}
+          text="From the parking lot to the kids hallway, our team is ready to help you feel welcomed, informed, and settled in before service starts."
+          leftPillars={homeHeroMode === 'video' ? ['Encounter God,', 'Love People,', 'Find Purpose.'] : []}
+          poster={homeHeroMode === 'video' ? media.heroes.home : homeHeroImage}
+          videoAlt="Limitless Church home hero media"
+          staticOnly={homeHeroMode === 'image'}
+          primaryCta={{ label: 'Plan Your Visit', href: '/plan-your-visit' }}
+          serviceSummary="Sundays: 8:00, 9:30, 11:00, 12:30 PM"
+          location={churchMeta.address}
+        />
       </div>
-      <VisitPlanningBlock compact={true} />
     </div>
-  </section>
 
-  <SplitSection
-    eyebrow="Limitless Kids"
-    title="Parents can breathe. Kids can thrive."
-    text="We know visiting with kids can feel overwhelming. At Limitless Kids, children are seen, known, and engaged in fun, faith-filled environments."
-    points={[
-      'Simple first-time family check-in process',
-      'Background-checked leaders in every room',
-      'Age-based worship, Bible teaching, and activities',
-      'Parent support team available every Sunday'
-    ]}
-    image={media.sections.homeKids}
-    imageAlt="Children in a bright classroom environment"
-    cta={{ label: 'Explore Kids Ministry', href: '/kids' }}
-  />
-
-  <section class="section surface-soft">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Messages"
-        title="Relevant messages for real life"
-        text="Catch up on the latest message, share with a friend, or explore full series on YouTube."
-      />
-      <CardGrid columns={3}>
-        <MessageCard {...featuredMessage} featured={true} />
-        {messages
-          .filter((message) => message.title !== featuredMessage.title)
-          .slice(0, 2)
-          .map((message) => (
-            <MessageCard {...message} />
-          ))}
-      </CardGrid>
-      <a href={withBase('/messages')} class="btn btn-secondary">Browse All Messages</a>
-    </div>
-  </section>
-
-  <section class="section surface-white">
-    <div class="container split">
-      <div class="stack-lg">
+    <section class="section home-section home-open-section">
+      <div class="container stack-lg">
         <SectionIntro
-          eyebrow="About Limitless"
-          title="A life-giving church in Nixa, Missouri."
-          text="Limitless Church exists to help people encounter God, love people, and find purpose."
+          eyebrow="New Here"
+          title="What to expect this Sunday"
+          text="From the parking lot to the kids hallway, our team is ready to help you feel welcomed, informed, and settled in before service starts."
         />
-        <ul class="list-check">
-          <li>Powerful worship and relevant, practical messages</li>
-          <li>A welcoming church family where people are known</li>
-          <li>Clear next steps for groups, serving, and growth</li>
-        </ul>
-        <a class="btn btn-ghost" href={withBase('/about')}>Learn More About Our Church</a>
+        <div class="grid grid-3 home-feature-strip">
+          {expectItems.map((item) => (
+            <article class="expect-card feature-note">
+              <img src={withBase(item.image)} alt={item.imageAlt} class="feature-note-media" loading="lazy" />
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
+          ))}
+        </div>
+        <VisitPlanningBlock compact={true} />
       </div>
-      <div class="card pastor-card">
-        <img
-          src={staff[0].image}
-          alt="Portrait of lead pastor"
-          class="media-cover"
-          loading="lazy"
+    </section>
+
+    <SplitSection
+      framed={true}
+      tone="soft"
+      eyebrow="Limitless Kids"
+      title="Parents can breathe. Kids can thrive."
+      text="We know visiting with kids can feel overwhelming. At Limitless Kids, children are seen, known, and engaged in fun, faith-filled environments."
+      points={[
+        'Simple first-time family check-in process',
+        'Background-checked leaders in every room',
+        'Age-based worship, Bible teaching, and activities',
+        'Parent support team available every Sunday'
+      ]}
+      image={media.sections.homeKids}
+      imageAlt="Children in a bright classroom environment"
+      cta={{ label: 'Explore Kids Ministry', href: '/kids' }}
+    />
+
+    <section class="section home-section home-framed-section">
+      <div class="container home-module home-module-ink stack-lg">
+        <SectionIntro
+          eyebrow="Messages"
+          title="Relevant messages for real life"
+          text="Catch up on the latest message, share with a friend, or explore full series on YouTube."
         />
-        <div class="stack-sm content">
-          <h3>Led by Pastor Stone Moss</h3>
-          <p>
-            Pastor Stone leads with bold faith and big vision, with a heart to see Nixa transformed by the power of Jesus.
-          </p>
-          <a class="btn btn-secondary" href={withBase('/staff')}>Meet Our Team</a>
+        <CardGrid columns={3}>
+          <MessageCard {...featuredMessage} featured={true} />
+          {messages
+            .filter((message) => message.title !== featuredMessage.title)
+            .slice(0, 2)
+            .map((message) => (
+              <MessageCard {...message} />
+            ))}
+        </CardGrid>
+        <div class="home-module-footer">
+          <a href={withBase('/messages')} class="btn btn-secondary">Browse All Messages</a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section surface-white">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Next Steps"
-        title="Your next step is clear"
-        text="Start with New Here Party, baptism, groups, or serving and keep moving forward in faith."
-      />
-      <div class="grid grid-3">
-        {nextSteps.slice(0, 3).map((step) => (
-          <article class="card simple-card">
-            <h3>{step.title}</h3>
-            <p>{step.description}</p>
-            <a href={withBase('/next-steps')} class="btn btn-ghost">{step.cta}</a>
-          </article>
-        ))}
+    <section class="section home-section home-open-section">
+      <div class="container split home-about-split">
+        <div class="stack-lg">
+          <SectionIntro
+            eyebrow="About Limitless"
+            title="A life-giving church in Nixa, Missouri."
+            text="Limitless Church exists to help people encounter God, love people, and find purpose."
+          />
+          <ul class="list-check">
+            <li>Powerful worship and relevant, practical messages</li>
+            <li>A welcoming church family where people are known</li>
+            <li>Clear next steps for groups, serving, and growth</li>
+          </ul>
+          <a class="btn btn-ghost" href={withBase('/about')}>Learn More About Our Church</a>
+        </div>
+        <div class="card pastor-card pastor-card-contrast">
+          <img
+            src={staff[0].image}
+            alt="Portrait of lead pastor"
+            class="media-cover"
+            loading="lazy"
+          />
+          <div class="stack-sm content">
+            <h3>Led by Pastor Stone Moss</h3>
+            <p>
+              Pastor Stone leads with bold faith and big vision, with a heart to see Nixa transformed by the power of Jesus.
+            </p>
+            <a class="btn btn-secondary" href={withBase('/staff')}>Meet Our Team</a>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section surface-white">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Upcoming"
-        title="There is always something happening"
-        text="From First Wednesday to baptisms, child dedications, and groups, there are clear ways to connect."
-      />
-      <CardGrid columns={3}>
-        <EventCard {...featuredEvent} featured={true} />
-        {events
-          .filter((event) => event.title !== featuredEvent.title)
-          .slice(0, 2)
-          .map((event) => (
-            <EventCard {...event} />
+    <section class="section home-section home-open-section">
+      <div class="container stack-lg">
+        <SectionIntro
+          eyebrow="Next Steps"
+          title="Your next step is clear"
+          text="Start with New Here Party, baptism, groups, or serving and keep moving forward in faith."
+        />
+        <div class="grid grid-3 home-card-cluster">
+          {nextSteps.slice(0, 3).map((step) => (
+            <article class="card simple-card">
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+              <a href={withBase('/next-steps')} class="btn btn-ghost">{step.cta}</a>
+            </article>
           ))}
-      </CardGrid>
-      <a href={withBase('/events')} class="btn btn-secondary">View All Events</a>
-    </div>
-  </section>
+        </div>
+      </div>
+    </section>
 
-  <CTABand
-    eyebrow="Ready For Sunday?"
-    title="Start your Sunday with confidence."
-    text="We will help with parking, kids check-in, and anything else you need to feel ready before you arrive."
-    primary={{ label: 'Get Sunday Details', href: '/plan-your-visit' }}
-    secondary={{ label: 'What About Kids?', href: '/kids' }}
-  />
+    <section class="section home-section home-framed-section">
+      <div class="container home-module home-module-ink stack-lg">
+        <SectionIntro
+          eyebrow="Upcoming"
+          title="There is always something happening"
+          text="From First Wednesday to baptisms, child dedications, and groups, there are clear ways to connect."
+        />
+        <CardGrid columns={3}>
+          <EventCard {...featuredEvent} featured={true} />
+          {events
+            .filter((event) => event.title !== featuredEvent.title)
+            .slice(0, 2)
+            .map((event) => (
+              <EventCard {...event} />
+            ))}
+        </CardGrid>
+        <div class="home-module-footer">
+          <a href={withBase('/events')} class="btn btn-secondary">View All Events</a>
+        </div>
+      </div>
+    </section>
+
+    <CTABand
+      eyebrow="Ready For Sunday?"
+      title="Start your Sunday with confidence."
+      text="We will help with parking, kids check-in, and anything else you need to feel ready before you arrive."
+      primary={{ label: 'Get Sunday Details', href: '/plan-your-visit' }}
+      secondary={{ label: 'What About Kids?', href: '/kids' }}
+    />
+  </div>
 </BaseLayout>
 
 <style>
+  .home-page {
+    background:
+      linear-gradient(180deg, #f3f4f6 0%, #eef1f5 38%, #f7f8fa 100%);
+  }
+
+  .home-hero-wrap {
+    padding-top: clamp(1rem, 2.5vw, 1.8rem);
+    padding-bottom: clamp(1.2rem, 2.8vw, 2rem);
+  }
+
+  .home-section {
+    padding-top: clamp(1.35rem, 3vw, 2.35rem);
+    padding-bottom: clamp(1.35rem, 3vw, 2.35rem);
+  }
+
+  .home-open-section {
+    padding-top: clamp(1.6rem, 3.8vw, 2.8rem);
+    padding-bottom: clamp(1.6rem, 3.8vw, 2.8rem);
+  }
+
+  .home-about-split {
+    align-items: center;
+  }
+
+  .home-module {
+    padding: clamp(1.2rem, 3vw, 2rem);
+    border-radius: 1rem;
+    border: 1px solid rgba(16, 18, 24, 0.1);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .home-module-white {
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .home-module-soft {
+    background: linear-gradient(180deg, #f7f8fa 0%, #edf1f5 100%);
+  }
+
+  .home-module-ink {
+    background:
+      radial-gradient(circle at top right, rgba(93, 143, 242, 0.22), transparent 34%),
+      linear-gradient(180deg, #171b22 0%, #0f1319 100%);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 22px 44px rgba(8, 11, 17, 0.18);
+  }
+
+  .home-module-ink :global(.title-lg),
+  .home-module-ink :global(.title-md),
+  .home-module-ink :global(h2),
+  .home-module-ink :global(h3),
+  .home-module-ink :global(.eyebrow),
+  .home-module-ink :global(.lead),
+  .home-module-ink :global(p),
+  .home-module-ink :global(li) {
+    color: var(--text);
+  }
+
+  .home-module-ink :global(.eyebrow::after) {
+    background: #5d8ff2;
+  }
+
+  .home-module-ink :global(.card) {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: none;
+  }
+
+  .home-module-ink :global(.card:hover) {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+  }
+
+  .home-module-ink :global(.expect-card p),
+  .home-module-ink :global(.simple-card p),
+  .home-module-ink :global(.message-card p),
+  .home-module-ink :global(.message-card .meta),
+  .home-module-ink :global(.event-card p),
+  .home-module-ink :global(.event-card .meta) {
+    color: var(--text-muted);
+  }
+
+  .home-module-ink :global(.badge) {
+    background: rgba(93, 143, 242, 0.18);
+    color: #dbe8ff;
+  }
+
+  .home-module-ink :global(.btn-secondary),
+  .home-module-ink :global(.btn-ghost) {
+    color: var(--text);
+    border-color: rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .home-module-ink :global(.btn-secondary:hover),
+  .home-module-ink :global(.btn-secondary:focus-visible),
+  .home-module-ink :global(.btn-ghost:hover),
+  .home-module-ink :global(.btn-ghost:focus-visible) {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.34);
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .home-card-cluster {
+    gap: 1rem;
+  }
+
+  .home-feature-strip {
+    gap: 1rem;
+  }
+
+  .feature-note {
+    padding: 0.1rem 0.2rem 0.25rem 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .feature-note-media {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 0.95rem;
+    border: 1px solid rgba(16, 18, 24, 0.08);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 0.15rem;
+  }
+
+  .feature-note h3 {
+    font-size: 1.34rem;
+    line-height: 1;
+    position: relative;
+    padding-top: 0.9rem;
+  }
+
+  .feature-note h3::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3.1rem;
+    height: 0.2rem;
+    border-radius: 999px;
+    background: rgba(42, 111, 232, 0.62);
+  }
+
+  .feature-note p {
+    color: #4f5d73;
+  }
+
+  .home-module-footer {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 0.2rem;
+  }
+
   .expect-card,
   .simple-card,
   .pastor-card .content {
@@ -211,5 +396,68 @@ const homeHeroImage = '/images/hero-home-banner.png';
 
   .pastor-card {
     overflow: hidden;
+  }
+
+  .pastor-card-contrast {
+    background:
+      linear-gradient(180deg, #1a1f27 0%, #12171e 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .pastor-card-contrast h3 {
+    color: var(--text);
+  }
+
+  .pastor-card-contrast p {
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 980px) {
+    .home-module {
+      padding: 1.15rem;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .home-hero-wrap {
+      padding-top: 1rem;
+      padding-bottom: 1.2rem;
+    }
+
+    .home-section {
+      padding-top: 1.15rem;
+      padding-bottom: 1.15rem;
+    }
+
+    .home-open-section {
+      padding-top: 1.4rem;
+      padding-bottom: 1.4rem;
+    }
+
+    .home-hero-wrap .container,
+    .home-framed-section .container {
+      width: min(var(--max-width), calc(100% - 1.9rem));
+    }
+
+    .home-module {
+      padding: 1rem;
+      border-radius: 0.9rem;
+    }
+
+    .home-feature-strip {
+      gap: 1.1rem;
+    }
+
+    .feature-note {
+      padding-right: 0;
+    }
+
+    .feature-note-media {
+      border-radius: 0.8rem;
+    }
+
+    .home-module-footer {
+      display: block;
+    }
   }
 </style>

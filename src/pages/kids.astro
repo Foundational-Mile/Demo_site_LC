@@ -11,112 +11,123 @@ import { media } from '../data/media';
 ---
 
 <BaseLayout title="Limitless Kids | Limitless Church">
-  <HeroSection
-    eyebrow="Limitless Kids"
-    title="A Great Place for Kids"
-    text="From infants through 5th grade, kids are seen, known, and engaged in faith-filled environments."
-    image={media.heroes.kids}
-    imageAlt="Children smiling in a bright kids ministry room"
-    primaryCta={{ label: 'Plan Your Family Visit', href: '/plan-your-visit' }}
-    secondaryCta={{ label: 'Talk With Kids Team', href: '/care' }}
-  />
+  <div class="page-field">
+    <HeroSection
+      eyebrow="Limitless Kids"
+      title="A Great Place for Kids"
+      text="From infants through 5th grade, kids are seen, known, and engaged in faith-filled environments."
+      image={media.heroes.kids}
+      imageAlt="Children smiling in a bright kids ministry room"
+      primaryCta={{ label: 'Plan Your Family Visit', href: '/plan-your-visit' }}
+      secondaryCta={{ label: 'Talk With Kids Team', href: '/care' }}
+    />
 
-  <section class="section surface-white">
-    <div class="container split">
-      <div class="stack-lg">
-        <SectionIntro
-          eyebrow="Parent Reassurance"
-          title="You can trust what happens in every room"
-          text="From check-in to pick-up, our team works to make every family feel safe, welcomed, and supported."
-        />
-        <ul class="list-check">
-          <li>Safe and secure check-in/check-out process</li>
-          <li>Age-specific classes for infants through 5th grade</li>
-          <li>Leaders who are trained and background-checked</li>
-          <li>Friendly volunteers from the parking lot to the classroom</li>
-        </ul>
+    <section class="section page-section">
+      <div class="container">
+        <div class="split page-module page-module-white page-module-split">
+          <div class="stack-lg">
+            <SectionIntro
+              eyebrow="Parent Reassurance"
+              title="You can trust what happens in every room"
+              text="From check-in to pick-up, our team works to make every family feel safe, welcomed, and supported."
+            />
+            <ul class="list-check">
+              <li>Safe and secure check-in/check-out process</li>
+              <li>Age-specific classes for infants through 5th grade</li>
+              <li>Leaders who are trained and background-checked</li>
+              <li>Friendly volunteers from the parking lot to the classroom</li>
+            </ul>
+          </div>
+          <div class="photo-frame">
+            <img
+              class="media-cover"
+              src={media.sections.kidsReassurance}
+              alt="Kids leader helping children during class activity"
+              loading="lazy"
+            />
+          </div>
+        </div>
       </div>
-      <div class="photo-frame">
-        <img
-          class="media-cover"
-          src={media.sections.kidsReassurance}
-          alt="Kids leader helping children during class activity"
-          loading="lazy"
-        />
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section surface-soft">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Age Groups"
-        title="Every stage has a place"
-        text="Each room is built for age-specific learning, connection, and fun."
-      />
-      <CardGrid columns={3}>
-        {kidsAgeGroups.map((group) => (
-          <article class="card age-card">
-            <h3>{group.stage}</h3>
-            <p class="age">{group.age}</p>
-            <p>{group.detail}</p>
-          </article>
-        ))}
-      </CardGrid>
-    </div>
-  </section>
-
-  <section class="section surface-white">
-    <div class="container split">
-      <div class="photo-grid">
-        <img
-          src={media.sections.kidsWorship}
-          alt="Kids worship environment"
-          loading="lazy"
-        />
-        <img
-          src={media.sections.kidsCheckin}
-          alt="Family interacting with volunteer at check-in"
-          loading="lazy"
-        />
+    <section class="section page-section">
+      <div class="container">
+        <div class="page-module page-module-soft page-module-stack">
+          <SectionIntro
+            eyebrow="Age Groups"
+            title="Every stage has a place"
+            text="Each room is built for age-specific learning, connection, and fun."
+          />
+          <CardGrid columns={3}>
+            {kidsAgeGroups.map((group) => (
+              <article class="card age-card">
+                <h3>{group.stage}</h3>
+                <p class="age">{group.age}</p>
+                <p>{group.detail}</p>
+              </article>
+            ))}
+          </CardGrid>
+        </div>
       </div>
-      <div class="stack-lg">
-        <SectionIntro
-          eyebrow="What Kids Experience"
-          title="Fun, discipleship, and friendships that stick"
-          text="Kids experience worship, Bible teaching, and engaging activities designed just for them."
-        />
-        <ul class="list-check">
-          <li>Fun worship and engaging Bible stories</li>
-          <li>Games, crafts, and age-appropriate activities</li>
-          <li>Real friendships with kids in their stage of life</li>
-          <li>A team that partners with parents every week</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <TestimonialStrip items={testimonials.slice(0, 2)} title="Why parents love Limitless Kids" />
-
-  <section class="section surface-white">
-    <div class="container split">
-      <div class="stack-lg">
-        <SectionIntro
-          eyebrow="Parent FAQ"
-          title="Questions we hear often"
-          text="If you are new, these quick answers can help you feel ready before your first visit."
-        />
-        <FAQAccordion items={visitFaqs.slice(0, 4)} />
+    <section class="section page-section">
+      <div class="container">
+        <div class="split page-module page-module-white page-module-split">
+          <div class="photo-grid">
+            <img
+              src={media.sections.kidsWorship}
+              alt="Kids worship environment"
+              loading="lazy"
+            />
+            <img
+              src={media.sections.kidsCheckin}
+              alt="Family interacting with volunteer at check-in"
+              loading="lazy"
+            />
+          </div>
+          <div class="stack-lg">
+            <SectionIntro
+              eyebrow="What Kids Experience"
+              title="Fun, discipleship, and friendships that stick"
+              text="Kids experience worship, Bible teaching, and engaging activities designed just for them."
+            />
+            <ul class="list-check">
+              <li>Fun worship and engaging Bible stories</li>
+              <li>Games, crafts, and age-appropriate activities</li>
+              <li>Real friendships with kids in their stage of life</li>
+              <li>A team that partners with parents every week</li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <CTABand
-        dark={false}
-        title="Ready to visit with your family?"
-        text="Tell us which service you are attending and we will help you check in quickly when you arrive."
-        primary={{ label: 'Start Family Visit', href: '/plan-your-visit' }}
-        secondary={{ label: 'View Service Times', href: '/plan-your-visit' }}
-      />
-    </div>
-  </section>
+    </section>
+
+    <TestimonialStrip items={testimonials.slice(0, 2)} title="Why parents love Limitless Kids" />
+
+    <section class="section page-section">
+      <div class="container">
+        <div class="split page-module page-module-soft page-module-split">
+          <div class="stack-lg">
+            <SectionIntro
+              eyebrow="Parent FAQ"
+              title="Questions we hear often"
+              text="If you are new, these quick answers can help you feel ready before your first visit."
+            />
+            <FAQAccordion items={visitFaqs.slice(0, 4)} />
+          </div>
+          <CTABand
+            embedded={true}
+            dark={false}
+            title="Ready to visit with your family?"
+            text="Tell us which service you are attending and we will help you check in quickly when you arrive."
+            primary={{ label: 'Start Family Visit', href: '/plan-your-visit' }}
+            secondary={{ label: 'View Service Times', href: '/plan-your-visit' }}
+          />
+        </div>
+      </div>
+    </section>
+  </div>
 </BaseLayout>
 
 <style>

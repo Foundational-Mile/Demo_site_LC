@@ -7,41 +7,45 @@ import { beliefs } from '../data/content';
 ---
 
 <BaseLayout title="The Essentials | Limitless Church">
-  <HeroSection
-    eyebrow="The Essentials"
-    title="What We Believe"
-    text="These biblical essentials shape our doctrine, teaching, and spiritual formation as a church."
-    centered={true}
-    textured={true}
-    primaryCta={{ label: 'Back To About', href: '/about' }}
-    secondaryCta={{ label: 'Read Our Values', href: '/about-values' }}
-  />
+  <div class="page-field">
+    <HeroSection
+      eyebrow="The Essentials"
+      title="What We Believe"
+      text="These biblical essentials shape our doctrine, teaching, and spiritual formation as a church."
+      centered={true}
+      textured={true}
+      primaryCta={{ label: 'Back To About', href: '/about' }}
+      secondaryCta={{ label: 'Read Our Values', href: '/about-values' }}
+    />
 
-  <section class="section surface-white">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Doctrine"
-        title="Core Convictions"
-        text="Each essential below summarizes a foundational belief we hold with clarity and conviction."
-      />
-      <div class="grid grid-2 essentials-grid">
-        {beliefs.map((belief) => (
-          <article class="card essential-card">
-            <h3>{belief.heading}</h3>
-            <p>{belief.text}</p>
-          </article>
-        ))}
+    <section class="section page-section">
+      <div class="container">
+        <div class="page-module page-module-white page-module-stack">
+          <SectionIntro
+            eyebrow="Doctrine"
+            title="Core Convictions"
+            text="Each essential below summarizes a foundational belief we hold with clarity and conviction."
+          />
+          <div class="grid grid-2 essentials-grid">
+            {beliefs.map((belief) => (
+              <article class="card essential-card">
+                <h3>{belief.heading}</h3>
+                <p>{belief.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <CTABand
-    eyebrow="Questions?"
-    title="Want to talk through what we believe?"
-    text="Our pastors would love to help you process faith, scripture, and next steps."
-    primary={{ label: 'Contact Our Team', href: '/care' }}
-    secondary={{ label: 'Plan Your Visit', href: '/plan-your-visit' }}
-  />
+    <CTABand
+      eyebrow="Questions?"
+      title="Want to talk through what we believe?"
+      text="Our pastors would love to help you process faith, scripture, and next steps."
+      primary={{ label: 'Contact Our Team', href: '/care' }}
+      secondary={{ label: 'Plan Your Visit', href: '/plan-your-visit' }}
+    />
+  </div>
 </BaseLayout>
 
 <style>

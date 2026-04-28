@@ -15,6 +15,7 @@ const {
   noindex = false
 } = Astro.props;
 const pathname = Astro.url.pathname;
+const enableBladePreview = pathname === '/';
 ---
 
 <!doctype html>
@@ -28,7 +29,7 @@ const pathname = Astro.url.pathname;
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
-    <Header pathname={pathname} />
+    <Header pathname={pathname} enableBladePreview={enableBladePreview} />
     <main id="main-content">
       <slot />
     </main>

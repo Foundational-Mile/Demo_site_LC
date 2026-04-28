@@ -10,82 +10,90 @@ import { media } from '../data/media';
 ---
 
 <BaseLayout title="Care | Limitless Church">
-  <HeroSection
-    eyebrow="Care + Prayer"
-    title="Care and Prayer Support"
-    text="If you are carrying something heavy, our team is here for you."
-    image={media.heroes.care}
-    imageAlt="Two people praying together"
-    primaryCta={{ label: 'Request Prayer', href: '#care-form' }}
-    secondaryCta={{ label: 'Share A Need', href: '#care-form' }}
-  />
+  <div class="page-field">
+    <HeroSection
+      eyebrow="Care + Prayer"
+      title="Care and Prayer Support"
+      text="If you are carrying something heavy, our team is here for you."
+      image={media.heroes.care}
+      imageAlt="Two people praying together"
+      primaryCta={{ label: 'Request Prayer', href: '#care-form' }}
+      secondaryCta={{ label: 'Share A Need', href: '#care-form' }}
+    />
 
-  <section class="section surface-white">
-    <div class="container split">
-      <div class="stack-lg">
-        <SectionIntro
-          eyebrow="Our Heart"
-          title="Care is ministry, not a side program"
-          text="Life can be challenging, but you do not have to walk through it alone. Our care team is here to listen, encourage, and pray with you."
-        />
-        <ul class="list-check">
-          <li>Prayer and spiritual encouragement</li>
-          <li>Support through celebrations like weddings and baptisms</li>
-          <li>Care through difficult seasons like grief and loss</li>
-        </ul>
-      </div>
-      <article class="card calm-note">
-        <p>
-          “Life can be challenging, but you do not have to walk through it alone.”
-        </p>
-        <strong>{testimonials[2].name}</strong>
-      </article>
-    </div>
-  </section>
-
-  <section class="section surface-soft">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Support Pathways"
-        title="Ways we can care for you"
-        text="Here are practical ways our team can walk with you right now."
-      />
-      <div class="grid grid-2">
-        {careResources.map((resource) => (
-          <article class="card resource-card">
-            <h3>{resource.title}</h3>
-            <p>{resource.summary}</p>
+    <section class="section page-section">
+      <div class="container">
+        <div class="split page-module page-module-white page-module-split">
+          <div class="stack-lg">
+            <SectionIntro
+              eyebrow="Our Heart"
+              title="Care is ministry, not a side program"
+              text="Life can be challenging, but you do not have to walk through it alone. Our care team is here to listen, encourage, and pray with you."
+            />
+            <ul class="list-check">
+              <li>Prayer and spiritual encouragement</li>
+              <li>Support through celebrations like weddings and baptisms</li>
+              <li>Care through difficult seasons like grief and loss</li>
+            </ul>
+          </div>
+          <article class="card calm-note">
+            <p>
+              “Life can be challenging, but you do not have to walk through it alone.”
+            </p>
+            <strong>{testimonials[2].name}</strong>
           </article>
-        ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section surface-white" id="care-form">
-    <div class="container split">
-      <div class="stack-lg">
-        <SectionIntro
-          eyebrow="Prayer Request"
-          title="Share what you need prayer for"
-          text="You can let us know as much or as little as you are comfortable sharing. We will follow up with care and confidentiality."
-        />
-        <FAQAccordion items={careFaqs} />
+    <section class="section page-section">
+      <div class="container">
+        <div class="page-module page-module-soft page-module-stack">
+          <SectionIntro
+            eyebrow="Support Pathways"
+            title="Ways we can care for you"
+            text="Here are practical ways our team can walk with you right now."
+          />
+          <div class="grid grid-2">
+            {careResources.map((resource) => (
+              <article class="card resource-card">
+                <h3>{resource.title}</h3>
+                <p>{resource.summary}</p>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
-      <FormPlaceholder
-        title="Care + Prayer Request"
-        description="Share your need and our team will follow up with prayer, encouragement, and support."
-        buttonLabel="Send Prayer Request"
-      />
-    </div>
-  </section>
+    </section>
 
-  <CTABand
-    eyebrow="Need Immediate Help?"
-    title="We are here to help."
-    text="For urgent needs, call the church office directly and our pastoral team will guide next steps."
-    primary={{ label: 'Call Church Office', href: 'tel:+14175219806' }}
-    secondary={{ label: 'Send Prayer Request', href: '/care#care-form' }}
-  />
+    <section class="section page-section" id="care-form">
+      <div class="container">
+        <div class="split page-module page-module-white page-module-split">
+          <div class="stack-lg">
+            <SectionIntro
+              eyebrow="Prayer Request"
+              title="Share what you need prayer for"
+              text="You can let us know as much or as little as you are comfortable sharing. We will follow up with care and confidentiality."
+            />
+            <FAQAccordion items={careFaqs} />
+          </div>
+          <FormPlaceholder
+            title="Care + Prayer Request"
+            description="Share your need and our team will follow up with prayer, encouragement, and support."
+            buttonLabel="Send Prayer Request"
+          />
+        </div>
+      </div>
+    </section>
+
+    <CTABand
+      eyebrow="Need Immediate Help?"
+      title="We are here to help."
+      text="For urgent needs, call the church office directly and our pastoral team will guide next steps."
+      primary={{ label: 'Call Church Office', href: 'tel:+14175219806' }}
+      secondary={{ label: 'Send Prayer Request', href: '/care#care-form' }}
+    />
+  </div>
 </BaseLayout>
 
 <style>

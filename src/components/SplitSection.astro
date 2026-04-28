@@ -10,13 +10,15 @@ interface Props {
   points?: string[];
   reverse?: boolean;
   cta?: { label: string; href: string };
+  framed?: boolean;
+  tone?: 'white' | 'soft';
 }
 
-const { eyebrow, title, text, image, imageAlt, points = [], reverse = false, cta } = Astro.props;
+const { eyebrow, title, text, image, imageAlt, points = [], reverse = false, cta, framed = false, tone = 'white' } = Astro.props;
 ---
 
 <section class="section">
-  <div class={`container split ${reverse ? 'reverse' : ''}`}>
+  <div class={`container split ${reverse ? 'reverse' : ''} ${framed ? `framed tone-${tone}` : ''}`}>
     <div class="stack-lg">
       {eyebrow && <span class="eyebrow">{eyebrow}</span>}
       <h2 class="title-lg">{title}</h2>
@@ -37,6 +39,21 @@ const { eyebrow, title, text, image, imageAlt, points = [], reverse = false, cta
 </section>
 
 <style>
+  .split.framed {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border-radius: 1rem;
+    border: 1px solid rgba(16, 18, 24, 0.1);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .split.framed.tone-white {
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .split.framed.tone-soft {
+    background: linear-gradient(180deg, #f7f8fa 0%, #edf1f5 100%);
+  }
+
   .reverse > :first-child {
     order: 2;
   }
@@ -46,6 +63,10 @@ const { eyebrow, title, text, image, imageAlt, points = [], reverse = false, cta
   }
 
   @media (max-width: 980px) {
+    .split.framed {
+      padding: 1.15rem;
+    }
+
     .reverse > :first-child,
     .reverse > :last-child {
       order: initial;

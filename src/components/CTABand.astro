@@ -8,13 +8,14 @@ interface Props {
   primary: { label: string; href: string };
   secondary?: { label: string; href: string };
   dark?: boolean;
+  embedded?: boolean;
 }
 
-const { eyebrow, title, text, primary, secondary, dark = true } = Astro.props;
+const { eyebrow, title, text, primary, secondary, dark = true, embedded = false } = Astro.props;
 ---
 
-<section class="section-tight">
-  <div class={`container cta-band ${dark ? 'dark' : 'light'}`}>
+{embedded ? (
+  <div class={`cta-band ${dark ? 'dark' : 'light'}`}>
     <div class="stack">
       {eyebrow && <span class="eyebrow">{eyebrow}</span>}
       <h2 class="title-lg">{title}</h2>
@@ -25,7 +26,21 @@ const { eyebrow, title, text, primary, secondary, dark = true } = Astro.props;
       {secondary && <a class="btn btn-secondary" href={withBase(secondary.href)}>{secondary.label}</a>}
     </div>
   </div>
-</section>
+) : (
+  <section class="section-tight">
+    <div class={`container cta-band ${dark ? 'dark' : 'light'}`}>
+      <div class="stack">
+        {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+        <h2 class="title-lg">{title}</h2>
+        <p class="lead">{text}</p>
+      </div>
+      <div class="cluster">
+        <a class="btn btn-primary" href={withBase(primary.href)}>{primary.label}</a>
+        {secondary && <a class="btn btn-secondary" href={withBase(secondary.href)}>{secondary.label}</a>}
+      </div>
+    </div>
+  </section>
+)}
 
 <style>
   .cta-band {

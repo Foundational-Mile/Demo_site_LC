@@ -11,76 +11,84 @@ import { withBase } from '../utils/paths';
 ---
 
 <BaseLayout title="Next Steps | Limitless Church">
-  <HeroSection
-    eyebrow="Next Steps"
-    title="Take Your Next Step"
-    text="Take a clear next step through New Here Party, groups, baptism, and serving."
-    centered={true}
-    textured={true}
-    primaryCta={{ label: 'Start With New Here', href: '/plan-your-visit' }}
-    secondaryCta={{ label: 'Talk To Next Steps Team', href: '/care' }}
-  />
+  <div class="page-field">
+    <HeroSection
+      eyebrow="Next Steps"
+      title="Take Your Next Step"
+      text="Take a clear next step through New Here Party, groups, baptism, and serving."
+      centered={true}
+      textured={true}
+      primaryCta={{ label: 'Start With New Here', href: '/plan-your-visit' }}
+      secondaryCta={{ label: 'Talk To Next Steps Team', href: '/care' }}
+    />
 
-  <section id="pathway" class="section surface-white">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Pathway"
-        title="Simple, practical, and purpose-driven"
-        text="Choose the step that fits your season. Our team is ready to help you get started."
-      />
-      <div class="grid grid-3">
-        {nextSteps.map((step) => (
-          <article class="card step-card">
-            <h3>{step.title}</h3>
-            <p>{step.description}</p>
-            <a href={withBase('/next-steps#pathway')} class="btn btn-ghost">{step.cta}</a>
-          </article>
-        ))}
+    <section id="pathway" class="section page-section">
+      <div class="container">
+        <div class="page-module page-module-white page-module-stack">
+          <SectionIntro
+            eyebrow="Pathway"
+            title="Simple, practical, and purpose-driven"
+            text="Choose the step that fits your season. Our team is ready to help you get started."
+          />
+          <div class="grid grid-3">
+            {nextSteps.map((step) => (
+              <article class="card step-card">
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+                <a href={withBase('/next-steps#pathway')} class="btn btn-ghost">{step.cta}</a>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section surface-soft">
-    <div class="container split">
-      <div class="stack-lg">
-        <SectionIntro
-          eyebrow="How This Helps"
-          title="From attending to belonging"
-          text="These steps help you connect to church family, grow in faith, and find your place to serve."
-        />
-        <ul class="list-check">
-          <li>Meet the team and learn the mission at New Here Party</li>
-          <li>Build relationships that carry real life in small groups</li>
-          <li>Take faith public through water baptism</li>
-          <li>Join a serve team and make a difference each week</li>
-        </ul>
+    <section class="section page-section">
+      <div class="container">
+        <div class="split page-module page-module-soft page-module-split">
+          <div class="stack-lg">
+            <SectionIntro
+              eyebrow="How This Helps"
+              title="From attending to belonging"
+              text="These steps help you connect to church family, grow in faith, and find your place to serve."
+            />
+            <ul class="list-check">
+              <li>Meet the team and learn the mission at New Here Party</li>
+              <li>Build relationships that carry real life in small groups</li>
+              <li>Take faith public through water baptism</li>
+              <li>Join a serve team and make a difference each week</li>
+            </ul>
+          </div>
+          <VisitPlanningBlock compact={true} />
+        </div>
       </div>
-      <VisitPlanningBlock compact={true} />
-    </div>
-  </section>
+    </section>
 
-  <section class="section surface-white">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Ministry Paths"
-        title="Find where you can belong and grow"
-        text="Every ministry is designed to help you build healthy relationships, grow in faith, and serve with purpose."
-      />
-      <CardGrid columns={2}>
-        {ministries.slice(0, 4).map((ministry) => (
-          <MinistryCard {...ministry} />
-        ))}
-      </CardGrid>
-    </div>
-  </section>
+    <section class="section page-section">
+      <div class="container">
+        <div class="page-module page-module-white page-module-stack">
+          <SectionIntro
+            eyebrow="Ministry Paths"
+            title="Find where you can belong and grow"
+            text="Every ministry is designed to help you build healthy relationships, grow in faith, and serve with purpose."
+          />
+          <CardGrid columns={2}>
+            {ministries.slice(0, 4).map((ministry) => (
+              <MinistryCard {...ministry} />
+            ))}
+          </CardGrid>
+        </div>
+      </div>
+    </section>
 
-  <CTABand
-    eyebrow="Need Help Choosing?"
-    title="Let us help you pick the best next step for your season."
-    text="If you are not sure where to start, our team would love to help you choose your next step."
-    primary={{ label: 'Connect With Team', href: '/care' }}
-    secondary={{ label: 'Sunday Info', href: '/plan-your-visit' }}
-  />
+    <CTABand
+      eyebrow="Need Help Choosing?"
+      title="Let us help you pick the best next step for your season."
+      text="If you are not sure where to start, our team would love to help you choose your next step."
+      primary={{ label: 'Connect With Team', href: '/care' }}
+      secondary={{ label: 'Sunday Info', href: '/plan-your-visit' }}
+    />
+  </div>
 </BaseLayout>
 
 <style>
