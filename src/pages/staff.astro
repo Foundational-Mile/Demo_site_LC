@@ -13,51 +13,57 @@ const otherStaff = staff.filter((person) => person.team !== 'Executive');
 ---
 
 <BaseLayout title="Staff | Limitless Church">
-  <HeroSection
-    eyebrow="Our Team"
-    title="Meet Our Team"
-    text="Get to know the pastors and directors serving Limitless Church."
-    image={media.heroes.staff}
-    imageAlt="Church leadership team in conversation"
-    primaryCta={{ label: 'Call The Team', href: 'tel:+14175219806' }}
-    secondaryCta={{ label: 'First-Time Guide', href: '/plan-your-visit' }}
-  />
+  <div class="page-field">
+    <HeroSection
+      eyebrow="Our Team"
+      title="Meet Our Team"
+      text="Get to know the pastors and directors serving Limitless Church."
+      image={media.heroes.staff}
+      imageAlt="Church leadership team in conversation"
+      primaryCta={{ label: 'Call The Team', href: 'tel:+14175219806' }}
+      secondaryCta={{ label: 'First-Time Guide', href: '/plan-your-visit' }}
+    />
 
-  <section class="section surface-white">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Executive Leadership"
-        title="Vision and pastoral oversight"
-        text="Our executive leaders help carry the mission, vision, and direction of Limitless Church."
-      />
-      <CardGrid columns={2}>
-        {executive.map((person) => (
-          <StaffCard {...person} />
-        ))}
-      </CardGrid>
-    </div>
-  </section>
+    <section class="section page-section">
+      <div class="container">
+        <div class="page-module page-module-white page-module-stack">
+          <SectionIntro
+            eyebrow="Executive Leadership"
+            title="Vision and pastoral oversight"
+            text="Our executive leaders help carry the mission, vision, and direction of Limitless Church."
+          />
+          <CardGrid columns={2}>
+            {executive.map((person) => (
+              <StaffCard {...person} />
+            ))}
+          </CardGrid>
+        </div>
+      </div>
+    </section>
 
-  <section class="section surface-soft">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Ministry Staff"
-        title="Specialized teams serving people at every stage"
-        text="From worship and groups to youth and operations, each team helps people connect and grow."
-      />
-      <CardGrid columns={4}>
-        {otherStaff.map((person) => (
-          <StaffCard {...person} />
-        ))}
-      </CardGrid>
-    </div>
-  </section>
+    <section class="section page-section">
+      <div class="container">
+        <div class="page-module page-module-soft page-module-stack">
+          <SectionIntro
+            eyebrow="Ministry Staff"
+            title="Specialized teams serving people at every stage"
+            text="From worship and groups to youth and operations, each team helps people connect and grow."
+          />
+          <CardGrid columns={4}>
+            {otherStaff.map((person) => (
+              <StaffCard {...person} />
+            ))}
+          </CardGrid>
+        </div>
+      </div>
+    </section>
 
-  <CTABand
-    eyebrow="Need Help Finding The Right Contact?"
-    title="Tell us what you need and we will connect you with the right person."
-    text="Call the church office and we will help connect you with the right ministry leader."
-    primary={{ label: 'Call Team', href: 'tel:+14175219806' }}
-    secondary={{ label: 'Explore Care', href: '/care' }}
-  />
+    <CTABand
+      eyebrow="Need Help Finding The Right Contact?"
+      title="Tell us what you need and we will connect you with the right person."
+      text="Call the church office and we will help connect you with the right ministry leader."
+      primary={{ label: 'Call Team', href: 'tel:+14175219806' }}
+      secondary={{ label: 'Explore Care', href: '/care' }}
+    />
+  </div>
 </BaseLayout>

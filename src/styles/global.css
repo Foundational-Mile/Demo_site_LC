@@ -131,6 +131,101 @@ main {
   color: var(--text);
 }
 
+.page-field {
+  background:
+    linear-gradient(180deg, #f3f4f6 0%, #eef1f5 38%, #f7f8fa 100%);
+}
+
+.page-section {
+  padding-top: clamp(1.35rem, 3vw, 2.35rem);
+  padding-bottom: clamp(1.35rem, 3vw, 2.35rem);
+}
+
+.page-open-section {
+  padding-top: clamp(1.6rem, 3.8vw, 2.8rem);
+  padding-bottom: clamp(1.6rem, 3.8vw, 2.8rem);
+}
+
+.page-module {
+  padding: clamp(1.2rem, 3vw, 2rem);
+  border-radius: 1rem;
+  border: 1px solid rgba(16, 18, 24, 0.1);
+  box-shadow: var(--shadow-sm);
+}
+
+.page-module-white {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.page-module-soft {
+  background: linear-gradient(180deg, #f7f8fa 0%, #edf1f5 100%);
+}
+
+.page-module-ink {
+  background:
+    radial-gradient(circle at top right, rgba(93, 143, 242, 0.22), transparent 34%),
+    linear-gradient(180deg, #171b22 0%, #0f1319 100%);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 22px 44px rgba(8, 11, 17, 0.18);
+}
+
+.page-module-ink h1,
+.page-module-ink h2,
+.page-module-ink h3,
+.page-module-ink h4,
+.page-module-ink .lead,
+.page-module-ink p,
+.page-module-ink li,
+.page-module-ink .eyebrow {
+  color: var(--text);
+}
+
+.page-module-ink .eyebrow::after {
+  background: #5d8ff2;
+}
+
+.page-module-ink .card {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: none;
+}
+
+.page-module-ink .card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+}
+
+.page-module-ink .btn-secondary,
+.page-module-ink .btn-ghost {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.page-module-ink .btn-secondary:hover,
+.page-module-ink .btn-secondary:focus-visible,
+.page-module-ink .btn-ghost:hover,
+.page-module-ink .btn-ghost:focus-visible {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.page-module-split {
+  align-items: center;
+}
+
+.page-module-stack {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.page-module-footer {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 0.2rem;
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;

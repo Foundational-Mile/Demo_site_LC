@@ -4,9 +4,10 @@ import { withBase, withoutBase } from '../utils/paths';
 
 interface Props {
   pathname: string;
+  enableBladePreview?: boolean;
 }
 
-const { pathname } = Astro.props;
+const { pathname, enableBladePreview = false } = Astro.props;
 
 const normalizePath = (value: string) => {
   if (value.length > 1 && value.endsWith('/')) return value.slice(0, -1);
@@ -27,6 +28,7 @@ const isLinkActive = (link: (typeof navLinks)[number]) => {
 };
 
 const brandLogo = withBase('/images/logo-white.png');
+const aboutChildren = navLinks.find((link) => link.label === 'About')?.children ?? [];
 ---
 
 <header class="site-header">
@@ -39,73 +41,239 @@ const brandLogo = withBase('/images/logo-white.png');
       </span>
     </a>
 
-    <nav class="desktop-nav" aria-label="Main">
-      <ul>
-        {navLinks.map((link) => {
-          const hasChildren = (link.children?.length ?? 0) > 0;
-          const active = isLinkActive(link);
-
-          return (
-            <li class={`nav-item ${hasChildren ? 'has-children' : ''}`}>
-              <a href={withBase(link.href)} class={active ? 'active' : ''}>
-                {link.label}
-                {hasChildren && <span class="caret" aria-hidden="true">▾</span>}
-              </a>
-
-              {hasChildren && (
-                <ul class="dropdown" aria-label={`${link.label} subpages`}>
-                  {link.children?.map((child) => (
-                    <li>
-                      <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>
-                        {child.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
-
-    <a class="btn btn-primary desktop-visit" href={withBase('/plan-your-visit')}>I'm New</a>
-
-    <details class="mobile-nav">
-      <summary aria-label="Open navigation menu">Menu</summary>
-      <nav aria-label="Mobile">
+    {!enableBladePreview && (
+      <nav class="desktop-nav" aria-label="Main">
         <ul>
           {navLinks.map((link) => {
             const hasChildren = (link.children?.length ?? 0) > 0;
             const active = isLinkActive(link);
 
-            if (!hasChildren) {
-              return (
-                <li>
-                  <a href={withBase(link.href)} class={active ? 'active' : ''}>{link.label}</a>
-                </li>
-              );
-            }
-
             return (
-              <li class="mobile-group">
-                <details open={active}>
-                  <summary class={active ? 'active' : ''}>{link.label}</summary>
-                  <div class="mobile-group-links">
+              <li class={`nav-item ${hasChildren ? 'has-children' : ''}`}>
+                <a href={withBase(link.href)} class={active ? 'active' : ''}>
+                  {link.label}
+                  {hasChildren && <span class="caret" aria-hidden="true">▾</span>}
+                </a>
+
+                {hasChildren && (
+                  <ul class="dropdown" aria-label={`${link.label} subpages`}>
                     {link.children?.map((child) => (
-                      <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>
-                        {child.label}
-                      </a>
+                      <li>
+                        <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>
+                          {child.label}
+                        </a>
+                      </li>
                     ))}
-                  </div>
-                </details>
+                  </ul>
+                )}
               </li>
             );
           })}
         </ul>
-        <a class="btn btn-primary" href={withBase('/plan-your-visit')}>I'm New</a>
       </nav>
-    </details>
+    )}
+
+    {enableBladePreview ? (
+      <>
+        <div class="blade-preview-launchers" aria-label="Menu blade previews">
+          <button
+            type="button"
+            class="blade-trigger"
+            data-blade-open="homepage-menu-blade-guided"
+            aria-haspopup="dialog"
+            aria-controls="homepage-menu-blade-guided"
+            aria-expanded="false"
+          >
+            Clean
+          </button>
+          <button
+            type="button"
+            class="blade-trigger blade-trigger-alt"
+            data-blade-open="homepage-menu-blade-editorial"
+            aria-haspopup="dialog"
+            aria-controls="homepage-menu-blade-editorial"
+            aria-expanded="false"
+          >
+            Editorial
+          </button>
+          <button
+            type="button"
+            class="blade-trigger blade-trigger-panel"
+            data-blade-open="homepage-menu-blade-panel"
+            aria-haspopup="dialog"
+            aria-controls="homepage-menu-blade-panel"
+            aria-expanded="false"
+          >
+            Panels
+          </button>
+        </div>
+
+        <dialog class="blade-dialog" id="homepage-menu-blade-guided" aria-label="Clean guided menu blade preview">
+          <div class="blade-shell">
+            <div class="blade-head">
+              <div class="blade-head-copy">
+                <p class="blade-preview-label">Blade Preview</p>
+                <h2>Clean guided blade</h2>
+              </div>
+              <p class="blade-head-note">Structured, newcomer-first, and easy to scan.</p>
+              <button type="button" class="blade-close" data-blade-close aria-label="Close menu preview">Close</button>
+            </div>
+
+            <div class="blade-body blade-guided">
+              <a class="blade-primary-link" href={withBase('/plan-your-visit')}>I'm New</a>
+
+              <div class="blade-guided-grid">
+                <section class="blade-group">
+                  <p>Main Navigation</p>
+                  <ul>
+                    {navLinks.map((link) => {
+                      const hasChildren = (link.children?.length ?? 0) > 0;
+                      return (
+                        <li>
+                          <a href={withBase(link.href)} class={isLinkActive(link) ? 'active' : ''}>
+                            <strong>{link.label}</strong>
+                          </a>
+                          {hasChildren && (
+                            <div class="blade-child-links">
+                              {link.children?.map((child) => (
+                                <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>
+                                  {child.label}
+                                </a>
+                              ))}
+                            </div>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              </div>
+            </div>
+          </div>
+        </dialog>
+
+        <dialog class="blade-dialog" id="homepage-menu-blade-editorial" aria-label="Editorial feature menu blade preview">
+          <div class="blade-shell">
+            <div class="blade-head">
+              <div class="blade-head-copy">
+                <p class="blade-preview-label">Blade Preview</p>
+                <h2>Editorial feature blade</h2>
+              </div>
+              <p class="blade-head-note">Bolder, more branded, and more statement-driven.</p>
+              <button type="button" class="blade-close" data-blade-close aria-label="Close menu preview">Close</button>
+            </div>
+
+            <div class="blade-body blade-editorial">
+              <div class="blade-editorial-hero">
+                <a class="blade-primary-link blade-primary-link-editorial" href={withBase('/plan-your-visit')}>I'm New</a>
+              </div>
+
+              <div class="blade-editorial-grid">
+                <section class="blade-editorial-links">
+                  <p>Explore</p>
+                  <div>
+                    {navLinks.map((link) => (
+                      <a href={withBase(link.href)} class={isLinkActive(link) ? 'active' : ''}>{link.label}</a>
+                    ))}
+                  </div>
+                </section>
+
+                <section class="blade-editorial-links blade-sub-links">
+                  <p>About</p>
+                  <div>
+                    {aboutChildren.map((child) => (
+                      <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>{child.label}</a>
+                    ))}
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </dialog>
+
+        <dialog class="blade-dialog" id="homepage-menu-blade-panel" aria-label="Stacked panel menu blade preview">
+          <div class="blade-shell">
+            <div class="blade-head">
+              <div class="blade-head-copy">
+                <p class="blade-preview-label">Blade Preview</p>
+                <h2>Stacked panel blade</h2>
+              </div>
+              <p class="blade-head-note">Layered, structured, and a little more tactile.</p>
+              <button type="button" class="blade-close" data-blade-close aria-label="Close menu preview">Close</button>
+            </div>
+
+            <div class="blade-body blade-panel">
+              <section class="blade-stack-panel blade-stack-panel-primary">
+                <p>Start Here</p>
+                <a class="blade-primary-link blade-primary-link-panel" href={withBase('/plan-your-visit')}>I'm New</a>
+                <div class="blade-panel-links">
+                  <a href={withBase('/plan-your-visit')} class={isActive('/plan-your-visit') ? 'active' : ''}>Plan Your Visit</a>
+                  <a href={withBase('/next-steps')} class={isActive('/next-steps') ? 'active' : ''}>Next Steps</a>
+                </div>
+              </section>
+
+              <section class="blade-stack-panel blade-stack-panel-main">
+                <p>Main Navigation</p>
+                <div class="blade-panel-grid">
+                  {navLinks.map((link) => (
+                    <a href={withBase(link.href)} class={isLinkActive(link) ? 'active' : ''}>{link.label}</a>
+                  ))}
+                </div>
+              </section>
+
+              <section class="blade-stack-panel blade-stack-panel-sub">
+                <p>About</p>
+                <div class="blade-panel-links">
+                  {aboutChildren.map((child) => (
+                    <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>{child.label}</a>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </div>
+        </dialog>
+      </>
+    ) : (
+      <>
+        <a class="btn btn-primary desktop-visit" href={withBase('/plan-your-visit')}>I'm New</a>
+
+        <details class="mobile-nav">
+          <summary aria-label="Open navigation menu">Menu</summary>
+          <nav aria-label="Mobile">
+            <ul>
+              {navLinks.map((link) => {
+                const hasChildren = (link.children?.length ?? 0) > 0;
+                const active = isLinkActive(link);
+
+                if (!hasChildren) {
+                  return (
+                    <li>
+                      <a href={withBase(link.href)} class={active ? 'active' : ''}>{link.label}</a>
+                    </li>
+                  );
+                }
+
+                return (
+                  <li class="mobile-group">
+                    <details open={active}>
+                      <summary class={active ? 'active' : ''}>{link.label}</summary>
+                      <div class="mobile-group-links">
+                        {link.children?.map((child) => (
+                          <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>
+                            {child.label}
+                          </a>
+                        ))}
+                      </div>
+                    </details>
+                  </li>
+                );
+              })}
+            </ul>
+            <a class="btn btn-primary" href={withBase('/plan-your-visit')}>I'm New</a>
+          </nav>
+        </details>
+      </>
+    )}
   </div>
 </header>
 
@@ -258,6 +426,387 @@ const brandLogo = withBase('/images/logo-white.png');
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+  }
+
+  .blade-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.065em;
+    color: #eef1f6;
+    padding: 0.52rem 0.78rem;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+  }
+
+  .blade-trigger::before {
+    content: '';
+    width: 0.85rem;
+    height: 0.6rem;
+    border-top: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    display: inline-block;
+    box-sizing: border-box;
+  }
+
+  .blade-trigger:hover,
+  .blade-trigger:focus-visible {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.34);
+    transform: translateY(-1px);
+  }
+
+  .blade-trigger-alt {
+    background: rgba(42, 111, 232, 0.14);
+    border-color: rgba(91, 145, 242, 0.34);
+  }
+
+  .blade-trigger-panel {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+
+  .blade-preview-launchers {
+    margin-left: auto;
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .blade-dialog {
+    width: min(31rem, calc(100vw - 1rem));
+    max-width: 31rem;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0 0 0 auto;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    background: transparent;
+    color: inherit;
+  }
+
+  .blade-dialog::backdrop {
+    background: rgba(6, 8, 12, 0.56);
+    backdrop-filter: blur(3px);
+  }
+
+  .blade-shell {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    background:
+      linear-gradient(180deg, rgba(18, 22, 29, 0.98) 0%, rgba(11, 14, 20, 0.99) 100%);
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: -24px 0 56px rgba(0, 0, 0, 0.28);
+    overflow: hidden;
+    transform: translateX(2.75rem);
+    opacity: 0.01;
+    transition: transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 220ms ease;
+  }
+
+  .blade-dialog.is-mounted .blade-shell {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .blade-head {
+    display: grid;
+    gap: 0.9rem;
+    padding: 1.2rem 1.15rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .blade-head-copy h2 {
+    margin: 0.2rem 0 0;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.65rem;
+    letter-spacing: 0.01em;
+    color: #f7f9fc;
+  }
+
+  .blade-head-note {
+    margin: -0.15rem 0 0;
+    color: #c7d0de;
+    line-height: 1.5;
+  }
+
+  .blade-preview-label {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7c8ca8;
+  }
+
+  .blade-close {
+    justify-self: start;
+    border: 0;
+    background: transparent;
+    color: #cdd6e4;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0;
+  }
+
+  .blade-body {
+    min-height: 0;
+    overflow: auto;
+    padding: 1.1rem 1.15rem 1.35rem;
+    align-content: start;
+  }
+
+  .blade-guided {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .blade-primary-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 0.95rem;
+    background: linear-gradient(180deg, #5a8ef0 0%, #4776d8 100%);
+    color: #ffffff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: 0 14px 28px rgba(42, 111, 232, 0.2);
+  }
+
+  .blade-primary-link-editorial {
+    width: auto;
+    justify-self: start;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: none;
+  }
+
+  .blade-primary-link-panel {
+    width: auto;
+    justify-self: start;
+    padding-inline: 1.15rem;
+    box-shadow: 0 10px 22px rgba(42, 111, 232, 0.18);
+  }
+
+  .blade-guided-grid {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .blade-group {
+    display: grid;
+    gap: 0.55rem;
+    padding: 0.95rem 1rem;
+    border-radius: 0.95rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .blade-group > p,
+  .blade-editorial-links > p {
+    margin: 0;
+    font-size: 0.73rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6d88bc;
+  }
+
+  .blade-group ul,
+  .blade-editorial-links div {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .blade-group a {
+    display: grid;
+    gap: 0.12rem;
+    padding: 0.65rem 0.7rem;
+    border-radius: 0.45rem;
+    color: #eef3fb;
+    transition: background-color 160ms ease, transform 160ms ease;
+  }
+
+  .blade-group a:hover,
+  .blade-group a:focus-visible,
+  .blade-group a.active {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(2px);
+  }
+
+  .blade-group a strong {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.96rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .blade-child-links {
+    display: grid;
+    gap: 0.12rem;
+    margin-top: 0.35rem;
+    margin-left: 0.75rem;
+    padding-left: 0.85rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .blade-child-links a {
+    display: block;
+    padding: 0.38rem 0;
+    color: #b9c4d6;
+    font-size: 0.86rem;
+    letter-spacing: 0.04em;
+    transition: color 160ms ease, transform 160ms ease;
+  }
+
+  .blade-child-links a:hover,
+  .blade-child-links a:focus-visible,
+  .blade-child-links a.active {
+    color: #ffffff;
+    transform: translateX(2px);
+  }
+
+  .blade-editorial {
+    display: grid;
+    gap: 1rem;
+    background:
+      radial-gradient(circle at top right, rgba(42, 111, 232, 0.22), transparent 34%);
+  }
+
+  .blade-editorial-hero {
+    display: grid;
+    gap: 0.2rem;
+    padding: 1rem;
+    border-radius: 1.05rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .blade-editorial-grid {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .blade-editorial-links {
+    display: grid;
+    gap: 0.55rem;
+    padding: 0.95rem 1rem;
+    border-radius: 0.95rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .blade-editorial-links a {
+    display: block;
+    padding: 0.42rem 0;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #d7deea;
+    transition: color 160ms ease, transform 160ms ease;
+  }
+
+  .blade-editorial-links a:hover,
+  .blade-editorial-links a:focus-visible,
+  .blade-editorial-links a.active {
+    color: #ffffff;
+    transform: translateX(2px);
+  }
+
+  .blade-panel {
+    display: grid;
+    gap: 0.9rem;
+    background:
+      radial-gradient(circle at top right, rgba(42, 111, 232, 0.16), transparent 30%);
+  }
+
+  .blade-stack-panel {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .blade-stack-panel > p {
+    margin: 0;
+    font-size: 0.73rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #83a2dd;
+  }
+
+  .blade-stack-panel-primary {
+    background:
+      linear-gradient(180deg, rgba(29, 37, 52, 0.98) 0%, rgba(18, 24, 35, 0.98) 100%);
+  }
+
+  .blade-stack-panel-main {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .blade-stack-panel-sub {
+    background: rgba(93, 143, 242, 0.08);
+    border-color: rgba(93, 143, 242, 0.16);
+  }
+
+  .blade-panel-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .blade-panel-grid a,
+  .blade-panel-links a {
+    display: block;
+    padding: 0.72rem 0.8rem;
+    border-radius: 0.8rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
+    color: #eef3fb;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease;
+  }
+
+  .blade-panel-links {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .blade-panel-grid a:hover,
+  .blade-panel-grid a:focus-visible,
+  .blade-panel-grid a.active,
+  .blade-panel-links a:hover,
+  .blade-panel-links a:focus-visible,
+  .blade-panel-links a.active {
+    transform: translateX(2px);
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.12);
   }
 
   .desktop-visit {
@@ -426,6 +975,14 @@ const brandLogo = withBase('/images/logo-white.png');
       display: none;
     }
 
+    .blade-trigger {
+      margin-left: auto;
+    }
+
+    .blade-preview-launchers {
+      margin-left: auto;
+    }
+
     .mobile-nav {
       display: block;
     }
@@ -463,5 +1020,118 @@ const brandLogo = withBase('/images/logo-white.png');
       width: min(22rem, calc(100vw - 1rem));
       padding: 0.9rem;
     }
+
+    .blade-dialog {
+      width: min(100vw, 29rem);
+    }
+
+    .blade-preview-launchers {
+      gap: 0.35rem;
+    }
+
+    .blade-trigger {
+      padding-left: 0.68rem;
+      padding-right: 0.68rem;
+      font-size: 0.82rem;
+    }
+
+    .blade-panel-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .blade-head,
+    .blade-body {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
 </style>
+
+<script is:inline>
+  const initBladePreview = () => {
+    const triggerButtons = Array.from(document.querySelectorAll('[data-blade-open]'));
+    if (triggerButtons.length === 0) return;
+
+    const closeDialog = (dialog) => {
+      if (!(dialog instanceof HTMLDialogElement)) return;
+      if (!dialog.open) return;
+      dialog.classList.remove('is-mounted');
+      window.setTimeout(() => {
+        if (dialog.open) dialog.close();
+      }, 220);
+      triggerButtons.forEach((button) => {
+        const expanded = button.getAttribute('data-blade-open') === dialog.id ? 'false' : button.getAttribute('aria-expanded') ?? 'false';
+        button.setAttribute('aria-expanded', expanded);
+      });
+    };
+
+    const openDialog = (dialogId) => {
+      const dialog = document.getElementById(dialogId);
+      if (!(dialog instanceof HTMLDialogElement)) return;
+
+      document.querySelectorAll('.blade-dialog[open]').forEach((openDialogEl) => {
+        if (openDialogEl instanceof HTMLDialogElement && openDialogEl.id !== dialogId) {
+          openDialogEl.classList.remove('is-mounted');
+          openDialogEl.close();
+        }
+      });
+
+      if (!dialog.open) dialog.showModal();
+      requestAnimationFrame(() => {
+        dialog.classList.add('is-mounted');
+      });
+
+      triggerButtons.forEach((button) => {
+        const active = button.getAttribute('data-blade-open') === dialogId;
+        button.setAttribute('aria-expanded', active ? 'true' : 'false');
+      });
+
+      document.documentElement.classList.add('blade-preview-open');
+    };
+
+    triggerButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const dialogId = button.getAttribute('data-blade-open');
+        if (dialogId) openDialog(dialogId);
+      });
+    });
+
+    document.querySelectorAll('.blade-dialog').forEach((dialog) => {
+      if (!(dialog instanceof HTMLDialogElement)) return;
+
+      dialog.querySelectorAll('[data-blade-close]').forEach((button) => {
+        button.addEventListener('click', () => closeDialog(dialog));
+      });
+
+      dialog.addEventListener('click', (event) => {
+        const rect = dialog.getBoundingClientRect();
+        const within =
+          event.clientX >= rect.left &&
+          event.clientX <= rect.right &&
+          event.clientY >= rect.top &&
+          event.clientY <= rect.bottom;
+
+        if (!within) closeDialog(dialog);
+      });
+
+      dialog.addEventListener('close', () => {
+        dialog.classList.remove('is-mounted');
+        triggerButtons.forEach((button) => {
+          if (button.getAttribute('data-blade-open') === dialog.id) {
+            button.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        if (!document.querySelector('.blade-dialog[open]')) {
+          document.documentElement.classList.remove('blade-preview-open');
+        }
+      });
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBladePreview, { once: true });
+  } else {
+    initBladePreview();
+  }
+</script>

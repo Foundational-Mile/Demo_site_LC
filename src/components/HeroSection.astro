@@ -38,68 +38,80 @@ const {
 const hasMedia = Boolean(image);
 ---
 
-<section class={`hero section surface-dark ${textured ? 'textured' : ''}`}>
-  <div class={`container hero-grid ${centered ? 'centered' : ''} ${!hasMedia ? 'no-media' : ''}`}>
-    <div class={`stack-lg hero-copy ${centered ? 'centered' : ''}`}>
-      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-      <h1 class="title-xl">{title}</h1>
-      <p class="lead">{text}</p>
+<section class="hero section page-section">
+  <div class="container">
+    <div class={`hero-shell surface-dark ${textured ? 'textured' : ''}`}>
+      <div class={`hero-grid ${centered ? 'centered' : ''} ${!hasMedia ? 'no-media' : ''}`}>
+        <div class={`stack-lg hero-copy ${centered ? 'centered' : ''}`}>
+          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+          <h1 class="title-xl">{title}</h1>
+          <p class="lead">{text}</p>
 
-      {(primaryCta || secondaryCta) && (
-        <div class="cluster hero-actions">
-          {primaryCta && <a class="btn btn-primary" href={withBase(primaryCta.href)}>{primaryCta.label}</a>}
-          {secondaryCta && <a class="btn btn-secondary" href={withBase(secondaryCta.href)}>{secondaryCta.label}</a>}
-        </div>
-      )}
-
-      {(serviceTimes.length > 0 || location) && (
-        <div class="hero-meta">
-          {serviceTimes.length > 0 && (
-            <div>
-              <h2>Service Times</h2>
-              <ul>
-                {serviceTimes.map((time) => (
-                  <li>{time}</li>
-                ))}
-              </ul>
+          {(primaryCta || secondaryCta) && (
+            <div class="cluster hero-actions">
+              {primaryCta && <a class="btn btn-primary" href={withBase(primaryCta.href)}>{primaryCta.label}</a>}
+              {secondaryCta && <a class="btn btn-secondary" href={withBase(secondaryCta.href)}>{secondaryCta.label}</a>}
             </div>
           )}
-          {location && (
-            <div>
-              <h2>Location</h2>
-              <p>{location}</p>
+
+          {(serviceTimes.length > 0 || location) && (
+            <div class="hero-meta">
+              {serviceTimes.length > 0 && (
+                <div>
+                  <h2>Service Times</h2>
+                  <ul>
+                    {serviceTimes.map((time) => (
+                      <li>{time}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {location && (
+                <div>
+                  <h2>Location</h2>
+                  <p>{location}</p>
+                </div>
+              )}
             </div>
           )}
         </div>
-      )}
+
+        {hasMedia &&
+          (videoPreview ? (
+            <a class="video-shell" href={withBase(videoHref)} aria-label={videoLabel}>
+              <img class="media-cover" src={image} alt={imageAlt} loading="eager" />
+              <span class="video-overlay">
+                <span class="play-icon" aria-hidden="true">▶</span>
+                <span>{videoLabel}</span>
+              </span>
+            </a>
+          ) : (
+            <div class="photo-frame">
+              <img class="media-cover" src={image} alt={imageAlt} loading="eager" />
+            </div>
+          ))}
+      </div>
     </div>
-
-    {hasMedia &&
-      (videoPreview ? (
-        <a class="video-shell" href={withBase(videoHref)} aria-label={videoLabel}>
-          <img class="media-cover" src={image} alt={imageAlt} loading="eager" />
-          <span class="video-overlay">
-            <span class="play-icon" aria-hidden="true">▶</span>
-            <span>{videoLabel}</span>
-          </span>
-        </a>
-      ) : (
-        <div class="photo-frame">
-          <img class="media-cover" src={image} alt={imageAlt} loading="eager" />
-        </div>
-      ))}
   </div>
 </section>
 
 <style>
   .hero {
-    padding-top: clamp(3rem, 8vw, 5.5rem);
-    padding-bottom: clamp(3.2rem, 8vw, 6.3rem);
+    padding-top: clamp(1rem, 2.4vw, 1.75rem);
+    padding-bottom: clamp(1.2rem, 2.8vw, 2rem);
     position: relative;
-    overflow: hidden;
   }
 
-  .hero::before {
+  .hero-shell {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.15rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-md);
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .hero-shell::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -107,7 +119,7 @@ const hasMedia = Boolean(image);
     pointer-events: none;
   }
 
-  .hero.textured {
+  .hero-shell.textured {
     background:
       radial-gradient(circle at 14% 8%, rgba(93, 143, 242, 0.36), transparent 40%),
       radial-gradient(circle at 88% 82%, rgba(93, 143, 242, 0.3), transparent 46%),
@@ -128,7 +140,7 @@ const hasMedia = Boolean(image);
       linear-gradient(140deg, #212b3a 0%, #172030 50%, #101725 100%);
   }
 
-  .hero.textured::before {
+  .hero-shell.textured::before {
     background:
       radial-gradient(circle at 84% 14%, rgba(255, 255, 255, 0.14), transparent 32%),
       radial-gradient(circle at 18% 88%, rgba(255, 255, 255, 0.08), transparent 38%),
@@ -136,7 +148,7 @@ const hasMedia = Boolean(image);
       linear-gradient(180deg, rgba(6, 10, 17, 0.08), rgba(6, 10, 17, 0.24));
   }
 
-  .hero.textured::after {
+  .hero-shell.textured::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -264,8 +276,13 @@ const hasMedia = Boolean(image);
 
   @media (max-width: 700px) {
     .hero {
-      padding-top: 2.8rem;
-      padding-bottom: 3rem;
+      padding-top: 1rem;
+      padding-bottom: 1.2rem;
+    }
+
+    .hero-shell {
+      padding: 1.1rem;
+      border-radius: 0.95rem;
     }
 
     .hero-grid {

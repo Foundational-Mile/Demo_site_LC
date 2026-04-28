@@ -12,16 +12,18 @@ interface Props {
 const { items, title = 'Stories of life change' } = Astro.props;
 ---
 
-<section class="section surface-soft">
-  <div class="container stack-lg">
-    <h2 class="title-lg">{title}</h2>
-    <div class="grid grid-3">
-      {items.map((item) => (
-        <blockquote class="card testimonial">
-          <p>“{item.quote}”</p>
-          <cite>{item.name}</cite>
-        </blockquote>
-      ))}
+<section class="section page-section">
+  <div class="container">
+    <div class="page-module page-module-soft stack-lg">
+      <h2 class="title-lg">{title}</h2>
+      <div class="grid grid-3">
+        {items.map((item) => (
+          <blockquote class="card testimonial">
+            <p>“{item.quote}”</p>
+            <cite>{item.name}</cite>
+          </blockquote>
+        ))}
+      </div>
     </div>
   </div>
 </section>

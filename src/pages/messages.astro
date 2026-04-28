@@ -14,79 +14,87 @@ const filters = ['All', 'Joseph', 'The Way Of Jesus', 'Easter Sunday', 'Featured
 ---
 
 <BaseLayout title="Messages | Limitless Church">
-  <HeroSection
-    eyebrow="Messages"
-    title="Watch Recent Messages"
-    text="Catch up on Sunday teaching and share a message with a friend."
-    centered={true}
-    textured={true}
-    primaryCta={{ label: 'Browse Recent Messages', href: '#browse-messages' }}
-    secondaryCta={{ label: 'See Next Steps', href: '/next-steps' }}
-  />
+  <div class="page-field">
+    <HeroSection
+      eyebrow="Messages"
+      title="Watch Recent Messages"
+      text="Catch up on Sunday teaching and share a message with a friend."
+      centered={true}
+      textured={true}
+      primaryCta={{ label: 'Browse Recent Messages', href: '#browse-messages' }}
+      secondaryCta={{ label: 'See Next Steps', href: '/next-steps' }}
+    />
 
-  <section class="section surface-white">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Featured Message"
-        title={featured.title}
-        text={featured.summary}
-      />
-      <MessageCard {...featured} featured={true} />
-    </div>
-  </section>
-
-  <section id="browse-messages" class="section surface-soft">
-    <div class="container stack-lg">
-      <SectionIntro
-        eyebrow="Browse"
-        title="Recent messages"
-        text="Access recent sermons here and on YouTube."
-      />
-      <div class="cluster filter-row" aria-label="Filter messages preview">
-        {filters.map((filter, index) => (
-          <button class={`filter-pill ${index === 0 ? 'active' : ''}`} type="button">{filter}</button>
-        ))}
+    <section class="section page-section">
+      <div class="container">
+        <div class="page-module page-module-white page-module-stack">
+          <SectionIntro
+            eyebrow="Featured Message"
+            title={featured.title}
+            text={featured.summary}
+          />
+          <MessageCard {...featured} featured={true} />
+        </div>
       </div>
-      <CardGrid columns={3}>
-        {recents.map((message) => (
-          <MessageCard {...message} />
-        ))}
-      </CardGrid>
-    </div>
-  </section>
+    </section>
 
-  <section class="section surface-white">
-    <div class="container split">
-      <div class="stack-lg">
-        <SectionIntro
-          eyebrow="Teaching Heart"
-          title="Truth with clarity. Grace with conviction."
-          text="Messages from Pastor Stone Moss are designed to challenge, encourage, and equip people in real life."
-        />
-        <ul class="list-check">
-          <li>Passionate, faith-filled Bible teaching</li>
-          <li>Practical messages for everyday discipleship</li>
-          <li>Full recent sermon archive available on YouTube</li>
-        </ul>
+    <section id="browse-messages" class="section page-section">
+      <div class="container">
+        <div class="page-module page-module-soft page-module-stack">
+          <SectionIntro
+            eyebrow="Browse"
+            title="Recent messages"
+            text="Access recent sermons here and on YouTube."
+          />
+          <div class="cluster filter-row" aria-label="Filter messages preview">
+            {filters.map((filter, index) => (
+              <button class={`filter-pill ${index === 0 ? 'active' : ''}`} type="button">{filter}</button>
+            ))}
+          </div>
+          <CardGrid columns={3}>
+            {recents.map((message) => (
+              <MessageCard {...message} />
+            ))}
+          </CardGrid>
+        </div>
       </div>
-      <div class="photo-frame">
-        <img
-          class="media-cover"
-          src={media.sections.messagesTeaching}
-          alt="Congregation listening during a message"
-          loading="lazy"
-        />
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <CTABand
-    eyebrow="Watch + Share"
-    title="Catch up this week and invite someone to watch with you."
-    text="Watch a recent message and share it with someone who needs encouragement this week."
-    primary={{ label: 'Browse Message Archive', href: '#browse-messages' }}
-    secondary={{ label: 'Plan An In-Person Visit', href: '/plan-your-visit' }}
-  />
+    <section class="section page-section">
+      <div class="container">
+        <div class="split page-module page-module-white page-module-split">
+          <div class="stack-lg">
+            <SectionIntro
+              eyebrow="Teaching Heart"
+              title="Truth with clarity. Grace with conviction."
+              text="Messages from Pastor Stone Moss are designed to challenge, encourage, and equip people in real life."
+            />
+            <ul class="list-check">
+              <li>Passionate, faith-filled Bible teaching</li>
+              <li>Practical messages for everyday discipleship</li>
+              <li>Full recent sermon archive available on YouTube</li>
+            </ul>
+          </div>
+          <div class="photo-frame">
+            <img
+              class="media-cover"
+              src={media.sections.messagesTeaching}
+              alt="Congregation listening during a message"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <CTABand
+      eyebrow="Watch + Share"
+      title="Catch up this week and invite someone to watch with you."
+      text="Watch a recent message and share it with someone who needs encouragement this week."
+      primary={{ label: 'Browse Message Archive', href: '#browse-messages' }}
+      secondary={{ label: 'Plan An In-Person Visit', href: '/plan-your-visit' }}
+    />
+  </div>
 </BaseLayout>
 
 <style>
