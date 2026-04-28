@@ -354,16 +354,42 @@ const hasFrame = Boolean(serviceSummary || location);
 
   @media (max-width: 740px) {
     .full-hero {
-      min-height: 520px;
+      min-height: 460px;
+    }
+
+    .hero-main {
+      min-height: 430px;
+    }
+
+    .hero-layout {
+      padding-top: 4.6rem;
+      padding-bottom: 7.2rem;
+      align-items: end;
+    }
+
+    .hero-stack {
+      max-width: 28rem;
+      padding-bottom: 1.4rem;
     }
 
     .pillar-wrap {
-      max-width: 20ch;
+      max-width: 15ch;
       gap: 0.35rem;
+    }
+
+    .pillar-line {
+      font-size: clamp(2rem, 10vw, 2.75rem);
+      line-height: 0.93;
+    }
+
+    .hero-frame {
+      padding: 0.8rem 0;
+      background: rgba(10, 12, 17, 0.72);
     }
 
     .frame-inner {
       grid-template-columns: 1fr;
+      gap: 0.65rem;
     }
 
     .frame-inner p {
@@ -375,6 +401,33 @@ const hasFrame = Boolean(serviceSummary || location);
       top: 0.55rem;
       font-size: 0.64rem;
       padding: 0.38rem 0.5rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .full-hero {
+      min-height: 430px;
+    }
+
+    .hero-main {
+      min-height: 405px;
+    }
+
+    .hero-layout {
+      padding-top: 4rem;
+      padding-bottom: 6.7rem;
+    }
+
+    .pillar-wrap {
+      max-width: 13ch;
+    }
+
+    .pillar-line {
+      font-size: clamp(1.82rem, 9.5vw, 2.35rem);
+    }
+
+    .frame-inner strong {
+      font-size: 0.68rem;
     }
   }
 </style>

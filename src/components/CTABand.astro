@@ -60,4 +60,16 @@ const { eyebrow, title, text, primary, secondary, dark = true } = Astro.props;
       grid-template-columns: 1fr;
     }
   }
+
+  @media (max-width: 700px) {
+    .cta-band {
+      padding: 1.15rem;
+      border-radius: 0.85rem;
+      gap: 1rem;
+    }
+
+    .cta-band .cluster {
+      gap: 0.7rem;
+    }
+  }
 </style>

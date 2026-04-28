@@ -457,11 +457,47 @@ main {
 
 @media (max-width: 700px) {
   .container {
-    width: min(var(--max-width), calc(100% - 1.2rem));
+    width: min(var(--max-width), calc(100% - 1.5rem));
   }
 
   .section {
-    padding: 2.9rem 0;
+    padding: 3.2rem 0;
+  }
+
+  .section-tight {
+    padding: 2.25rem 0;
+  }
+
+  .eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+
+  .lead {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .title-xl {
+    font-size: clamp(2.15rem, 11vw, 3.2rem);
+    line-height: 0.94;
+  }
+
+  .title-lg {
+    font-size: clamp(1.8rem, 8.8vw, 2.6rem);
+    line-height: 0.96;
+  }
+
+  .title-md {
+    font-size: clamp(1.24rem, 6vw, 1.7rem);
+  }
+
+  .stack {
+    gap: 0.9rem;
+  }
+
+  .stack-lg {
+    gap: 1rem;
   }
 
   .grid-2,
@@ -471,10 +507,29 @@ main {
 
   .btn {
     width: 100%;
+    min-height: 3rem;
   }
 
   .cluster .btn {
-    width: auto;
+    width: 100%;
     flex: 1 1 100%;
+  }
+
+  .card {
+    border-radius: 0.8rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .container {
+    width: min(var(--max-width), calc(100% - 1.25rem));
+  }
+
+  .section {
+    padding: 2.85rem 0;
+  }
+
+  .btn {
+    padding-inline: 0.95rem;
   }
 }

@@ -59,4 +59,14 @@ const { title, audience, description, image } = Astro.props;
     width: fit-content;
     margin-top: 0.28rem;
   }
+
+  @media (max-width: 700px) {
+    .ministry-card .content {
+      padding: 0.95rem;
+    }
+
+    .ministry-card h3 {
+      font-size: 1.26rem;
+    }
+  }
 </style>
