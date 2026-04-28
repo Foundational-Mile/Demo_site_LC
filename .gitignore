@@ -4,4 +4,5 @@ dist/
 .DS_Store
 .env
 content_old/
+raw_from/
 # Local large media

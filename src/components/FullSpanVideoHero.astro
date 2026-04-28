@@ -6,18 +6,12 @@ interface Props {
   title?: string;
   text?: string;
   leftPillars?: string[];
-  mobileEyebrow?: string;
-  mobileTitle?: string;
-  mobileText?: string;
   poster: string;
-  mobilePoster?: string;
   videoAlt: string;
   videoSrc?: string;
   staticOnly?: boolean;
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
-  mobilePrimaryCta?: { label: string; href: string };
-  mobileSecondaryCta?: { label: string; href: string };
   serviceSummary?: string;
   location?: string;
 }
@@ -27,34 +21,26 @@ const {
   title = '',
   text = '',
   leftPillars = [],
-  mobileEyebrow,
-  mobileTitle = '',
-  mobileText = '',
   poster,
-  mobilePoster,
   videoAlt,
   videoSrc = '/videos/hero-home.mp4',
   staticOnly = false,
   primaryCta,
   secondaryCta,
-  mobilePrimaryCta,
-  mobileSecondaryCta,
   serviceSummary,
   location
 } = Astro.props;
 
 const resolvedPoster = withBase(poster);
-const resolvedMobilePoster = withBase(mobilePoster ?? poster);
 const resolvedVideoSrc = withBase(videoSrc);
 const hasFrame = Boolean(serviceSummary || location);
-const hasMobileCopy = Boolean(mobileEyebrow || mobileTitle || mobileText || mobilePrimaryCta || mobileSecondaryCta);
 ---
 
 {staticOnly ? (
   <section
     class="full-hero static-hero surface-dark"
     aria-label="Homepage hero"
-    style={`--hero-poster-url: url("${resolvedPoster}"); --hero-mobile-poster-url: url("${resolvedMobilePoster}")`}
+    style={`--hero-poster-url: url("${resolvedPoster}")`}
   >
     <div class="hero-main">
       <div class="hero-media">
@@ -65,7 +51,7 @@ const hasMobileCopy = Boolean(mobileEyebrow || mobileTitle || mobileText || mobi
       <div class="hero-content">
         <div class="container hero-layout">
           {leftPillars.length > 0 ? (
-            <div class="pillar-wrap desktop-pillar" aria-label="Faith pillars">
+            <div class="pillar-wrap" aria-label="Faith pillars">
               <h1 class="pillar-heading">
                 {leftPillars.map((pillar) => (
                   <span class="pillar-line">{pillar}</span>
@@ -86,23 +72,6 @@ const hasMobileCopy = Boolean(mobileEyebrow || mobileTitle || mobileText || mobi
               )}
             </div>
           ) : null}
-
-          {hasMobileCopy && (
-            <div class="mobile-hero-copy">
-              <div class="stack hero-copy-card">
-                {mobileEyebrow && <span class="eyebrow">{mobileEyebrow}</span>}
-                {mobileTitle && <h1 class="title-lg">{mobileTitle}</h1>}
-                {mobileText && <p class="lead">{mobileText}</p>}
-
-                {(mobilePrimaryCta || mobileSecondaryCta) && (
-                  <div class="cluster hero-mobile-actions">
-                    {mobilePrimaryCta && <a class="btn btn-primary" href={withBase(mobilePrimaryCta.href)}>{mobilePrimaryCta.label}</a>}
-                    {mobileSecondaryCta && <a class="btn btn-secondary" href={withBase(mobileSecondaryCta.href)}>{mobileSecondaryCta.label}</a>}
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
@@ -135,76 +104,62 @@ const hasMobileCopy = Boolean(mobileEyebrow || mobileTitle || mobileText || mobi
   <section
     class="full-hero surface-dark"
     aria-label="Homepage hero"
-    style={`--hero-poster-url: url("${resolvedPoster}"); --hero-mobile-poster-url: url("${resolvedMobilePoster}")`}
+    style={`--hero-poster-url: url("${resolvedPoster}")`}
   >
-    <div class="hero-media">
-      <video class="hero-video" autoplay muted loop playsinline poster={resolvedPoster} preload="metadata" aria-label={videoAlt}>
-        <source src={resolvedVideoSrc} type="video/mp4" />
-      </video>
-      <div class="hero-scrim"></div>
-    </div>
+    <div class="hero-main">
+      <div class="hero-media">
+        <video class="hero-video" autoplay muted loop playsinline poster={resolvedPoster} preload="metadata" aria-label={videoAlt}>
+          <source src={resolvedVideoSrc} type="video/mp4" />
+        </video>
+        <div class="hero-scrim"></div>
+      </div>
 
-    <div class="hero-content">
-      <div class="container hero-layout">
-        {leftPillars.length > 0 ? (
-          <div class="pillar-wrap desktop-pillar" aria-label="Faith pillars">
-            <h1 class="pillar-heading">
-              {leftPillars.map((pillar) => (
-                <span class="pillar-line">{pillar}</span>
-              ))}
-            </h1>
-          </div>
-        ) : (eyebrow || title || text || primaryCta || secondaryCta) ? (
-          <div class="stack hero-stack">
-            {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-            {title && <h1 class="title-xl">{title}</h1>}
-            {text && <p class="lead">{text}</p>}
+      <div class="hero-content">
+        <div class="container hero-layout">
+          {leftPillars.length > 0 ? (
+            <div class="pillar-wrap" aria-label="Faith pillars">
+              <h1 class="pillar-heading">
+                {leftPillars.map((pillar) => (
+                  <span class="pillar-line">{pillar}</span>
+                ))}
+              </h1>
+            </div>
+          ) : (eyebrow || title || text || primaryCta || secondaryCta) ? (
+            <div class="stack hero-stack">
+              {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+              {title && <h1 class="title-xl">{title}</h1>}
+              {text && <p class="lead">{text}</p>}
 
-            {(primaryCta || secondaryCta) && (
-              <div class="cluster">
-                {primaryCta && <a class="btn btn-primary" href={withBase(primaryCta.href)}>{primaryCta.label}</a>}
-                {secondaryCta && <a class="btn btn-secondary" href={withBase(secondaryCta.href)}>{secondaryCta.label}</a>}
-              </div>
-            )}
-          </div>
-        ) : null}
-
-        {hasMobileCopy && (
-          <div class="mobile-hero-copy">
-            <div class="stack hero-copy-card">
-              {mobileEyebrow && <span class="eyebrow">{mobileEyebrow}</span>}
-              {mobileTitle && <h1 class="title-lg">{mobileTitle}</h1>}
-              {mobileText && <p class="lead">{mobileText}</p>}
-
-              {(mobilePrimaryCta || mobileSecondaryCta) && (
-                <div class="cluster hero-mobile-actions">
-                  {mobilePrimaryCta && <a class="btn btn-primary" href={withBase(mobilePrimaryCta.href)}>{mobilePrimaryCta.label}</a>}
-                  {mobileSecondaryCta && <a class="btn btn-secondary" href={withBase(mobileSecondaryCta.href)}>{mobileSecondaryCta.label}</a>}
+              {(primaryCta || secondaryCta) && (
+                <div class="cluster">
+                  {primaryCta && <a class="btn btn-primary" href={withBase(primaryCta.href)}>{primaryCta.label}</a>}
+                  {secondaryCta && <a class="btn btn-secondary" href={withBase(secondaryCta.href)}>{secondaryCta.label}</a>}
                 </div>
               )}
             </div>
-          </div>
-        )}
-      </div>
-      {hasFrame && (
-        <div class="hero-frame">
-          <div class="container frame-inner">
-            {serviceSummary && (
-              <p>
-                <strong>Service Times</strong>
-                <span>{serviceSummary}</span>
-              </p>
-            )}
-            {location && (
-              <p>
-                <strong>Location</strong>
-                <span>{location}</span>
-              </p>
-            )}
-          </div>
+          ) : null}
         </div>
-      )}
+      </div>
     </div>
+
+    {hasFrame && (
+      <div class="hero-frame">
+        <div class="container frame-inner">
+          {serviceSummary && (
+            <p>
+              <strong>Service Times</strong>
+              <span>{serviceSummary}</span>
+            </p>
+          )}
+          {location && (
+            <p>
+              <strong>Location</strong>
+              <span>{location}</span>
+            </p>
+          )}
+        </div>
+      </div>
+    )}
     
     <div class="sr-only">
       {title}
@@ -301,31 +256,6 @@ const hasMobileCopy = Boolean(mobileEyebrow || mobileTitle || mobileText || mobi
 
   .pillar-wrap {
     max-width: 28ch;
-  }
-
-  .mobile-hero-copy {
-    display: none;
-    align-self: end;
-    max-width: 24rem;
-  }
-
-  .hero-copy-card {
-    padding: 1.15rem;
-    border-radius: 1rem;
-    background:
-      linear-gradient(180deg, rgba(9, 12, 18, 0.88), rgba(9, 12, 18, 0.72));
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24);
-    backdrop-filter: blur(10px);
-  }
-
-  .hero-copy-card .lead,
-  .hero-copy-card .title-lg {
-    color: #f4f7fc;
-  }
-
-  .hero-mobile-actions {
-    gap: 0.7rem;
   }
 
   .pillar-heading {
@@ -426,70 +356,34 @@ const hasMobileCopy = Boolean(mobileEyebrow || mobileTitle || mobileText || mobi
   }
 
   @media (max-width: 740px) {
-    .full-hero {
-      min-height: auto;
-    }
-
     .hero-main {
-      min-height: auto;
+      min-height: 500px;
     }
 
     .hero-layout {
-      padding-top: 3.2rem;
-      padding-bottom: 1.25rem;
+      padding-top: 2.5rem;
+      padding-bottom: 6.35rem;
       align-items: end;
-    }
-
-    .desktop-pillar,
-    .hero-stack {
-      display: none;
-    }
-
-    .mobile-hero-copy {
-      display: grid;
-      max-width: 19rem;
-    }
-
-    .hero-copy-card {
-      padding: 1rem;
-      gap: 0.8rem;
-      background:
-        linear-gradient(180deg, rgba(8, 11, 18, 0.94), rgba(8, 11, 18, 0.76));
-    }
-
-    .hero-copy-card .eyebrow {
-      font-size: 0.76rem;
-    }
-
-    .hero-copy-card .title-lg {
-      font-size: clamp(1.9rem, 8vw, 2.5rem);
-      line-height: 0.95;
-    }
-
-    .hero-copy-card .lead {
-      font-size: 0.98rem;
-      line-height: 1.5;
-    }
-
-    .hero-video {
-      display: none;
-    }
-
-    .hero-content {
-      position: relative;
-      inset: auto;
-      min-height: 100%;
-    }
-
-    .hero-media {
-      background-image: var(--hero-mobile-poster-url);
-      background-position: center right 38%;
+      justify-items: start;
     }
 
     .hero-scrim {
       background:
-        linear-gradient(180deg, rgba(7, 8, 12, 0.28) 0%, rgba(7, 8, 12, 0.38) 26%, rgba(7, 8, 12, 0.8) 72%, rgba(7, 8, 12, 0.94) 100%),
-        linear-gradient(90deg, rgba(8, 10, 16, 0.84) 0%, rgba(8, 10, 16, 0.52) 48%, rgba(8, 10, 16, 0.28) 100%);
+        linear-gradient(180deg, rgba(8, 9, 12, 0.18) 0%, rgba(8, 9, 12, 0.32) 34%, rgba(8, 9, 12, 0.72) 72%, rgba(8, 9, 12, 0.9) 100%),
+        linear-gradient(90deg, rgba(7, 10, 16, 0.2) 0%, rgba(7, 10, 16, 0.08) 55%, rgba(7, 10, 16, 0.28) 100%);
+    }
+
+    .pillar-wrap {
+      max-width: 14ch;
+      width: min(100%, 14ch);
+      justify-self: start;
+      margin-left: 0.15rem;
+    }
+
+    .pillar-line {
+      font-size: clamp(2rem, 10.4vw, 2.85rem);
+      line-height: 0.92;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
     }
 
     .hero-frame {
@@ -519,13 +413,23 @@ const hasMobileCopy = Boolean(mobileEyebrow || mobileTitle || mobileText || mobi
   }
 
   @media (max-width: 420px) {
-    .hero-layout {
-      padding-top: 2.85rem;
-      padding-bottom: 1rem;
+    .hero-main {
+      min-height: 460px;
     }
 
-    .mobile-hero-copy {
-      max-width: 17rem;
+    .hero-layout {
+      padding-top: 2.15rem;
+      padding-bottom: 5.75rem;
+    }
+
+    .pillar-wrap {
+      max-width: 12ch;
+      width: min(100%, 12ch);
+      margin-left: 0;
+    }
+
+    .pillar-line {
+      font-size: clamp(1.8rem, 9.8vw, 2.35rem);
     }
 
     .frame-inner strong {
