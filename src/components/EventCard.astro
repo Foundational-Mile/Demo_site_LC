@@ -17,66 +17,78 @@ const { title, date, time, location, category, description, image, featured = fa
 
 <article class={`card event-card ${featured ? 'featured' : ''}`}>
   <img src={image} alt={`${title} event`} loading="lazy" />
+  <div class="event-overlay"></div>
   <div class="stack-sm content">
     <span class="badge">{category}</span>
     <h3>{title}</h3>
     <p class="meta">{date} • {time}</p>
     <p class="meta">{location}</p>
     <p>{description}</p>
-    <a href={withBase('/events')} class="btn btn-secondary">View Details</a>
+    <a href={withBase('/events')} class="editorial-link">View Details</a>
   </div>
 </article>
 
 <style>
   .event-card {
     overflow: hidden;
-    border-top: 3px solid rgba(42, 111, 232, 0.55);
+    min-height: 28rem;
+    background: #09111a;
   }
 
-  .event-card img {
+  .event-card > img,
+  .event-overlay,
+  .event-card .content {
+    position: absolute;
+    inset: 0;
+  }
+
+  .event-card > img {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: 100%;
     object-fit: cover;
   }
 
+  .event-overlay {
+    background:
+      linear-gradient(180deg, rgba(7, 10, 16, 0.02) 0%, rgba(7, 10, 16, 0.28) 38%, rgba(7, 10, 16, 0.9) 100%);
+  }
+
   .event-card .content {
-    padding: 0.86rem;
+    z-index: 1;
+    display: grid;
+    align-content: end;
+    gap: 0.55rem;
+    padding: 1.1rem;
   }
 
   .event-card h3 {
-    font-size: 1.38rem;
-    line-height: 1;
-  }
-
-  .event-card .meta,
-  .event-card p {
-    color: #505f76;
+    font-size: 1.7rem;
+    line-height: 0.94;
+    color: #f4f7fc;
   }
 
   .event-card .meta {
-    font-size: 0.77rem;
-    letter-spacing: 0.05em;
+    color: #c1cbd8;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
-  .event-card .btn {
-    width: fit-content;
-    margin-top: 0.25rem;
+  .event-card p {
+    color: #dce4ef;
+  }
+
+  .event-card .editorial-link {
+    color: #ffffff;
   }
 
   .event-card.featured {
-    border-color: rgba(16, 18, 24, 0.2);
-    box-shadow: 0 16px 30px rgba(16, 20, 32, 0.14);
-    border-top-color: #2a6fe8;
+    box-shadow: 0 34px 64px rgba(0, 0, 0, 0.22);
   }
 
   @media (max-width: 700px) {
-    .event-card .content {
-      padding: 0.95rem;
-    }
-
-    .event-card h3 {
-      font-size: 1.28rem;
+    .event-card {
+      min-height: 23rem;
     }
   }
 </style>

@@ -13,60 +13,98 @@ const { title, audience, description, image } = Astro.props;
 
 <article class="card ministry-card">
   <img src={image} alt={`${title} ministry`} loading="lazy" />
+  <div class="ministry-overlay"></div>
   <div class="stack-sm content">
-    <h3>{title}</h3>
     <p class="audience">{audience}</p>
+    <h3>{title}</h3>
     <p>{description}</p>
-    <a href={withBase('/next-steps')} class="btn btn-ghost">Learn More</a>
+    <div class="ministry-footer">
+      <span class="ministry-kicker">Find Your Place</span>
+      <a href={withBase('/next-steps')} class="editorial-link">Learn More</a>
+    </div>
   </div>
 </article>
 
 <style>
   .ministry-card {
     overflow: hidden;
-    height: 100%;
-    border-top: 3px solid rgba(42, 111, 232, 0.55);
+    min-height: 30rem;
+    background: #09111a;
   }
 
-  .ministry-card img {
+  .ministry-card > img,
+  .ministry-overlay,
+  .ministry-card .content {
+    position: absolute;
+    inset: 0;
+  }
+
+  .ministry-card > img {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    height: 100%;
     object-fit: cover;
   }
 
+  .ministry-overlay {
+    background:
+      linear-gradient(180deg, rgba(7, 10, 16, 0.06) 0%, rgba(7, 10, 16, 0.36) 38%, rgba(7, 10, 16, 0.88) 100%);
+  }
+
   .ministry-card .content {
-    padding: 0.86rem;
+    display: grid;
+    align-content: end;
+    gap: 0.75rem;
+    padding: 1.2rem;
+    z-index: 1;
   }
 
   .ministry-card h3 {
-    font-size: 1.35rem;
-    line-height: 1;
+    font-size: 2.05rem;
+    color: #f4f7fc;
   }
 
   .audience {
-    color: #12151b;
+    color: #8eb3ff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.88rem;
     font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
   }
 
   .ministry-card p {
-    color: #505e75;
+    color: #d8e0ec;
   }
 
-  .ministry-card .btn {
-    width: fit-content;
-    margin-top: 0.28rem;
+  .ministry-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.2rem;
+  }
+
+  .ministry-kicker {
+    color: rgba(255, 255, 255, 0.72);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .ministry-card .editorial-link {
+    color: #ffffff;
   }
 
   @media (max-width: 700px) {
-    .ministry-card .content {
-      padding: 0.95rem;
+    .ministry-card {
+      min-height: 24rem;
     }
 
     .ministry-card h3 {
-      font-size: 1.26rem;
+      font-size: 1.7rem;
     }
   }
 </style>

@@ -5,6 +5,7 @@ import SectionIntro from '../components/SectionIntro.astro';
 import MessageCard from '../components/MessageCard.astro';
 import CTABand from '../components/CTABand.astro';
 import CardGrid from '../components/CardGrid.astro';
+import OutlineGraphic from '../components/OutlineGraphic.astro';
 import { messages } from '../data/content';
 import { media } from '../data/media';
 
@@ -21,13 +22,15 @@ const filters = ['All', 'Joseph', 'The Way Of Jesus', 'Easter Sunday', 'Featured
       text="Catch up on Sunday teaching and share a message with a friend."
       centered={true}
       textured={true}
+      graphic="open-bible"
       primaryCta={{ label: 'Browse Recent Messages', href: '#browse-messages' }}
       secondaryCta={{ label: 'See Next Steps', href: '/next-steps' }}
     />
 
-    <section class="section page-section">
+    <section class="section page-section surface-dark messages-feature-band">
       <div class="container">
-        <div class="page-module page-module-white page-module-stack">
+        <div class="page-module page-module-white page-module-stack messages-feature-shell">
+          <OutlineGraphic src="/brand/mission/outline-03.png" className="messages-outline" />
           <SectionIntro
             eyebrow="Featured Message"
             title={featured.title}
@@ -38,9 +41,9 @@ const filters = ['All', 'Joseph', 'The Way Of Jesus', 'Easter Sunday', 'Featured
       </div>
     </section>
 
-    <section id="browse-messages" class="section page-section">
+    <section id="browse-messages" class="section page-section surface-soft messages-browse-band">
       <div class="container">
-        <div class="page-module page-module-soft page-module-stack">
+        <div class="page-module page-module-soft page-module-stack messages-browse-shell">
           <SectionIntro
             eyebrow="Browse"
             title="Recent messages"
@@ -60,9 +63,9 @@ const filters = ['All', 'Joseph', 'The Way Of Jesus', 'Easter Sunday', 'Featured
       </div>
     </section>
 
-    <section class="section page-section">
+    <section class="section page-section surface-dark messages-heart-band">
       <div class="container">
-        <div class="split page-module page-module-white page-module-split">
+        <div class="split page-module page-module-ink page-module-split messages-heart-shell">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Teaching Heart"
@@ -98,23 +101,51 @@ const filters = ['All', 'Joseph', 'The Way Of Jesus', 'Easter Sunday', 'Featured
 </BaseLayout>
 
 <style>
+  .messages-feature-shell,
+  .messages-browse-shell,
+  .messages-heart-shell {
+    position: relative;
+  }
+
+  .messages-outline {
+    right: -7rem;
+    top: 1rem;
+    width: 22rem;
+    height: 16rem;
+    opacity: 0.14;
+    --outline-rotate: 3deg;
+  }
+
   .filter-row {
     gap: 0.6rem;
+    padding-bottom: 0.25rem;
   }
 
   .filter-pill {
-    border: 1px solid rgba(16, 18, 24, 0.15);
-    background: #fff;
+    border: 1px solid rgba(13, 18, 25, 0.12);
+    background: rgba(255, 255, 255, 0.88);
     color: #46536a;
     font-weight: 700;
-    padding: 0.45rem 0.7rem;
+    padding: 0.55rem 0.82rem;
     border-radius: 999px;
     cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .filter-pill.active {
     border-color: rgba(16, 18, 24, 0.28);
     color: #0f1115;
     background: #eceff4;
+  }
+
+  @media (max-width: 900px) {
+    .messages-outline {
+      right: -3rem;
+      top: 2rem;
+      width: 12rem;
+      height: 9rem;
+    }
   }
 </style>

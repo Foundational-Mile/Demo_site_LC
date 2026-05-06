@@ -5,6 +5,7 @@ import SectionIntro from '../components/SectionIntro.astro';
 import StaffCard from '../components/StaffCard.astro';
 import CardGrid from '../components/CardGrid.astro';
 import CTABand from '../components/CTABand.astro';
+import OutlineGraphic from '../components/OutlineGraphic.astro';
 import { staff } from '../data/content';
 import { media } from '../data/media';
 
@@ -18,15 +19,17 @@ const otherStaff = staff.filter((person) => person.team !== 'Executive');
       eyebrow="Our Team"
       title="Meet Our Team"
       text="Get to know the pastors and directors serving Limitless Church."
+      graphic="worship-hands"
       image={media.heroes.staff}
       imageAlt="Church leadership team in conversation"
       primaryCta={{ label: 'Call The Team', href: 'tel:+14175219806' }}
       secondaryCta={{ label: 'First-Time Guide', href: '/plan-your-visit' }}
     />
 
-    <section class="section page-section">
+    <section class="section page-section surface-dark staff-executive-band">
       <div class="container">
-        <div class="page-module page-module-white page-module-stack">
+        <div class="staff-executive-shell">
+          <OutlineGraphic src="/brand/mission/outline-01.png" className="staff-outline staff-outline-executive" />
           <SectionIntro
             eyebrow="Executive Leadership"
             title="Vision and pastoral oversight"
@@ -41,9 +44,9 @@ const otherStaff = staff.filter((person) => person.team !== 'Executive');
       </div>
     </section>
 
-    <section class="section page-section">
+    <section class="section page-section surface-soft staff-team-band">
       <div class="container">
-        <div class="page-module page-module-soft page-module-stack">
+        <div class="staff-team-shell">
           <SectionIntro
             eyebrow="Ministry Staff"
             title="Specialized teams serving people at every stage"
@@ -67,3 +70,30 @@ const otherStaff = staff.filter((person) => person.team !== 'Executive');
     />
   </div>
 </BaseLayout>
+
+<style>
+  .staff-executive-shell,
+  .staff-team-shell {
+    position: relative;
+    display: grid;
+    gap: 2rem;
+  }
+
+  .staff-outline-executive {
+    width: min(34rem, 42vw);
+    height: min(34rem, 42vw);
+    top: -2.5rem;
+    right: -4rem;
+    opacity: 0.12;
+  }
+
+  @media (max-width: 980px) {
+    .staff-outline-executive {
+      width: 18rem;
+      height: 18rem;
+      top: auto;
+      right: -2rem;
+      bottom: 8rem;
+    }
+  }
+</style>

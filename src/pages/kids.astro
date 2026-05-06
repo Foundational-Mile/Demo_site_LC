@@ -6,6 +6,7 @@ import CTABand from '../components/CTABand.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import CardGrid from '../components/CardGrid.astro';
 import TestimonialStrip from '../components/TestimonialStrip.astro';
+import OutlineGraphic from '../components/OutlineGraphic.astro';
 import { kidsAgeGroups, testimonials, visitFaqs } from '../data/content';
 import { media } from '../data/media';
 ---
@@ -16,15 +17,16 @@ import { media } from '../data/media';
       eyebrow="Limitless Kids"
       title="A Great Place for Kids"
       text="From infants through 5th grade, kids are seen, known, and engaged in faith-filled environments."
+      graphic="dove"
       image={media.heroes.kids}
       imageAlt="Children smiling in a bright kids ministry room"
       primaryCta={{ label: 'Plan Your Family Visit', href: '/plan-your-visit' }}
       secondaryCta={{ label: 'Talk With Kids Team', href: '/care' }}
     />
 
-    <section class="section page-section">
+    <section class="section page-section surface-soft kids-reassure-band">
       <div class="container">
-        <div class="split page-module page-module-white page-module-split">
+        <div class="split page-module page-module-white page-module-split kids-reassure-shell">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Parent Reassurance"
@@ -50,9 +52,9 @@ import { media } from '../data/media';
       </div>
     </section>
 
-    <section class="section page-section">
+    <section class="section page-section kids-ages-band">
       <div class="container">
-        <div class="page-module page-module-soft page-module-stack">
+        <div class="page-module page-module-soft page-module-stack kids-ages-shell">
           <SectionIntro
             eyebrow="Age Groups"
             title="Every stage has a place"
@@ -71,9 +73,10 @@ import { media } from '../data/media';
       </div>
     </section>
 
-    <section class="section page-section">
+    <section class="section page-section surface-dark kids-experience-band">
       <div class="container">
-        <div class="split page-module page-module-white page-module-split">
+        <div class="split page-module page-module-ink page-module-split kids-experience-shell">
+          <OutlineGraphic src="/brand/mission/outline-05.png" className="kids-outline kids-outline-experience" />
           <div class="photo-grid">
             <img
               src={media.sections.kidsWorship}
@@ -105,9 +108,9 @@ import { media } from '../data/media';
 
     <TestimonialStrip items={testimonials.slice(0, 2)} title="Why parents love Limitless Kids" />
 
-    <section class="section page-section">
+    <section class="section page-section kids-faq-band">
       <div class="container">
-        <div class="split page-module page-module-soft page-module-split">
+        <div class="split page-module page-module-soft page-module-split kids-faq-shell">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Parent FAQ"
@@ -131,16 +134,27 @@ import { media } from '../data/media';
 </BaseLayout>
 
 <style>
+  .kids-reassure-shell,
+  .kids-ages-shell,
+  .kids-experience-shell,
+  .kids-faq-shell {
+    position: relative;
+  }
+
   .age-card {
     padding: 1.15rem;
     display: grid;
     gap: 0.55rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 243, 238, 0.88) 100%);
+    border-top: 4px solid rgba(23, 92, 216, 0.18);
   }
 
   .age {
     color: #101218;
     font-weight: 700;
     font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
   .age-card p {
@@ -158,5 +172,19 @@ import { media } from '../data/media';
     object-fit: cover;
     width: 100%;
     aspect-ratio: 5 / 3;
+  }
+
+  .kids-outline {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .kids-outline-experience {
+    right: -5rem;
+    top: 1rem;
+    width: 16rem;
+    height: 12rem;
+    opacity: 0.12;
+    --outline-rotate: 4deg;
   }
 </style>

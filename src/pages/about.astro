@@ -5,6 +5,7 @@ import SectionIntro from '../components/SectionIntro.astro';
 import CTABand from '../components/CTABand.astro';
 import CardGrid from '../components/CardGrid.astro';
 import TestimonialStrip from '../components/TestimonialStrip.astro';
+import OutlineGraphic from '../components/OutlineGraphic.astro';
 import { values, beliefs, staff, testimonials } from '../data/content';
 import { media } from '../data/media';
 import { withBase } from '../utils/paths';
@@ -18,15 +19,17 @@ const leadPastor = staff[0];
       eyebrow="Who We Are"
       title="A Life-Giving Church In Nixa, Missouri"
       text="Limitless Church exists to help people encounter God, love people, and find purpose."
+      graphic="dove"
       image={media.heroes.about}
       imageAlt="Church lobby with people connecting"
       primaryCta={{ label: 'Plan Your Visit', href: '/plan-your-visit' }}
       secondaryCta={{ label: 'Read Our Values', href: '/about-values' }}
     />
 
-    <section class="section page-section">
+    <section class="section page-section surface-dark about-pastor-band">
       <div class="container">
-        <div class="split page-module page-module-white page-module-split">
+        <div class="split page-module page-module-ink page-module-split about-pastor-shell">
+          <OutlineGraphic src="/brand/mission/outline-01.png" className="about-outline about-outline-pastor" />
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Pastor Stone Moss"
@@ -42,7 +45,7 @@ const leadPastor = staff[0];
               <a class="btn btn-ghost" href={withBase('/messages')}>Watch A Message</a>
             </div>
           </div>
-          <div class="card lead-pastor-card">
+          <div class="lead-pastor-card">
             <img
               class="media-cover"
               src={leadPastor.image}
@@ -59,9 +62,9 @@ const leadPastor = staff[0];
       </div>
     </section>
 
-    <section class="section page-section">
+    <section class="section page-section about-values-band">
       <div class="container">
-        <div class="page-module page-module-soft page-module-stack">
+        <div class="page-module page-module-soft page-module-stack about-values-shell">
           <SectionIntro
             eyebrow="Our Values"
             title="How We Live And Lead"
@@ -80,15 +83,15 @@ const leadPastor = staff[0];
       </div>
     </section>
 
-    <section class="section page-open-section">
+    <section class="section page-open-section surface-dark about-mission-band">
       <div class="container split">
-        <article class="card statement-card">
+        <article class="statement-card">
           <h3>Our Mission</h3>
           <p>
             We exist to help people experience the presence of God, build authentic relationships, and step into divine purpose.
           </p>
         </article>
-        <article class="card statement-card">
+        <article class="statement-card">
           <h3>Our Vision: There Is More</h3>
           <p>
             We believe God has more hope, more purpose, and more life ahead for every person, every family, and our city.
@@ -97,9 +100,9 @@ const leadPastor = staff[0];
       </div>
     </section>
 
-    <section class="section page-section">
+    <section class="section page-section about-essentials-band">
       <div class="container">
-        <div class="page-module page-module-white page-module-stack">
+        <div class="page-module page-module-white page-module-stack about-essentials-shell">
           <SectionIntro
             eyebrow="The Essentials"
             title="Core Biblical Convictions"
@@ -131,6 +134,26 @@ const leadPastor = staff[0];
 </BaseLayout>
 
 <style>
+  .about-pastor-shell,
+  .about-values-shell,
+  .about-essentials-shell {
+    position: relative;
+  }
+
+  .about-outline {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .about-outline-pastor {
+    left: -6rem;
+    top: 0;
+    width: 18rem;
+    height: 14rem;
+    opacity: 0.12;
+    --outline-rotate: -5deg;
+  }
+
   .value-card,
   .belief-card,
   .statement-card,
@@ -147,14 +170,15 @@ const leadPastor = staff[0];
 
   .lead-pastor-card {
     overflow: hidden;
-    border-top: 3px solid rgba(42, 111, 232, 0.55);
+    background: rgba(255, 255, 255, 0.06);
+    border-top: 4px solid rgba(125, 169, 255, 0.18);
   }
 
   .lead-pastor-card .role {
     font-size: 0.82rem;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #1d56b9;
+    letter-spacing: 0.12em;
+    color: #8eb3ff;
     font-weight: 700;
   }
 
@@ -166,6 +190,24 @@ const leadPastor = staff[0];
   }
 
   .statement-card {
-    border-top: 3px solid rgba(42, 111, 232, 0.55);
+    background: rgba(255, 255, 255, 0.05);
+    border-top: 4px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .statement-card h3 {
+    color: var(--text);
+  }
+
+  .statement-card p,
+  .lead-pastor-card p {
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 900px) {
+    .about-outline-pastor {
+      left: -3rem;
+      width: 11rem;
+      height: 8rem;
+    }
   }
 </style>

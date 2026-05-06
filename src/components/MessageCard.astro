@@ -16,60 +16,92 @@ const { title, speaker, date, series, duration, summary, image, featured = false
 ---
 
 <article class={`card message-card ${featured ? 'featured' : ''}`}>
-  <img src={image} alt={`${title} message thumbnail`} loading="lazy" />
+  <div class="message-media">
+    <img src={image} alt={`${title} message thumbnail`} loading="lazy" />
+    <div class="message-overlay"></div>
+  </div>
   <div class="stack-sm content">
-    <div class="cluster">
-      <span class="badge">{series}</span>
-      <span class="meta">{duration}</span>
-    </div>
+    <p class="message-label">{series}</p>
     <h3>{title}</h3>
-    <p class="meta">{speaker} • {date}</p>
+    <p class="meta">{speaker}</p>
     <p>{summary}</p>
-    <a class="btn btn-ghost" href={withBase('/messages')}>Watch Message</a>
+    <div class="message-footer">
+      <p class="meta">{date} / {duration}</p>
+      <a class="editorial-link" href={withBase('/messages')}>Watch Message</a>
+    </div>
   </div>
 </article>
 
 <style>
   .message-card {
     overflow: hidden;
-    border-top: 3px solid rgba(42, 111, 232, 0.55);
+    min-height: 32rem;
+    background: linear-gradient(180deg, #0a1119 0%, #060a10 100%);
   }
 
-  .message-card img {
+  .message-media {
+    position: relative;
+    min-height: 60%;
+  }
+
+  .message-media img {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: 100%;
+    min-height: 19rem;
     object-fit: cover;
   }
 
+  .message-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 11, 16, 0.02) 0%, rgba(7, 11, 16, 0.58) 100%);
+  }
+
   .message-card .content {
-    padding: 0.86rem;
+    padding: 1.2rem 1.15rem 1.25rem;
+    align-content: space-between;
+    min-height: 40%;
   }
 
   .message-card h3 {
-    font-size: 1.45rem;
-    line-height: 1;
+    font-size: 2.15rem;
+    line-height: 0.92;
+    color: inherit;
+  }
+
+  .message-label {
+    color: #91b6ff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
   .message-card .meta {
-    color: #59657a;
-    font-size: 0.78rem;
+    color: #95a4bb;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
   }
 
   .message-card p {
-    color: #4e5b6f;
+    color: #c0cad8;
   }
 
-  .message-card .btn {
-    margin-top: 0.3rem;
-    width: fit-content;
+  .message-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.35rem;
   }
 
   .message-card.featured {
-    border-color: rgba(16, 18, 24, 0.22);
-    box-shadow: 0 18px 34px rgba(16, 18, 24, 0.15);
-    border-top-color: #2a6fe8;
+    transform: none;
+    border-color: rgba(125, 169, 255, 0.18);
+    box-shadow: 0 34px 64px rgba(0, 0, 0, 0.16);
   }
 
   @media (max-width: 700px) {
@@ -78,11 +110,11 @@ const { title, speaker, date, series, duration, summary, image, featured = false
     }
 
     .message-card h3 {
-      font-size: 1.32rem;
+      font-size: 1.85rem;
     }
 
-    .message-card .meta {
-      font-size: 0.74rem;
+    .message-footer {
+      align-items: flex-start;
     }
   }
 </style>

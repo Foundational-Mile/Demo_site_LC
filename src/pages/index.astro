@@ -1,463 +1,1289 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FullSpanVideoHero from '../components/FullSpanVideoHero.astro';
-import SectionIntro from '../components/SectionIntro.astro';
-import SplitSection from '../components/SplitSection.astro';
-import CTABand from '../components/CTABand.astro';
-import CardGrid from '../components/CardGrid.astro';
-import MessageCard from '../components/MessageCard.astro';
-import EventCard from '../components/EventCard.astro';
-import VisitPlanningBlock from '../components/VisitPlanningBlock.astro';
+import OutlineGraphic from '../components/OutlineGraphic.astro';
 import { churchMeta } from '../data/site';
 import { media } from '../data/media';
 import { withBase } from '../utils/paths';
-import {
-  messages,
-  events,
-  nextSteps,
-  staff
-} from '../data/content';
+import { events, messages, ministries, staff, values } from '../data/content';
 
 const featuredMessage = messages.find((message) => message.featured) ?? messages[0];
-const featuredEvent = events.find((event) => event.featured) ?? events[0];
-const expectItems = [
-  {
-    title: 'Friendly Arrival',
-    description: 'Clear signage, guest parking, and greeters who help you get where you need to go.',
-    image: '/images/placeholder-friendly-arrival.svg',
-    imageAlt: 'Placeholder image for Friendly Arrival'
-  },
-  {
-    title: 'Bold Worship + Practical Message',
-    description: 'A focused service with worship, prayer, and biblical teaching you can apply this week.',
-    image: '/images/placeholder-bold-worship.svg',
-    imageAlt: 'Placeholder image for Bold Worship and Practical Message'
-  },
-  {
-    title: 'Family-Friendly Experience',
-    description: 'Safe check-in, age-based kids rooms, and a team that loves serving families well.',
-    image: '/images/placeholder-family-friendly.svg',
-    imageAlt: 'Placeholder image for Family-Friendly Experience'
-  }
-] as const;
+const recentMessages = messages.filter((message) => message.title !== featuredMessage.title).slice(0, 2);
+const featuredValues = values.slice(0, 6);
+const sundayTimes = churchMeta.serviceTimes.slice(0, 4);
+const firstWednesday = churchMeta.serviceTimes.find((time) => time.includes('First Wednesday')) ?? '';
+const newHereParty = events.find((event) => event.title === 'New Here Party') ?? events[0];
+const leadPastor = staff[0];
 
-// Home hero toggle:
-// - 'video' uses /public/videos/hero-home.mp4 with pillar words
-// - 'image' uses /public/images/hero-home-banner.png with no pillar words
-const homeHeroMode: 'video' | 'image' = 'video';
-const homeHeroImage = '/images/hero-home-banner.png';
+const ministryLinks = [
+  { ...ministries[0], href: '/kids', cta: 'Explore Kids' },
+  { ...ministries[1], href: '/next-steps', cta: 'Students + Families' },
+  { ...ministries[2], href: '/next-steps', cta: 'Find A Group' }
+];
 ---
 
 <BaseLayout title="Limitless Church | Home">
   <div class="home-page">
-    <div class="section home-hero-wrap">
-      <div class="container">
-        <FullSpanVideoHero
-          contained={true}
-          text="From the parking lot to the kids hallway, our team is ready to help you feel welcomed, informed, and settled in before service starts."
-          leftPillars={homeHeroMode === 'video' ? ['Encounter God,', 'Love People,', 'Find Purpose.'] : []}
-          poster={homeHeroMode === 'video' ? media.heroes.home : homeHeroImage}
-          videoAlt="Limitless Church home hero media"
-          staticOnly={homeHeroMode === 'image'}
-          primaryCta={{ label: 'Plan Your Visit', href: '/plan-your-visit' }}
-          serviceSummary="Sundays: 8:00, 9:30, 11:00, 12:30 PM"
-          location={churchMeta.address}
-        />
-      </div>
-    </div>
-
-    <section class="section home-section home-open-section">
-      <div class="container stack-lg">
-        <SectionIntro
-          eyebrow="New Here"
-          title="What to expect this Sunday"
-          text="From the parking lot to the kids hallway, our team is ready to help you feel welcomed, informed, and settled in before service starts."
-        />
-        <div class="grid grid-3 home-feature-strip">
-          {expectItems.map((item) => (
-            <article class="expect-card feature-note">
-              <img src={withBase(item.image)} alt={item.imageAlt} class="feature-note-media" loading="lazy" />
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </article>
-          ))}
-        </div>
-        <VisitPlanningBlock compact={true} />
-      </div>
+    <section class="section home-hero-wrap">
+      <FullSpanVideoHero
+        contained={false}
+        eyebrow="This Sunday In Nixa"
+        title="Limitless Church"
+        text=""
+        supportEyebrow=""
+        supportTitle=""
+        supportMeta=""
+        leftPillars={['Encounter God.', 'Love People.', 'Find Purpose.']}
+        poster={media.heroes.home}
+        videoAlt="Limitless Church home hero media"
+        supportVisible={false}
+        serviceSummary="Sundays at 8:00, 9:30, 11:00, and 12:30"
+        location={churchMeta.address}
+      />
     </section>
 
-    <SplitSection
-      framed={true}
-      tone="soft"
-      eyebrow="Limitless Kids"
-      title="Parents can breathe. Kids can thrive."
-      text="We know visiting with kids can feel overwhelming. At Limitless Kids, children are seen, known, and engaged in fun, faith-filled environments."
-      points={[
-        'Simple first-time family check-in process',
-        'Background-checked leaders in every room',
-        'Age-based worship, Bible teaching, and activities',
-        'Parent support team available every Sunday'
-      ]}
-      image={media.sections.homeKids}
-      imageAlt="Children in a bright classroom environment"
-      cta={{ label: 'Explore Kids Ministry', href: '/kids' }}
-    />
-
-    <section class="section home-section home-framed-section">
-      <div class="container home-module home-module-ink stack-lg">
-        <SectionIntro
-          eyebrow="Messages"
-          title="Relevant messages for real life"
-          text="Catch up on the latest message, share with a friend, or explore full series on YouTube."
-        />
-        <CardGrid columns={3}>
-          <MessageCard {...featuredMessage} featured={true} />
-          {messages
-            .filter((message) => message.title !== featuredMessage.title)
-            .slice(0, 2)
-            .map((message) => (
-              <MessageCard {...message} />
-            ))}
-        </CardGrid>
-        <div class="home-module-footer">
-          <a href={withBase('/messages')} class="btn btn-secondary">Browse All Messages</a>
+    <section class="section surface-white home-visit-band">
+      <div class="container home-visit-shell" data-rail-shell>
+        <div class="home-visit-head">
+          <div class="stack-sm">
+            <p class="home-label">New Here</p>
+            <h2 class="home-display home-display-dark home-visit-title">Your first Sunday.</h2>
+          </div>
+          <p class="home-visit-copy">
+            We want your first visit to feel simple, welcoming, and easy to navigate for you and your family.
+          </p>
         </div>
-      </div>
-    </section>
 
-    <section class="section home-section home-open-section">
-      <div class="container split home-about-split">
-        <div class="stack-lg">
-          <SectionIntro
-            eyebrow="About Limitless"
-            title="A life-giving church in Nixa, Missouri."
-            text="Limitless Church exists to help people encounter God, love people, and find purpose."
-          />
-          <ul class="list-check">
-            <li>Powerful worship and relevant, practical messages</li>
-            <li>A welcoming church family where people are known</li>
-            <li>Clear next steps for groups, serving, and growth</li>
-          </ul>
-          <a class="btn btn-ghost" href={withBase('/about')}>Learn More About Our Church</a>
+        <div class="home-visit-toolbar">
+          <p class="home-toolbar-note">Slide through the details.</p>
+          <div class="home-rail-controls home-rail-controls-dark">
+            <button type="button" class="home-rail-button home-rail-button-dark" data-rail-prev aria-label="Scroll first visit details left">←</button>
+            <button type="button" class="home-rail-button home-rail-button-dark" data-rail-next aria-label="Scroll first visit details right">→</button>
+          </div>
         </div>
-        <div class="card pastor-card pastor-card-contrast">
-          <img
-            src={staff[0].image}
-            alt="Portrait of lead pastor"
-            class="media-cover"
-            loading="lazy"
-          />
-          <div class="stack-sm content">
-            <h3>Led by Pastor Stone Moss</h3>
-            <p>
-              Pastor Stone leads with bold faith and big vision, with a heart to see Nixa transformed by the power of Jesus.
-            </p>
-            <a class="btn btn-secondary" href={withBase('/staff')}>Meet Our Team</a>
+
+        <div class="home-visit-rail" data-home-rail data-scroll-rail>
+          <article class="home-visit-slide home-visit-slide-primary">
+            <div class="home-visit-slide-copy">
+              <p class="home-item-label">Sunday Service Times</p>
+              <h3>Choose a time and come as you are.</h3>
+              <ul class="home-time-list">
+                {sundayTimes.map((time) => (
+                  <li>{time.replace('Sundays at ', '')}</li>
+                ))}
+              </ul>
+              {firstWednesday && <p class="home-visit-support">{firstWednesday}</p>}
+              <a class="editorial-link editorial-link-light" href={withBase('/plan-your-visit')}>Plan Your Visit</a>
+            </div>
+          </article>
+
+          <article class="home-visit-slide home-visit-slide-light">
+            <div class="home-visit-slide-copy">
+              <p class="home-item-label home-item-label-dark">What To Expect</p>
+              <h3>Worship, practical teaching, and people ready to help.</h3>
+              <ul class="home-visit-bullets">
+                <li>Guest parking and a team outside to welcome you.</li>
+                <li>Clear signage from the lobby to kids check-in.</li>
+                <li>Biblical teaching you can apply right away.</li>
+              </ul>
+              <a class="editorial-link" href={withBase('/plan-your-visit')}>Get Sunday Details</a>
+            </div>
+          </article>
+
+          <a href={withBase('/kids')} class="home-visit-slide home-visit-slide-image">
+            <img src={ministries[0].image} alt="Limitless Kids" loading="lazy" />
+            <div class="home-visit-slide-overlay"></div>
+            <div class="home-visit-slide-copy">
+              <p class="home-item-label">Kids + Families</p>
+              <h3>{ministries[0].title}</h3>
+              <p>{ministries[0].description}</p>
+              <span class="editorial-link editorial-link-light">See Kids Details</span>
+            </div>
+          </a>
+
+          <a href={withBase('/next-steps')} class="home-visit-slide home-visit-slide-event">
+            <img src={newHereParty.image} alt={newHereParty.title} loading="lazy" />
+            <div class="home-visit-slide-overlay"></div>
+            <div class="home-visit-slide-copy">
+              <p class="home-item-label">{newHereParty.category}</p>
+              <h3>{newHereParty.title}</h3>
+              <p>{newHereParty.description}</p>
+              <span class="editorial-link editorial-link-light">Learn The Next Steps</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="home-visit-footer">
+          <p class="home-address">{churchMeta.address}</p>
+          <div class="cluster">
+            <a class="btn btn-primary" href={withBase('/plan-your-visit')}>Get Sunday Details</a>
+            <a class="editorial-link" href={withBase('/kids')}>What About Kids?</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section home-section home-open-section">
-      <div class="container stack-lg">
-        <SectionIntro
-          eyebrow="Next Steps"
-          title="Your next step is clear"
-          text="Start with New Here Party, baptism, groups, or serving and keep moving forward in faith."
-        />
-        <div class="grid grid-3 home-card-cluster">
-          {nextSteps.slice(0, 3).map((step) => (
-            <article class="card simple-card">
-              <h3>{step.title}</h3>
-              <p>{step.description}</p>
-              <a href={withBase('/next-steps')} class="btn btn-ghost">{step.cta}</a>
+    <section class="section surface-dark home-media-band">
+      <div class="container home-media-shell">
+        <OutlineGraphic src="/brand/mission/outline-03.png" className="home-outline home-outline-media" />
+
+        <div class="home-media-head">
+          <div class="stack-sm">
+            <p class="home-label home-label-light">Messages</p>
+            <h2 class="home-display home-media-title">Recent messages to watch this week.</h2>
+          </div>
+          <a href={withBase('/messages')} class="editorial-link">Browse All Messages</a>
+        </div>
+
+        <div class="home-media-feature">
+          <div class="home-media-copy">
+            <span class="home-sticker home-sticker-light">Latest At Limitless</span>
+            <h3>{featuredMessage.title}</h3>
+            <p class="home-media-meta">{featuredMessage.series} / {featuredMessage.speaker} / {featuredMessage.duration}</p>
+            <p>{featuredMessage.summary}</p>
+            <div class="cluster">
+              <a class="btn btn-primary" href={withBase('/messages')}>Watch Message</a>
+              <a class="editorial-link" href={withBase('/messages')}>See Recent Series</a>
+            </div>
+          </div>
+
+          <a href={withBase('/messages')} class="home-media-poster">
+            <img src={featuredMessage.image} alt={`${featuredMessage.title} message artwork`} loading="lazy" />
+            <div class="home-media-overlay"></div>
+            <div class="home-media-play">
+              <span>Play</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="home-media-rail">
+          {recentMessages.map((message) => (
+            <article class="home-media-item">
+              <div class="home-media-item-image">
+                <img src={message.image} alt={`${message.title} message artwork`} loading="lazy" />
+                <div class="home-media-item-overlay"></div>
+              </div>
+              <div class="home-media-item-copy">
+                <p class="home-item-label">{message.series}</p>
+                <h3>{message.title}</h3>
+                <p>{message.summary}</p>
+                <a href={withBase('/messages')} class="editorial-link">Watch Message</a>
+              </div>
             </article>
           ))}
         </div>
       </div>
     </section>
 
-    <section class="section home-section home-framed-section">
-      <div class="container home-module home-module-ink stack-lg">
-        <SectionIntro
-          eyebrow="Upcoming"
-          title="There is always something happening"
-          text="From First Wednesday to baptisms, child dedications, and groups, there are clear ways to connect."
-        />
-        <CardGrid columns={3}>
-          <EventCard {...featuredEvent} featured={true} />
-          {events
-            .filter((event) => event.title !== featuredEvent.title)
-            .slice(0, 2)
-            .map((event) => (
-              <EventCard {...event} />
-            ))}
-        </CardGrid>
-        <div class="home-module-footer">
-          <a href={withBase('/events')} class="btn btn-secondary">View All Events</a>
+    <section class="section surface-dark home-mission-band">
+      <OutlineGraphic src="/brand/mission/outline-05.png" className="home-outline home-outline-mission" />
+      <div class="container home-mission-shell" data-rail-shell>
+        <div class="home-mission-copy">
+          <p class="home-label home-label-light">Limitless Church</p>
+          <h2 class="home-mission-statement">
+            "Our mission is to help <span class="home-sticker">people</span> encounter God, love people, and find purpose."
+          </h2>
+        </div>
+
+        <div class="home-values-head">
+          <div class="stack-sm">
+            <h3 class="home-values-title">Our Values</h3>
+            <p class="home-values-copy">Our core values shape how we serve, lead, and follow Jesus together.</p>
+          </div>
+          <div class="home-rail-controls">
+            <button type="button" class="home-rail-button" data-rail-prev aria-label="Scroll values left">←</button>
+            <button type="button" class="home-rail-button" data-rail-next aria-label="Scroll values right">→</button>
+          </div>
+        </div>
+
+        <div class="home-values-rail" data-home-rail data-scroll-rail>
+          {featuredValues.map((value, index) => (
+            <article class="home-value-item">
+              <div class="home-value-rule"></div>
+              <div class="home-value-number">{String(index + 1).padStart(2, '0')}</div>
+              <h4>{value.title}</h4>
+              <p>{value.description}</p>
+            </article>
+          ))}
         </div>
       </div>
     </section>
 
-    <CTABand
-      eyebrow="Ready For Sunday?"
-      title="Start your Sunday with confidence."
-      text="We will help with parking, kids check-in, and anything else you need to feel ready before you arrive."
-      primary={{ label: 'Get Sunday Details', href: '/plan-your-visit' }}
-      secondary={{ label: 'What About Kids?', href: '/kids' }}
-    />
+    <section class="section surface-soft home-doorway-band">
+      <div class="container home-doorway-shell">
+        <div class="home-doorway-head">
+          <div class="stack-sm">
+            <p class="home-label">Ways To Connect</p>
+            <h2 class="home-display home-display-dark home-doorway-title">Ways to connect beyond Sunday.</h2>
+          </div>
+          <a href={withBase('/next-steps')} class="editorial-link">Explore More Ways To Connect</a>
+        </div>
+
+        <div class="home-doorway-grid">
+          {ministryLinks.map((ministry) => (
+            <a href={withBase(ministry.href)} class="home-doorway-card">
+              <img src={ministry.image} alt={`${ministry.title} ministry`} loading="lazy" />
+              <div class="home-doorway-overlay"></div>
+              <div class="home-doorway-copy">
+                <p class="home-item-label">{ministry.audience}</p>
+                <h3>{ministry.title}</h3>
+                <p>{ministry.description}</p>
+                <span class="editorial-link">{ministry.cta}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section surface-dark home-pastor-band">
+      <div class="container home-pastor-shell">
+        <OutlineGraphic src="/brand/mission/outline-01.png" className="home-outline home-outline-pastor" />
+
+        <div class="home-pastor-head">
+          <p class="home-label home-label-light">Leadership</p>
+          <h2 class="home-pastor-title">Our Pastors</h2>
+        </div>
+
+        <div class="home-pastor-feature">
+          <a href={withBase('/about')} class="home-pastor-portrait">
+            <img src={leadPastor.image} alt={`Portrait of Pastor ${leadPastor.name}`} loading="lazy" />
+            <div class="home-pastor-overlay"></div>
+            <div class="home-pastor-mark">
+              <span>Stone + Madison Moss</span>
+            </div>
+          </a>
+
+          <div class="home-pastor-copy">
+            <p class="home-pastor-lead">
+              Pastor Stone leads with bold faith, big vision, and a heart to see Nixa transformed by the power of Jesus.
+            </p>
+            <p class="home-pastor-body">
+              Alongside his wife Madison and their children, Stone is helping build a church culture marked by faith,
+              family, and a belief that there is more ahead.
+            </p>
+            <p class="home-pastor-body">
+              His teaching is practical, biblical, and focused on real life. Limitless exists to help people encounter
+              God, love people, and find purpose together.
+            </p>
+            <div class="cluster">
+              <a class="editorial-link editorial-link-light" href={withBase('/about')}>Read More</a>
+              <a class="editorial-link editorial-link-light" href={withBase('/messages')}>Watch A Message</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section home-final-band">
+      <div class="container home-final-shell">
+        <OutlineGraphic src="/brand/mission/outline-02.png" className="home-outline home-outline-final" />
+        <p class="home-label home-label-light">Ready For Sunday?</p>
+        <h2 class="home-final-title">Start your Sunday with confidence.</h2>
+        <p class="home-final-copy">
+          We will help with parking, kids check-in, and anything else you need so your first visit feels easy.
+        </p>
+        <div class="cluster">
+          <a class="btn btn-primary" href={withBase('/plan-your-visit')}>Get Sunday Details</a>
+          <a class="editorial-link" href={withBase('/kids')}>What About Kids?</a>
+        </div>
+      </div>
+    </section>
   </div>
 </BaseLayout>
 
 <style>
   .home-page {
     background:
-      linear-gradient(180deg, #f3f4f6 0%, #eef1f5 38%, #f7f8fa 100%);
+      linear-gradient(180deg, #faf6f0 0%, #eef3f8 38%, #f9fafb 100%);
   }
 
   .home-hero-wrap {
-    padding-top: clamp(1rem, 2.5vw, 1.8rem);
-    padding-bottom: clamp(1.2rem, 2.8vw, 2rem);
+    padding: 0;
   }
 
-  .home-section {
-    padding-top: clamp(1.35rem, 3vw, 2.35rem);
-    padding-bottom: clamp(1.35rem, 3vw, 2.35rem);
+  .home-label {
+    color: var(--accent-strong);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
   }
 
-  .home-open-section {
-    padding-top: clamp(1.6rem, 3.8vw, 2.8rem);
-    padding-bottom: clamp(1.6rem, 3.8vw, 2.8rem);
+  .home-label-light {
+    color: #dfe7f5;
   }
 
-  .home-about-split {
-    align-items: center;
-  }
-
-  .home-module {
-    padding: clamp(1.2rem, 3vw, 2rem);
-    border-radius: 1rem;
-    border: 1px solid rgba(16, 18, 24, 0.1);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .home-module-white {
-    background: rgba(255, 255, 255, 0.94);
-  }
-
-  .home-module-soft {
-    background: linear-gradient(180deg, #f7f8fa 0%, #edf1f5 100%);
-  }
-
-  .home-module-ink {
-    background:
-      radial-gradient(circle at top right, rgba(93, 143, 242, 0.22), transparent 34%),
-      linear-gradient(180deg, #171b22 0%, #0f1319 100%);
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 22px 44px rgba(8, 11, 17, 0.18);
-  }
-
-  .home-module-ink :global(.title-lg),
-  .home-module-ink :global(.title-md),
-  .home-module-ink :global(h2),
-  .home-module-ink :global(h3),
-  .home-module-ink :global(.eyebrow),
-  .home-module-ink :global(.lead),
-  .home-module-ink :global(p),
-  .home-module-ink :global(li) {
+  .home-display {
     color: var(--text);
+    font-size: clamp(2.25rem, 4.8vw, 4.6rem);
+    line-height: 0.92;
+    max-width: 11ch;
+    text-wrap: balance;
   }
 
-  .home-module-ink :global(.eyebrow::after) {
-    background: #5d8ff2;
+  .home-display-dark {
+    color: var(--ink);
   }
 
-  .home-module-ink :global(.card) {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.14);
-    box-shadow: none;
+  .home-item-label-dark {
+    color: #335ea7;
   }
 
-  .home-module-ink :global(.card:hover) {
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+  .home-visit-title {
+    font-size: clamp(1.95rem, 3.2vw, 3rem);
+    line-height: 0.96;
+    max-width: 8.8ch;
   }
 
-  .home-module-ink :global(.expect-card p),
-  .home-module-ink :global(.simple-card p),
-  .home-module-ink :global(.message-card p),
-  .home-module-ink :global(.message-card .meta),
-  .home-module-ink :global(.event-card p),
-  .home-module-ink :global(.event-card .meta) {
-    color: var(--text-muted);
+  .home-media-title,
+  .home-doorway-title {
+    max-width: 10ch;
   }
 
-  .home-module-ink :global(.badge) {
-    background: rgba(93, 143, 242, 0.18);
-    color: #dbe8ff;
+  .home-sticker {
+    display: inline-block;
+    padding: 0.14em 0.42em 0.06em;
+    background: #ffffff;
+    color: #0d1219;
+    border-radius: 0.08rem;
+    transform: rotate(-4deg) translateY(-0.05em);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
   }
 
-  .home-module-ink :global(.btn-secondary),
-  .home-module-ink :global(.btn-ghost) {
-    color: var(--text);
-    border-color: rgba(255, 255, 255, 0.22);
-    background: rgba(255, 255, 255, 0.08);
+  .home-sticker-light {
+    background: #f4f7fc;
   }
 
-  .home-module-ink :global(.btn-secondary:hover),
-  .home-module-ink :global(.btn-secondary:focus-visible),
-  .home-module-ink :global(.btn-ghost:hover),
-  .home-module-ink :global(.btn-ghost:focus-visible) {
+  .editorial-link-light {
     color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.34);
-    background: rgba(255, 255, 255, 0.14);
   }
 
-  .home-card-cluster {
-    gap: 1rem;
-  }
-
-  .home-feature-strip {
-    gap: 1rem;
-  }
-
-  .feature-note {
-    padding: 0.1rem 0.2rem 0.25rem 0;
-    display: grid;
-    gap: 0.6rem;
-  }
-
-  .feature-note-media {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 0.95rem;
-    border: 1px solid rgba(16, 18, 24, 0.08);
-    box-shadow: var(--shadow-sm);
-    margin-bottom: 0.15rem;
-  }
-
-  .feature-note h3 {
-    font-size: 1.34rem;
-    line-height: 1;
-    position: relative;
-    padding-top: 0.9rem;
-  }
-
-  .feature-note h3::before {
-    content: '';
+  .home-outline {
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 3.1rem;
-    height: 0.2rem;
-    border-radius: 999px;
-    background: rgba(42, 111, 232, 0.62);
+    z-index: 0;
   }
 
-  .feature-note p {
-    color: #4f5d73;
+  .home-visit-band {
+    background:
+      linear-gradient(180deg, #fbf7f1 0%, #eef3f8 100%);
+    padding-top: clamp(4rem, 8vw, 6rem);
   }
 
-  .home-module-footer {
+  .home-visit-shell,
+  .home-media-shell,
+  .home-mission-shell,
+  .home-doorway-shell {
+    position: relative;
+    z-index: 1;
+  }
+
+  .home-visit-shell {
+    display: grid;
+    gap: 1.35rem;
+  }
+
+  .home-visit-head {
+    display: grid;
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 0.72fr);
+    gap: 2.4rem;
+    align-items: start;
+  }
+
+  .home-visit-copy,
+  .home-address {
+    color: #556277;
+    font-size: 1rem;
+  }
+
+  .home-visit-copy {
+    max-width: 32ch;
+    padding-top: 0.45rem;
+    line-height: 1.5;
+  }
+
+  .home-visit-toolbar {
     display: flex;
-    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
     padding-top: 0.2rem;
   }
 
-  .expect-card,
-  .simple-card,
-  .pastor-card .content {
-    padding: 0.94rem;
+  .home-toolbar-note {
+    color: #6a7482;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
-  .expect-card,
-  .simple-card {
+  .home-rail-controls-dark .home-rail-button-dark {
+    background: #0b1017;
+    color: #f4f7fc;
+  }
+
+  .home-visit-rail {
     display: grid;
-    gap: 0.6rem;
-    border-top: 3px solid rgba(42, 111, 232, 0.55);
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(18rem, 22rem);
+    gap: 0.9rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    align-items: stretch;
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x proximity;
+    cursor: grab;
   }
 
-  .expect-card h3,
-  .simple-card h3 {
-    font-size: 1.38rem;
-    line-height: 1;
+  .home-visit-rail:active {
+    cursor: grabbing;
   }
 
-  .expect-card p,
-  .simple-card p,
-  .pastor-card p {
-    color: #4f5d73;
+  .home-visit-rail::-webkit-scrollbar {
+    height: 0.45rem;
   }
 
-  .simple-card .btn {
-    width: fit-content;
+  .home-visit-rail::-webkit-scrollbar-thumb {
+    background: rgba(13, 18, 25, 0.18);
+    border-radius: 999px;
   }
 
-  .pastor-card {
+  .home-visit-slide {
+    position: relative;
+    min-height: 19.5rem;
+    display: grid;
+    scroll-snap-align: start;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .home-visit-slide-copy {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.75rem;
+    align-content: end;
+    min-height: 100%;
+    padding: 1.1rem;
+  }
+
+  .home-visit-slide h3 {
+    font-size: clamp(1.45rem, 2.2vw, 2.3rem);
+    line-height: 0.96;
+    max-width: 11ch;
+  }
+
+  .home-visit-slide p,
+  .home-visit-slide li {
+    font-size: 0.96rem;
+    line-height: 1.45;
+  }
+
+  .home-visit-slide-primary {
+    min-width: min(24rem, 66vw);
+    background:
+      radial-gradient(circle at 75% 25%, rgba(66, 121, 255, 0.22), transparent 28%),
+      linear-gradient(180deg, #0a0e15 0%, #05080d 100%);
+    color: #f4f7fc;
+  }
+
+  .home-visit-slide-light {
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 14px 24px rgba(10, 15, 24, 0.04);
+  }
+
+  .home-visit-slide-image,
+  .home-visit-slide-event {
+    background: #0b1118;
+    color: #f4f7fc;
+  }
+
+  .home-visit-slide-image img,
+  .home-visit-slide-event img,
+  .home-visit-slide-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .home-visit-slide-image img,
+  .home-visit-slide-event img {
+    object-fit: cover;
+  }
+
+  .home-visit-slide-overlay {
+    background:
+      linear-gradient(180deg, rgba(7, 10, 16, 0.1) 0%, rgba(7, 10, 16, 0.26) 40%, rgba(7, 10, 16, 0.9) 100%);
+  }
+
+  .home-time-list {
+    display: grid;
+    gap: 0.38rem;
+    color: #ffffff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+    line-height: 0.96;
+    text-transform: uppercase;
+  }
+
+  .home-visit-support {
+    color: #b8c8df;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .home-visit-bullets {
+    display: grid;
+    gap: 0.7rem;
+    color: #425063;
+  }
+
+  .home-visit-bullets li {
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .home-visit-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6rem;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: #2e63ff;
+  }
+
+  .home-visit-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.2rem;
+  }
+
+  .home-media-band {
+    background:
+      radial-gradient(circle at 82% 18%, rgba(61, 116, 255, 0.14), transparent 24%),
+      linear-gradient(180deg, #0b1017 0%, #05080d 100%);
     overflow: hidden;
   }
 
-  .pastor-card-contrast {
-    background:
-      linear-gradient(180deg, #1a1f27 0%, #12171e 100%);
-    border-color: rgba(255, 255, 255, 0.08);
+  .home-media-shell {
+    display: grid;
+    gap: 1.45rem;
   }
 
-  .pastor-card-contrast h3 {
+  .home-outline-media {
+    right: -10rem;
+    top: 1.5rem;
+    width: 30rem;
+    height: 20rem;
+    opacity: 0.14;
+    --outline-rotate: 3deg;
+  }
+
+  .home-media-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1.2rem;
+    align-items: end;
+  }
+
+  .home-media-feature {
+    display: grid;
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    gap: 1.35rem;
+    align-items: end;
+  }
+
+  .home-media-copy {
+    display: grid;
+    gap: 0.9rem;
+    align-content: end;
+    max-width: 31rem;
+  }
+
+  .home-media-copy h3 {
     color: var(--text);
+    font-size: clamp(2rem, 4vw, 3.8rem);
+    line-height: 0.92;
+    max-width: 9ch;
   }
 
-  .pastor-card-contrast p {
+  .home-media-copy p {
+    color: var(--text-muted);
+    max-width: 36ch;
+  }
+
+  .home-media-meta {
+    color: #7da9ff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .home-media-poster {
+    position: relative;
+    min-height: clamp(18rem, 36vw, 30rem);
+    overflow: hidden;
+    background: #060a10;
+  }
+
+  .home-media-poster img,
+  .home-media-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .home-media-poster img {
+    object-fit: cover;
+  }
+
+  .home-media-overlay {
+    background:
+      linear-gradient(180deg, rgba(6, 10, 16, 0.06) 0%, rgba(6, 10, 16, 0.58) 100%);
+  }
+
+  .home-media-play {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: #ffffff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .home-media-play::before {
+    content: '';
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 100%);
+  }
+
+  .home-media-play::after {
+    content: '';
+    position: absolute;
+    left: 1.12rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 0.34rem solid transparent;
+    border-bottom: 0.34rem solid transparent;
+    border-left: 0.5rem solid #ffffff;
+  }
+
+  .home-media-rail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .home-media-item {
+    display: grid;
+    grid-template-columns: minmax(9rem, 0.75fr) minmax(0, 1fr);
+    min-height: 13rem;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .home-media-item-image {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .home-media-item-image img,
+  .home-media-item-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .home-media-item-image img {
+    object-fit: cover;
+  }
+
+  .home-media-item-overlay {
+    background: linear-gradient(180deg, rgba(7, 10, 16, 0.04) 0%, rgba(7, 10, 16, 0.56) 100%);
+  }
+
+  .home-media-item-copy {
+    display: grid;
+    gap: 0.75rem;
+    align-content: end;
+    padding: 0.35rem 0 0.2rem;
+  }
+
+  .home-media-item-copy h3 {
+    color: var(--text);
+    font-size: 1.65rem;
+    line-height: 0.96;
+  }
+
+  .home-media-item-copy p {
     color: var(--text-muted);
   }
 
-  @media (max-width: 980px) {
-    .home-module {
-      padding: 1.15rem;
+  .home-item-label {
+    color: #8eb3ff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .home-mission-band {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 22% 32%, rgba(61, 116, 255, 0.08), transparent 20%),
+      linear-gradient(180deg, #080c11 0%, #05070b 100%);
+    padding-top: clamp(5rem, 11vw, 8rem);
+  }
+
+  .home-outline-mission {
+    right: -9rem;
+    top: 3rem;
+    width: min(48vw, 34rem);
+    height: min(54vw, 28rem);
+    opacity: 0.18;
+    transform: none;
+    --outline-rotate: 6deg;
+  }
+
+  .home-mission-shell {
+    display: grid;
+    gap: 1.7rem;
+  }
+
+  .home-mission-copy {
+    position: relative;
+    z-index: 1;
+    max-width: 62rem;
+  }
+
+  .home-mission-statement {
+    color: var(--text);
+    font-size: clamp(2.55rem, 5.3vw, 4.9rem);
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    max-width: 12ch;
+    text-wrap: balance;
+  }
+
+  .home-values-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .home-values-title {
+    color: var(--text);
+    font-size: clamp(2.4rem, 4.6vw, 4.1rem);
+    line-height: 0.94;
+  }
+
+  .home-values-copy {
+    color: var(--text-muted);
+    max-width: 36ch;
+  }
+
+  .home-rail-controls {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .home-rail-button {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    font-size: 1.1rem;
+  }
+
+  .home-values-rail {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(18rem, 24rem);
+    gap: 1.2rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x proximity;
+  }
+
+  .home-values-rail::-webkit-scrollbar {
+    height: 0.45rem;
+  }
+
+  .home-values-rail::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+  }
+
+  .home-value-item {
+    scroll-snap-align: start;
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .home-value-rule {
+    height: 0.3rem;
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .home-value-number {
+    color: transparent;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(3.2rem, 5.2vw, 4.8rem);
+    font-weight: 700;
+    line-height: 0.85;
+    -webkit-text-stroke: 1.6px rgba(255, 255, 255, 0.96);
+  }
+
+  .home-value-item h4 {
+    color: var(--text);
+    font-size: 1.8rem;
+    line-height: 0.96;
+    max-width: 8ch;
+  }
+
+  .home-value-item p {
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
+
+  .home-doorway-shell {
+    display: grid;
+    gap: 1.55rem;
+  }
+
+  .home-doorway-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: end;
+  }
+
+  .home-doorway-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .home-doorway-card {
+    position: relative;
+    min-height: 24rem;
+    overflow: hidden;
+    background: #0b1118;
+    isolation: isolate;
+  }
+
+  .home-doorway-card img,
+  .home-doorway-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .home-doorway-card img {
+    object-fit: cover;
+  }
+
+  .home-doorway-overlay {
+    background:
+      linear-gradient(180deg, rgba(7, 10, 16, 0.04) 0%, rgba(7, 10, 16, 0.3) 36%, rgba(7, 10, 16, 0.88) 100%);
+  }
+
+  .home-doorway-copy {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.8rem;
+    align-content: end;
+    min-height: 100%;
+    padding: 1.25rem;
+  }
+
+  .home-doorway-copy h3 {
+    color: #f4f7fc;
+    font-size: 1.9rem;
+    line-height: 0.96;
+  }
+
+  .home-doorway-copy p {
+    color: #dbe3ef;
+  }
+
+  .home-doorway-copy .editorial-link {
+    color: #ffffff;
+  }
+
+  .home-final-band {
+    position: relative;
+    background:
+      radial-gradient(circle at 86% 40%, rgba(55, 113, 255, 0.12), transparent 25%),
+      linear-gradient(180deg, rgba(11, 16, 24, 0.98) 0%, rgba(7, 10, 15, 1) 100%);
+  }
+
+  .home-final-shell {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.6rem, 3vw, 2.6rem) 0;
+    z-index: 1;
+    max-width: 42rem;
+  }
+
+  .home-outline-final {
+    right: -8rem;
+    top: 50%;
+    width: 24rem;
+    height: 18rem;
+    opacity: 0.14;
+    transform: translateY(-40%);
+    --outline-rotate: 5deg;
+  }
+
+  .home-final-title {
+    color: var(--text);
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    line-height: 0.96;
+    max-width: 9ch;
+  }
+
+  .home-final-copy {
+    color: var(--text-muted);
+    max-width: 34ch;
+  }
+
+  .home-pastor-band {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 18% 26%, rgba(55, 113, 255, 0.1), transparent 22%),
+      linear-gradient(180deg, #090d13 0%, #05080d 100%);
+  }
+
+  .home-pastor-shell {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 1.3rem;
+  }
+
+  .home-outline-pastor {
+    left: -8rem;
+    top: 2rem;
+    width: 25rem;
+    height: 18rem;
+    opacity: 0.12;
+    --outline-rotate: -6deg;
+  }
+
+  .home-pastor-head {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.55rem;
+    max-width: 40rem;
+  }
+
+  .home-pastor-feature {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.92fr) minmax(0, 0.88fr);
+    gap: 1.8rem;
+    align-items: center;
+  }
+
+  .home-pastor-title {
+    color: var(--text);
+    font-size: clamp(3.2rem, 7vw, 6.6rem);
+    line-height: 0.88;
+    max-width: 7ch;
+  }
+
+  .home-pastor-copy {
+    display: grid;
+    gap: 1rem;
+    align-content: center;
+    max-width: 33rem;
+  }
+
+  .home-pastor-lead {
+    color: #f0f4fb;
+    font-size: 1.08rem;
+    line-height: 1.65;
+    max-width: 38ch;
+  }
+
+  .home-pastor-body {
+    color: var(--text-muted);
+    max-width: 38ch;
+    line-height: 1.7;
+  }
+
+  .home-pastor-portrait {
+    position: relative;
+    min-height: 30rem;
+    display: block;
+    overflow: hidden;
+    background: #0b1017;
+  }
+
+  .home-pastor-portrait img,
+  .home-pastor-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .home-pastor-portrait img {
+    object-fit: cover;
+  }
+
+  .home-pastor-overlay {
+    background:
+      linear-gradient(180deg, rgba(8, 11, 17, 0.02) 0%, rgba(8, 11, 17, 0.1) 32%, rgba(8, 11, 17, 0.58) 100%);
+  }
+
+  .home-pastor-mark {
+    position: relative;
+    z-index: 1;
+    min-height: 100%;
+    padding: 1.2rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+
+  .home-pastor-mark span {
+    display: inline-block;
+    color: #f4f7fc;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.05rem, 1.9vw, 1.7rem);
+    font-style: italic;
+    line-height: 0.95;
+    text-align: right;
+    transform: rotate(-5deg);
+  }
+
+  @media (max-width: 1080px) {
+    .home-visit-head,
+    .home-media-head,
+    .home-media-feature,
+    .home-pastor-feature,
+    .home-doorway-head,
+    .home-doorway-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .home-media-rail {
+      grid-template-columns: 1fr;
+    }
+
+    .home-visit-copy,
+    .home-media-copy,
+    .home-pastor-copy,
+    .home-final-shell {
+      max-width: 100%;
     }
   }
 
   @media (max-width: 700px) {
-    .home-hero-wrap {
-      padding-top: 1rem;
-      padding-bottom: 1.2rem;
+    .home-display,
+    .home-mission-statement,
+    .home-values-title {
+      max-width: 100%;
     }
 
-    .home-section {
-      padding-top: 1.15rem;
-      padding-bottom: 1.15rem;
+    .home-visit-shell,
+    .home-media-shell,
+    .home-mission-shell,
+    .home-pastor-shell,
+    .home-doorway-shell {
+      gap: 1.35rem;
     }
 
-    .home-open-section {
-      padding-top: 1.4rem;
-      padding-bottom: 1.4rem;
+    .home-pastor-title {
+      max-width: 100%;
     }
 
-    .home-hero-wrap .container,
-    .home-framed-section .container {
-      width: min(var(--max-width), calc(100% - 1.9rem));
+    .home-visit-rail {
+      grid-auto-columns: minmax(15rem, 84vw);
     }
 
-    .home-module {
-      padding: 1rem;
-      border-radius: 0.9rem;
+    .home-visit-slide {
+      min-height: 20rem;
     }
 
-    .home-feature-strip {
-      gap: 1.1rem;
+    .home-visit-slide-primary {
+      min-width: 84vw;
     }
 
-    .feature-note {
-      padding-right: 0;
+    .home-visit-footer,
+    .home-media-head,
+    .home-doorway-head {
+      align-items: start;
     }
 
-    .feature-note-media {
-      border-radius: 0.8rem;
+    .home-media-feature {
+      gap: 1rem;
     }
 
-    .home-module-footer {
-      display: block;
+    .home-media-poster {
+      min-height: 19rem;
+    }
+
+    .home-media-item {
+      grid-template-columns: 1fr;
+      min-height: initial;
+    }
+
+    .home-media-item-image {
+      min-height: 14rem;
+    }
+
+    .home-outline-media {
+      right: -4rem;
+      top: 2rem;
+      width: 16rem;
+      height: 11rem;
+    }
+
+    .home-outline-mission {
+      left: auto;
+      right: -4rem;
+      top: 6rem;
+      width: 16rem;
+      height: 11rem;
+      transform: none;
+    }
+
+    .home-outline-final {
+      right: -4rem;
+      width: 14rem;
+      height: 10rem;
+      top: auto;
+      bottom: 1rem;
+      transform: none;
+    }
+
+    .home-outline-pastor {
+      left: -4rem;
+      top: 1rem;
+      width: 14rem;
+      height: 10rem;
+    }
+
+    .home-values-rail {
+      grid-auto-columns: minmax(15rem, 82vw);
+    }
+
+    .home-doorway-card {
+      min-height: 21rem;
+    }
+
+    .home-pastor-portrait {
+      min-height: 22rem;
     }
   }
 </style>
+
+<script is:inline>
+  const initDraggableRails = () => {
+    document.querySelectorAll('[data-scroll-rail]').forEach((rail) => {
+      if (!(rail instanceof HTMLElement)) return;
+
+      let isPointerDown = false;
+      let startX = 0;
+      let startScrollLeft = 0;
+
+      rail.addEventListener('pointerdown', (event) => {
+        isPointerDown = true;
+        startX = event.clientX;
+        startScrollLeft = rail.scrollLeft;
+        rail.setPointerCapture(event.pointerId);
+      });
+
+      rail.addEventListener('pointermove', (event) => {
+        if (!isPointerDown) return;
+        const delta = event.clientX - startX;
+        rail.scrollLeft = startScrollLeft - delta;
+      });
+
+      const endDrag = (event) => {
+        if (isPointerDown && rail.hasPointerCapture?.(event.pointerId)) {
+          rail.releasePointerCapture(event.pointerId);
+        }
+        isPointerDown = false;
+      };
+
+      rail.addEventListener('pointerup', endDrag);
+      rail.addEventListener('pointercancel', endDrag);
+      rail.addEventListener('pointerleave', endDrag);
+    });
+  };
+
+  const initHomepageRail = () => {
+    document.querySelectorAll('[data-rail-shell]').forEach((shell) => {
+      const rail = shell.querySelector('[data-home-rail]');
+      const prev = shell.querySelector('[data-rail-prev]');
+      const next = shell.querySelector('[data-rail-next]');
+      if (!(rail instanceof HTMLElement)) return;
+
+      const moveRail = (direction) => {
+        rail.scrollBy({ left: rail.clientWidth * 0.75 * direction, behavior: 'smooth' });
+      };
+
+      prev?.addEventListener('click', () => moveRail(-1));
+      next?.addEventListener('click', () => moveRail(1));
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initHomepageRail();
+      initDraggableRails();
+    }, { once: true });
+  } else {
+    initHomepageRail();
+    initDraggableRails();
+  }
+</script>
