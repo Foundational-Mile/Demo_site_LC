@@ -23,9 +23,9 @@ import { withBase } from '../utils/paths';
       secondaryCta={{ label: 'Talk To Next Steps Team', href: '/care' }}
     />
 
-    <section id="pathway" class="section page-section surface-soft">
+    <section id="pathway" class="section page-section surface-soft next-path-band">
       <div class="container">
-        <div class="page-module page-module-white page-module-stack">
+        <div class="page-module page-module-white page-module-stack next-path-shell">
           <SectionIntro
             eyebrow="Pathway"
             title="Simple, practical, and purpose-driven"
@@ -33,7 +33,7 @@ import { withBase } from '../utils/paths';
           />
           <div class="grid grid-3">
             {nextSteps.map((step) => (
-              <article class="card step-card">
+              <article class="step-card">
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>
                 <a href={withBase('/next-steps#pathway')} class="editorial-link">{step.cta}</a>
@@ -44,9 +44,9 @@ import { withBase } from '../utils/paths';
       </div>
     </section>
 
-    <section class="section page-section surface-dark">
+    <section class="section page-section surface-dark next-belong-band">
       <div class="container">
-        <div class="split page-module page-module-ink page-module-split">
+        <div class="split page-module page-module-ink page-module-split next-belong-shell">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="How This Helps"
@@ -65,9 +65,9 @@ import { withBase } from '../utils/paths';
       </div>
     </section>
 
-    <section class="section page-section surface-soft">
+    <section class="section page-section surface-soft next-ministry-band">
       <div class="container">
-        <div class="page-module page-module-white page-module-stack">
+        <div class="page-module page-module-white page-module-stack next-ministry-shell">
           <SectionIntro
             eyebrow="Ministry Paths"
             title="Find where you can belong and grow"
@@ -97,9 +97,17 @@ import { withBase } from '../utils/paths';
     padding: 1.2rem;
     display: grid;
     gap: 0.7rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 243, 238, 0.88) 100%);
+    border-top: 4px solid rgba(23, 92, 216, 0.18);
   }
 
   .step-card p {
     color: #55647d;
+  }
+
+  .next-path-shell,
+  .next-belong-shell,
+  .next-ministry-shell {
+    position: relative;
   }
 </style>

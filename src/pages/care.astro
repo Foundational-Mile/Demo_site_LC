@@ -5,6 +5,7 @@ import SectionIntro from '../components/SectionIntro.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import FormPlaceholder from '../components/FormPlaceholder.astro';
 import CTABand from '../components/CTABand.astro';
+import OutlineGraphic from '../components/OutlineGraphic.astro';
 import { careResources, careFaqs, testimonials } from '../data/content';
 import { media } from '../data/media';
 ---
@@ -22,9 +23,10 @@ import { media } from '../data/media';
       secondaryCta={{ label: 'Share A Need', href: '#care-form' }}
     />
 
-    <section class="section page-section surface-dark">
+    <section class="section page-section surface-dark care-heart-band">
       <div class="container">
-        <div class="split page-module page-module-ink page-module-split">
+        <div class="split page-module page-module-ink page-module-split care-heart-shell">
+          <OutlineGraphic src="/brand/mission/outline-05.png" className="care-outline care-outline-heart" />
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Our Heart"
@@ -37,7 +39,7 @@ import { media } from '../data/media';
               <li>Care through difficult seasons like grief and loss</li>
             </ul>
           </div>
-          <article class="card calm-note">
+          <article class="calm-note">
             <p>
               “Life can be challenging, but you do not have to walk through it alone.”
             </p>
@@ -47,9 +49,9 @@ import { media } from '../data/media';
       </div>
     </section>
 
-    <section class="section page-section surface-soft">
+    <section class="section page-section surface-soft care-path-band">
       <div class="container">
-        <div class="page-module page-module-soft page-module-stack">
+        <div class="page-module page-module-soft page-module-stack care-path-shell">
           <SectionIntro
             eyebrow="Support Pathways"
             title="Ways we can care for you"
@@ -57,7 +59,7 @@ import { media } from '../data/media';
           />
           <div class="grid grid-2">
             {careResources.map((resource) => (
-              <article class="card resource-card">
+              <article class="resource-card">
                 <h3>{resource.title}</h3>
                 <p>{resource.summary}</p>
               </article>
@@ -67,9 +69,9 @@ import { media } from '../data/media';
       </div>
     </section>
 
-    <section class="section page-section surface-white" id="care-form">
+    <section class="section page-section surface-white care-form-band" id="care-form">
       <div class="container">
-        <div class="split page-module page-module-white page-module-split">
+        <div class="split page-module page-module-white page-module-split care-form-shell">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Prayer Request"
@@ -103,9 +105,17 @@ import { media } from '../data/media';
     padding: 1.2rem;
   }
 
+  .care-heart-shell,
+  .care-path-shell,
+  .care-form-shell {
+    position: relative;
+  }
+
   .resource-card {
     display: grid;
     gap: 0.6rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 243, 238, 0.88) 100%);
+    border-top: 4px solid rgba(23, 92, 216, 0.18);
   }
 
   .resource-card p,
@@ -116,7 +126,7 @@ import { media } from '../data/media';
   .calm-note {
     align-content: center;
     background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 4px solid rgba(255, 255, 255, 0.2);
     display: grid;
     gap: 1rem;
   }
@@ -127,5 +137,19 @@ import { media } from '../data/media';
 
   .calm-note p {
     color: var(--text-muted);
+  }
+
+  .care-outline {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .care-outline-heart {
+    right: -4rem;
+    top: 1rem;
+    width: 16rem;
+    height: 12rem;
+    opacity: 0.12;
+    --outline-rotate: 4deg;
   }
 </style>

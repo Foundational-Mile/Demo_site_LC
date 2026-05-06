@@ -22,9 +22,9 @@ import { media } from '../data/media';
       secondaryCta={{ label: 'Giving FAQ', href: '#giving-faq' }}
     />
 
-    <section class="section page-section surface-dark">
+    <section class="section page-section surface-dark give-why-band">
       <div class="container">
-        <div class="split page-module page-module-ink page-module-split">
+        <div class="split page-module page-module-ink page-module-split give-why-shell">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Why We Give"
@@ -38,7 +38,7 @@ import { media } from '../data/media';
               <li>Practical support for people and families in our community</li>
             </ul>
           </div>
-          <article class="card stewardship-card">
+          <article class="stewardship-card">
             <h3>Stewardship + Trust</h3>
             <p>
               Limitless Church is a registered non-profit, and giving statements are provided annually. We are committed to
@@ -50,10 +50,10 @@ import { media } from '../data/media';
       </div>
     </section>
 
-    <section class="section page-section surface-soft">
+    <section class="section page-section surface-soft give-impact-band">
       <div class="container">
         <div class="page-module page-module-soft page-module-stack impact-shell">
-          <OutlineGraphic variant="open-bible" className="impact-outline" />
+          <OutlineGraphic src="/brand/mission/outline-03.png" className="impact-outline" />
           <SectionIntro
             eyebrow="Impact"
             title="What your generosity makes possible"
@@ -61,7 +61,7 @@ import { media } from '../data/media';
           />
           <div class="grid grid-3">
             {impactHighlights.map((item) => (
-              <article class="card impact-card">
+              <article class="impact-card">
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </article>
@@ -71,9 +71,9 @@ import { media } from '../data/media';
       </div>
     </section>
 
-    <section id="giving-faq" class="section page-section">
+    <section id="giving-faq" class="section page-section give-faq-band">
       <div class="container">
-        <div class="split page-module page-module-white page-module-split">
+        <div class="split page-module page-module-white page-module-split give-faq-shell">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Giving FAQ"
@@ -104,6 +104,12 @@ import { media } from '../data/media';
     gap: 0.7rem;
   }
 
+  .give-why-shell,
+  .give-faq-shell,
+  .impact-shell {
+    position: relative;
+  }
+
   .impact-shell {
     position: relative;
     overflow: hidden;
@@ -112,8 +118,8 @@ import { media } from '../data/media';
   .impact-outline {
     right: -3rem;
     top: -1.5rem;
-    width: 15rem;
-    height: 15rem;
+    width: 18rem;
+    height: 12rem;
     opacity: 0.12;
   }
 
@@ -124,5 +130,15 @@ import { media } from '../data/media';
 
   .stewardship-card .editorial-link {
     color: var(--text);
+  }
+
+  .stewardship-card {
+    background: rgba(255, 255, 255, 0.06);
+    border-top: 4px solid rgba(125, 169, 255, 0.18);
+  }
+
+  .impact-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 243, 238, 0.88) 100%);
+    border-top: 4px solid rgba(23, 92, 216, 0.18);
   }
 </style>

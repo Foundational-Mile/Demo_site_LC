@@ -6,6 +6,7 @@ import FAQAccordion from '../components/FAQAccordion.astro';
 import FormPlaceholder from '../components/FormPlaceholder.astro';
 import ServiceInfoBlock from '../components/ServiceInfoBlock.astro';
 import CTABand from '../components/CTABand.astro';
+import OutlineGraphic from '../components/OutlineGraphic.astro';
 import { visitFaqs } from '../data/content';
 import { media } from '../data/media';
 import { withBase } from '../utils/paths';
@@ -24,9 +25,9 @@ import { withBase } from '../utils/paths';
       secondaryCta={{ label: 'What About Kids?', href: '/kids' }}
     />
 
-    <section class="section page-section surface-soft">
+    <section class="section page-section surface-soft visit-utility-band">
       <div class="container">
-        <div class="split page-module page-module-white page-module-split">
+        <div class="split page-module page-module-white page-module-split visit-utility-shell">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Service Times + Location"
@@ -34,7 +35,7 @@ import { withBase } from '../utils/paths';
               text="Plan your route, pick your service time, and arrive a little early if you are checking in kids."
             />
             <ServiceInfoBlock />
-            <article class="card map-card">
+            <article class="map-card">
               <h3>Campus Map Preview</h3>
               <p>We are located at 400 Northview Rd in Nixa. Guest parking and entry points are clearly marked.</p>
               <div class="map-shell" role="img" aria-label="Campus map preview block"></div>
@@ -52,7 +53,7 @@ import { withBase } from '../utils/paths';
               <li>Bold worship and a relevant, biblically grounded message</li>
               <li>Clear dismissal and easy next-step opportunities</li>
             </ul>
-            <article class="card expect-card">
+            <article class="expect-card">
               <h3>What should I wear?</h3>
               <p>Come as you are. Most people wear casual or smart casual attire.</p>
               <h3>What if I come alone?</h3>
@@ -63,9 +64,10 @@ import { withBase } from '../utils/paths';
       </div>
     </section>
 
-    <section class="section page-section surface-dark">
+    <section class="section page-section surface-dark visit-kids-band">
       <div class="container">
-        <div class="split page-module page-module-ink page-module-split">
+        <div class="split page-module page-module-ink page-module-split visit-kids-shell">
+          <OutlineGraphic src="/brand/mission/outline-05.png" className="visit-outline visit-outline-kids" />
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Kids"
@@ -91,9 +93,9 @@ import { withBase } from '../utils/paths';
       </div>
     </section>
 
-    <section id="visit-form" class="section page-section">
+    <section id="visit-form" class="section page-section visit-form-band">
       <div class="container">
-        <div class="split page-module page-module-white page-module-split">
+        <div class="split page-module page-module-white page-module-split visit-form-shell">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Plan Ahead"
@@ -122,11 +124,21 @@ import { withBase } from '../utils/paths';
 </BaseLayout>
 
 <style>
+  .visit-utility-shell,
+  .visit-kids-shell,
+  .visit-form-shell {
+    position: relative;
+    gap: clamp(1.5rem, 3vw, 2.6rem);
+    align-items: start;
+  }
+
   .map-card,
   .expect-card {
     padding: 1.1rem;
     display: grid;
     gap: 0.6rem;
+    border-top: 4px solid rgba(23, 92, 216, 0.18);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(246, 243, 238, 0.88) 100%);
   }
 
   .map-card p,
@@ -136,8 +148,32 @@ import { withBase } from '../utils/paths';
 
   .map-shell {
     min-height: 180px;
-    border-radius: 0.75rem;
-    background: linear-gradient(135deg, #e3e7ee 0%, #f1f3f7 100%);
-    border: 1px dashed #b2bac7;
+    background:
+      radial-gradient(circle at 82% 20%, rgba(45, 120, 255, 0.12), transparent 18%),
+      linear-gradient(135deg, #e3e7ee 0%, #f1f3f7 100%);
+    border-top: 3px solid rgba(23, 92, 216, 0.18);
+  }
+
+  .visit-outline {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .visit-outline-kids {
+    right: -5rem;
+    top: 0;
+    width: 18rem;
+    height: 14rem;
+    opacity: 0.12;
+    --outline-rotate: 4deg;
+  }
+
+  @media (max-width: 900px) {
+    .visit-outline-kids {
+      right: -3rem;
+      top: 2rem;
+      width: 12rem;
+      height: 9rem;
+    }
   }
 </style>

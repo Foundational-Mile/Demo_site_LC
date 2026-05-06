@@ -14,7 +14,7 @@ interface Props {
 const { items, title = 'Stories of life change' } = Astro.props;
 ---
 
-<section class="section page-section">
+<section class="section page-section surface-dark testimonial-band">
   <div class="container">
     <div class="page-module page-module-ink stack-lg testimonial-shell">
       <OutlineGraphic variant="dove" className="testimonial-outline" />
@@ -32,9 +32,14 @@ const { items, title = 'Stories of life change' } = Astro.props;
 </section>
 
 <style>
+  .testimonial-band {
+    overflow: clip;
+  }
+
   .testimonial-shell {
     position: relative;
     overflow: hidden;
+    padding: clamp(0.25rem, 1vw, 0.5rem) 0;
   }
 
   .testimonial-outline {
@@ -42,6 +47,7 @@ const { items, title = 'Stories of life change' } = Astro.props;
     bottom: -2rem;
     width: 14rem;
     height: 14rem;
+    opacity: 0.11;
   }
 
   .testimonial {
@@ -60,5 +66,14 @@ const { items, title = 'Stories of life change' } = Astro.props;
     font-style: normal;
     font-weight: 700;
     color: #ffffff;
+  }
+
+  @media (max-width: 900px) {
+    .testimonial-outline {
+      width: 10rem;
+      height: 10rem;
+      left: -1rem;
+      bottom: -1rem;
+    }
   }
 </style>

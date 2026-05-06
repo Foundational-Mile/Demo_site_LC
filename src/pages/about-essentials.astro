@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroSection from '../components/HeroSection.astro';
 import SectionIntro from '../components/SectionIntro.astro';
 import CTABand from '../components/CTABand.astro';
+import OutlineGraphic from '../components/OutlineGraphic.astro';
 import { beliefs } from '../data/content';
 ---
 
@@ -18,9 +19,10 @@ import { beliefs } from '../data/content';
       secondaryCta={{ label: 'Read Our Values', href: '/about-values' }}
     />
 
-    <section class="section page-section">
+    <section class="section page-section surface-soft essentials-band">
       <div class="container">
-        <div class="page-module page-module-white page-module-stack">
+        <div class="essentials-shell">
+          <OutlineGraphic src="/brand/mission/outline-05.png" className="essentials-outline" />
           <SectionIntro
             eyebrow="Doctrine"
             title="Core Convictions"
@@ -49,6 +51,21 @@ import { beliefs } from '../data/content';
 </BaseLayout>
 
 <style>
+  .essentials-shell {
+    position: relative;
+    display: grid;
+    gap: 2rem;
+  }
+
+  .essentials-outline {
+    width: min(22rem, 32vw);
+    height: min(22rem, 32vw);
+    left: auto;
+    right: -2.5rem;
+    top: 8rem;
+    opacity: 0.12;
+  }
+
   .essentials-grid {
     gap: 1rem;
   }
@@ -62,5 +79,15 @@ import { beliefs } from '../data/content';
 
   .essential-card p {
     color: #55647d;
+  }
+
+  @media (max-width: 980px) {
+    .essentials-outline {
+      width: 14rem;
+      height: 14rem;
+      top: auto;
+      bottom: 3rem;
+      right: -1.5rem;
+    }
   }
 </style>

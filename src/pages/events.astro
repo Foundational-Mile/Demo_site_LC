@@ -25,9 +25,9 @@ const categories = ['All', 'Worship', 'Next Step', 'Family', 'Youth', 'Groups'];
       secondaryCta={{ label: 'See Visit Info', href: '/plan-your-visit' }}
     />
 
-    <section class="section page-section surface-dark">
+    <section class="section page-section surface-dark events-feature-band">
       <div class="container">
-        <div class="page-module page-module-white page-module-stack">
+        <div class="page-module page-module-white page-module-stack events-feature-shell">
           <SectionIntro
             eyebrow="Featured Event"
             title={featured.title}
@@ -38,9 +38,9 @@ const categories = ['All', 'Worship', 'Next Step', 'Family', 'Youth', 'Groups'];
       </div>
     </section>
 
-    <section id="upcoming" class="section page-section surface-soft">
+    <section id="upcoming" class="section page-section surface-soft events-upcoming-band">
       <div class="container">
-        <div class="page-module page-module-soft page-module-stack">
+        <div class="page-module page-module-soft page-module-stack events-upcoming-shell">
           <SectionIntro
             eyebrow="Upcoming"
             title="Plan ahead and bring someone with you"
@@ -71,8 +71,14 @@ const categories = ['All', 'Worship', 'Next Step', 'Family', 'Youth', 'Groups'];
 </BaseLayout>
 
 <style>
+  .events-feature-shell,
+  .events-upcoming-shell {
+    position: relative;
+  }
+
   .filter-row {
     gap: 0.55rem;
+    padding-bottom: 0.25rem;
   }
 
   .filter-pill {

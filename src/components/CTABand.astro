@@ -61,7 +61,7 @@ const { eyebrow, title, text, primary, secondary, dark = true, embedded = false 
     gap: 1rem;
     grid-template-columns: minmax(0, 1.1fr) auto;
     align-items: center;
-    padding: clamp(2rem, 5vw, 3.2rem) 0;
+    padding: clamp(2.2rem, 5vw, 3.4rem) 0;
     overflow: hidden;
     position: relative;
   }
@@ -91,7 +91,9 @@ const { eyebrow, title, text, primary, secondary, dark = true, embedded = false 
   }
 
   .cta-band.dark {
-    background: linear-gradient(180deg, #101722 0%, #080d13 100%);
+    background:
+      radial-gradient(circle at top right, rgba(45, 120, 255, 0.16), transparent 24%),
+      linear-gradient(180deg, #101722 0%, #080d13 100%);
     color: var(--text);
   }
 
@@ -101,7 +103,8 @@ const { eyebrow, title, text, primary, secondary, dark = true, embedded = false 
   }
 
   .cta-band.light {
-    background: transparent;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 243, 238, 0.88) 100%);
   }
 
   .cta-band .cluster .btn {

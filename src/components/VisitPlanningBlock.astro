@@ -9,7 +9,7 @@ interface Props {
 const { compact = false } = Astro.props;
 ---
 
-<section class={`visit-plan card ${compact ? 'compact' : ''}`}>
+<section class={`visit-plan ${compact ? 'compact' : ''}`}>
   <div class="stack visit-plan-copy">
     <span class="eyebrow">First Time at Limitless</span>
     <h2 class="title-md">Planning a visit should feel clear before you even pull into the parking lot.</h2>
@@ -47,7 +47,7 @@ const { compact = false } = Astro.props;
     background:
       radial-gradient(circle at top right, rgba(45, 120, 255, 0.12), transparent 28%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(244, 241, 235, 0.96) 100%);
-    box-shadow: 0 30px 60px rgba(6, 10, 16, 0.08);
+    border-top: 4px solid rgba(23, 92, 216, 0.22);
   }
 
   .visit-plan p,
