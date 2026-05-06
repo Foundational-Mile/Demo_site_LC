@@ -14,11 +14,38 @@ const sundayTimes = churchMeta.serviceTimes.slice(0, 4);
 const firstWednesday = churchMeta.serviceTimes.find((time) => time.includes('First Wednesday')) ?? '';
 const newHereParty = events.find((event) => event.title === 'New Here Party') ?? events[0];
 const leadPastor = staff[0];
-
-const ministryLinks = [
-  { ...ministries[0], href: '/kids', cta: 'Explore Kids' },
-  { ...ministries[1], href: '/next-steps', cta: 'Students + Families' },
-  { ...ministries[2], href: '/next-steps', cta: 'Find A Group' }
+const baptismEvent = events.find((event) => event.title === 'Baptism') ?? events[1];
+const childDedicationEvent = events.find((event) => event.title === 'Child Dedication') ?? events[2];
+const homeConnectEvents = [
+  {
+    title: 'Seniors Lunch',
+    category: 'Community',
+    image: media.events.prayerCare,
+    href: '/events',
+    cta: 'See Upcoming Events',
+    primary: true
+  },
+  {
+    title: baptismEvent.title,
+    category: baptismEvent.category,
+    image: baptismEvent.image,
+    href: '/events',
+    cta: 'Learn About Baptism'
+  },
+  {
+    title: childDedicationEvent.title,
+    category: 'Baby Dedication',
+    image: childDedicationEvent.image,
+    href: '/events',
+    cta: 'See Family Events'
+  },
+  {
+    title: newHereParty.title,
+    category: newHereParty.category,
+    image: newHereParty.image,
+    href: '/events',
+    cta: 'Plan Your Next Step'
+  }
 ];
 ---
 
@@ -49,9 +76,12 @@ const ministryLinks = [
             <p class="home-label">New Here</p>
             <h2 class="home-display home-display-dark home-visit-title">Your first Sunday.</h2>
           </div>
-          <p class="home-visit-copy">
-            We want your first visit to feel simple, welcoming, and easy to navigate for you and your family.
-          </p>
+          <div class="home-visit-copy-wrap">
+            <p class="home-visit-copy-kicker">Made for first-time guests</p>
+            <p class="home-visit-copy">
+              We want your first visit to feel simple, welcoming, and easy to navigate for you and your family.
+            </p>
+          </div>
         </div>
 
         <div class="home-visit-toolbar">
@@ -66,7 +96,7 @@ const ministryLinks = [
           <article class="home-visit-slide home-visit-slide-primary">
             <div class="home-visit-slide-copy">
               <p class="home-item-label">Sunday Service Times</p>
-              <h3>Choose a time and come as you are.</h3>
+              <h3>Choose a time.</h3>
               <ul class="home-time-list">
                 {sundayTimes.map((time) => (
                   <li>{time.replace('Sundays at ', '')}</li>
@@ -80,12 +110,7 @@ const ministryLinks = [
           <article class="home-visit-slide home-visit-slide-light">
             <div class="home-visit-slide-copy">
               <p class="home-item-label home-item-label-dark">What To Expect</p>
-              <h3>Worship, practical teaching, and people ready to help.</h3>
-              <ul class="home-visit-bullets">
-                <li>Guest parking and a team outside to welcome you.</li>
-                <li>Clear signage from the lobby to kids check-in.</li>
-                <li>Biblical teaching you can apply right away.</li>
-              </ul>
+              <h3>Warm worship. Clear teaching. Helpful people.</h3>
               <a class="editorial-link" href={withBase('/plan-your-visit')}>Get Sunday Details</a>
             </div>
           </article>
@@ -96,7 +121,6 @@ const ministryLinks = [
             <div class="home-visit-slide-copy">
               <p class="home-item-label">Kids + Families</p>
               <h3>{ministries[0].title}</h3>
-              <p>{ministries[0].description}</p>
               <span class="editorial-link editorial-link-light">See Kids Details</span>
             </div>
           </a>
@@ -107,7 +131,6 @@ const ministryLinks = [
             <div class="home-visit-slide-copy">
               <p class="home-item-label">{newHereParty.category}</p>
               <h3>{newHereParty.title}</h3>
-              <p>{newHereParty.description}</p>
               <span class="editorial-link editorial-link-light">Learn The Next Steps</span>
             </div>
           </a>
@@ -210,25 +233,37 @@ const ministryLinks = [
     </section>
 
     <section class="section surface-soft home-doorway-band">
-      <div class="container home-doorway-shell">
+      <div class="container home-doorway-shell" data-rail-shell>
         <div class="home-doorway-head">
           <div class="stack-sm">
-            <p class="home-label">Ways To Connect</p>
+            <p class="home-label">Coming Up</p>
             <h2 class="home-display home-display-dark home-doorway-title">Ways to connect beyond Sunday.</h2>
           </div>
-          <a href={withBase('/next-steps')} class="editorial-link">Explore More Ways To Connect</a>
+          <div class="home-doorway-copy-wrap">
+            <p class="home-doorway-copy-kicker">Make a moment of it</p>
+            <p class="home-doorway-intro-copy">
+              From baptisms to baby dedication to community gatherings, here are a few moments coming up at Limitless.
+            </p>
+          </div>
         </div>
 
-        <div class="home-doorway-grid">
-          {ministryLinks.map((ministry) => (
-            <a href={withBase(ministry.href)} class="home-doorway-card">
-              <img src={ministry.image} alt={`${ministry.title} ministry`} loading="lazy" />
+        <div class="home-doorway-toolbar">
+          <a href={withBase('/events')} class="editorial-link">See All Events</a>
+          <div class="home-rail-controls home-rail-controls-dark">
+            <button type="button" class="home-rail-button home-rail-button-dark" data-rail-prev aria-label="Scroll upcoming events left">←</button>
+            <button type="button" class="home-rail-button home-rail-button-dark" data-rail-next aria-label="Scroll upcoming events right">→</button>
+          </div>
+        </div>
+
+        <div class="home-doorway-rail" data-home-rail data-scroll-rail>
+          {homeConnectEvents.map((event) => (
+            <a href={withBase(event.href)} class={`home-doorway-card ${event.primary ? 'home-doorway-card-primary' : ''}`}>
+              {!event.primary && <img src={event.image} alt={event.title} loading="lazy" />}
               <div class="home-doorway-overlay"></div>
               <div class="home-doorway-copy">
-                <p class="home-item-label">{ministry.audience}</p>
-                <h3>{ministry.title}</h3>
-                <p>{ministry.description}</p>
-                <span class="editorial-link">{ministry.cta}</span>
+                <p class="home-item-label">{event.category}</p>
+                <h3>{event.title}</h3>
+                <span class={`editorial-link ${event.primary ? 'editorial-link-light' : ''}`}>{event.cta}</span>
               </div>
             </a>
           ))}
@@ -386,9 +421,9 @@ const ministryLinks = [
 
   .home-visit-head {
     display: grid;
-    grid-template-columns: minmax(0, 0.86fr) minmax(0, 0.72fr);
-    gap: 2.4rem;
-    align-items: start;
+    grid-template-columns: minmax(0, 0.86fr) minmax(16rem, 0.62fr);
+    gap: 2rem;
+    align-items: end;
   }
 
   .home-visit-copy,
@@ -397,10 +432,42 @@ const ministryLinks = [
     font-size: 1rem;
   }
 
+  .home-visit-copy-wrap {
+    position: relative;
+    max-width: 24rem;
+    justify-self: start;
+    padding: 1.05rem 1.15rem 1.05rem 1.4rem;
+    background: rgba(255, 255, 255, 0.7);
+    border-left: 4px solid #2d78ff;
+    box-shadow: 0 18px 40px rgba(12, 18, 28, 0.06);
+  }
+
+  .home-visit-copy-wrap::before {
+    content: '';
+    position: absolute;
+    top: -0.55rem;
+    left: 1.15rem;
+    width: 5.5rem;
+    height: 0.22rem;
+    background: #2d78ff;
+  }
+
+  .home-visit-copy-kicker {
+    color: #2d78ff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 0.55rem;
+  }
+
   .home-visit-copy {
-    max-width: 32ch;
-    padding-top: 0.45rem;
-    line-height: 1.5;
+    max-width: 26ch;
+    padding-top: 0;
+    color: #344154;
+    font-size: 1.04rem;
+    line-height: 1.58;
   }
 
   .home-visit-toolbar {
@@ -465,22 +532,22 @@ const ministryLinks = [
     position: relative;
     z-index: 1;
     display: grid;
-    gap: 0.75rem;
+    gap: 0.6rem;
     align-content: end;
     min-height: 100%;
     padding: 1.1rem;
   }
 
   .home-visit-slide h3 {
-    font-size: clamp(1.45rem, 2.2vw, 2.3rem);
+    font-size: clamp(1.3rem, 2vw, 2.05rem);
     line-height: 0.96;
-    max-width: 11ch;
+    max-width: 10ch;
   }
 
   .home-visit-slide p,
   .home-visit-slide li {
-    font-size: 0.96rem;
-    line-height: 1.45;
+    font-size: 0.92rem;
+    line-height: 1.4;
   }
 
   .home-visit-slide-primary {
@@ -541,7 +608,7 @@ const ministryLinks = [
 
   .home-visit-bullets {
     display: grid;
-    gap: 0.7rem;
+    gap: 0.55rem;
     color: #425063;
   }
 
@@ -885,30 +952,109 @@ const ministryLinks = [
     font-size: 1rem;
   }
 
+  .home-doorway-band {
+    background:
+      linear-gradient(180deg, #fbf7f1 0%, #eef3f8 100%);
+  }
+
   .home-doorway-shell {
     display: grid;
-    gap: 1.55rem;
+    gap: 1.45rem;
   }
 
   .home-doorway-head {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 1rem;
+    grid-template-columns: minmax(0, 0.9fr) minmax(16rem, 0.7fr);
+    gap: 2rem;
     align-items: end;
   }
 
-  .home-doorway-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .home-doorway-copy-wrap {
+    position: relative;
+    max-width: 25rem;
+    justify-self: start;
+    padding: 1.05rem 1.15rem 1.05rem 1.4rem;
+    background: rgba(255, 255, 255, 0.7);
+    border-left: 4px solid #2d78ff;
+    box-shadow: 0 18px 40px rgba(12, 18, 28, 0.06);
+  }
+
+  .home-doorway-copy-wrap::before {
+    content: '';
+    position: absolute;
+    top: -0.55rem;
+    left: 1.15rem;
+    width: 5.5rem;
+    height: 0.22rem;
+    background: #2d78ff;
+  }
+
+  .home-doorway-copy-kicker {
+    color: #2d78ff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 0.55rem;
+  }
+
+  .home-doorway-intro-copy {
+    max-width: 27ch;
+    color: #344154;
+    font-size: 1.04rem;
+    line-height: 1.58;
+  }
+
+  .home-doorway-toolbar {
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .home-doorway-rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(18rem, 22rem);
+    gap: 1.15rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    align-items: stretch;
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x proximity;
+    cursor: grab;
+  }
+
+  .home-doorway-rail:active {
+    cursor: grabbing;
+  }
+
+  .home-doorway-rail::-webkit-scrollbar {
+    height: 0.45rem;
+  }
+
+  .home-doorway-rail::-webkit-scrollbar-thumb {
+    background: rgba(13, 18, 25, 0.18);
+    border-radius: 999px;
   }
 
   .home-doorway-card {
     position: relative;
-    min-height: 24rem;
+    min-height: 22rem;
     overflow: hidden;
     background: #0b1118;
     isolation: isolate;
+    scroll-snap-align: start;
+  }
+
+  .home-doorway-card-primary {
+    min-width: min(24rem, 66vw);
+    margin-right: 0.25rem;
+    background:
+      radial-gradient(circle at 75% 25%, rgba(66, 121, 255, 0.22), transparent 28%),
+      linear-gradient(180deg, #0a0e15 0%, #05080d 100%);
   }
 
   .home-doorway-card img,
@@ -928,11 +1074,16 @@ const ministryLinks = [
       linear-gradient(180deg, rgba(7, 10, 16, 0.04) 0%, rgba(7, 10, 16, 0.3) 36%, rgba(7, 10, 16, 0.88) 100%);
   }
 
+  .home-doorway-card-primary .home-doorway-overlay {
+    background:
+      linear-gradient(180deg, rgba(7, 10, 16, 0.08) 0%, rgba(7, 10, 16, 0.28) 38%, rgba(7, 10, 16, 0.92) 100%);
+  }
+
   .home-doorway-copy {
     position: relative;
     z-index: 1;
     display: grid;
-    gap: 0.8rem;
+    gap: 0.65rem;
     align-content: end;
     min-height: 100%;
     padding: 1.25rem;
@@ -940,12 +1091,9 @@ const ministryLinks = [
 
   .home-doorway-copy h3 {
     color: #f4f7fc;
-    font-size: 1.9rem;
+    font-size: clamp(1.55rem, 2.2vw, 2.05rem);
     line-height: 0.96;
-  }
-
-  .home-doorway-copy p {
-    color: #dbe3ef;
+    max-width: 9ch;
   }
 
   .home-doorway-copy .editorial-link {
@@ -1109,8 +1257,7 @@ const ministryLinks = [
     .home-media-head,
     .home-media-feature,
     .home-pastor-feature,
-    .home-doorway-head,
-    .home-doorway-grid {
+    .home-doorway-head {
       grid-template-columns: 1fr;
     }
 
@@ -1119,10 +1266,20 @@ const ministryLinks = [
     }
 
     .home-visit-copy,
+    .home-visit-copy-wrap,
     .home-media-copy,
     .home-pastor-copy,
     .home-final-shell {
       max-width: 100%;
+    }
+
+    .home-visit-copy-wrap {
+      padding-right: 1rem;
+    }
+
+    .home-doorway-copy-wrap {
+      max-width: 100%;
+      padding-right: 1rem;
     }
   }
 
@@ -1163,6 +1320,22 @@ const ministryLinks = [
       align-items: start;
     }
 
+    .home-doorway-toolbar {
+      align-items: start;
+    }
+
+    .home-doorway-rail {
+      grid-auto-columns: minmax(15rem, 84vw);
+    }
+
+    .home-doorway-card {
+      min-height: 20rem;
+    }
+
+    .home-doorway-card-primary {
+      min-width: 84vw;
+    }
+
     .home-media-feature {
       gap: 1rem;
     }
@@ -1181,35 +1354,39 @@ const ministryLinks = [
     }
 
     .home-outline-media {
-      right: -4rem;
-      top: 2rem;
-      width: 16rem;
-      height: 11rem;
+      right: -8rem;
+      top: 1rem;
+      width: 32rem;
+      height: 22rem;
+      --outline-rotate: 10deg;
     }
 
     .home-outline-mission {
       left: auto;
-      right: -4rem;
-      top: 6rem;
-      width: 16rem;
-      height: 11rem;
+      right: -8rem;
+      top: 4rem;
+      width: 32rem;
+      height: 22rem;
       transform: none;
+      --outline-rotate: 14deg;
     }
 
     .home-outline-final {
-      right: -4rem;
-      width: 14rem;
-      height: 10rem;
+      right: -7rem;
+      width: 28rem;
+      height: 20rem;
       top: auto;
-      bottom: 1rem;
+      bottom: -1rem;
       transform: none;
+      --outline-rotate: 9deg;
     }
 
     .home-outline-pastor {
-      left: -4rem;
-      top: 1rem;
-      width: 14rem;
-      height: 10rem;
+      left: -8rem;
+      top: 0;
+      width: 28rem;
+      height: 20rem;
+      --outline-rotate: -14deg;
     }
 
     .home-values-rail {

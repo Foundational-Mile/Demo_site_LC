@@ -88,8 +88,11 @@ const svgViewBox =
     pointer-events: none;
     z-index: 0;
     opacity: 0.12;
-    transform: rotate(var(--outline-rotate, 0deg));
+    transform:
+      translate3d(var(--outline-scroll-x, 0px), var(--outline-scroll-y, 0px), 0)
+      rotate(var(--outline-rotate, 0deg));
     animation: outlineFloat var(--outline-duration, 20s) ease-in-out infinite;
+    will-change: transform;
   }
 
   .outline-graphic svg,
@@ -114,22 +117,34 @@ const svgViewBox =
 
   @keyframes outlineFloat {
     0% {
-      transform: translate3d(0, 0, 0) rotate(var(--outline-rotate, 0deg));
+      transform:
+        translate3d(var(--outline-scroll-x, 0px), var(--outline-scroll-y, 0px), 0)
+        rotate(var(--outline-rotate, 0deg));
     }
 
     50% {
-      transform: translate3d(0, -10px, 0) rotate(calc(var(--outline-rotate, 0deg) + 2deg));
+      transform:
+        translate3d(
+          var(--outline-scroll-x, 0px),
+          calc(var(--outline-scroll-y, 0px) - 10px),
+          0
+        )
+        rotate(calc(var(--outline-rotate, 0deg) + 2deg));
     }
 
     100% {
-      transform: translate3d(0, 0, 0) rotate(var(--outline-rotate, 0deg));
+      transform:
+        translate3d(var(--outline-scroll-x, 0px), var(--outline-scroll-y, 0px), 0)
+        rotate(var(--outline-rotate, 0deg));
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .outline-graphic {
       animation: none;
-      transform: rotate(var(--outline-rotate, 0deg));
+      transform:
+        translate3d(var(--outline-scroll-x, 0px), var(--outline-scroll-y, 0px), 0)
+        rotate(var(--outline-rotate, 0deg));
     }
   }
 </style>

@@ -56,3 +56,49 @@ const enableBladePreview = withoutBase(pathname) === '/';
     top: 0.75rem;
   }
 </style>
+
+<script is:inline>
+  const initOutlineParallax = () => {
+    const outlines = Array.from(document.querySelectorAll('.outline-graphic')).filter(
+      (element) => element instanceof HTMLElement
+    );
+
+    if (!outlines.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let ticking = false;
+
+    const updateOutlines = () => {
+      const viewportHeight = window.innerHeight || 1;
+
+      outlines.forEach((outline, index) => {
+        const rect = outline.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const normalizedOffset = (center - viewportHeight / 2) / viewportHeight;
+        const speed = 58 + (index % 4) * 16;
+        const translateY = normalizedOffset * speed * -1;
+        const translateX = normalizedOffset * (speed * 0.38) * (index % 2 === 0 ? 1 : -1);
+
+        outline.style.setProperty('--outline-scroll-y', `${translateY.toFixed(2)}px`);
+        outline.style.setProperty('--outline-scroll-x', `${translateX.toFixed(2)}px`);
+      });
+
+      ticking = false;
+    };
+
+    const requestUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateOutlines);
+    };
+
+    requestUpdate();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initOutlineParallax, { once: true });
+  } else {
+    initOutlineParallax();
+  }
+</script>
