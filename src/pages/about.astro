@@ -18,15 +18,16 @@ const leadPastor = staff[0];
       eyebrow="Who We Are"
       title="A Life-Giving Church In Nixa, Missouri"
       text="Limitless Church exists to help people encounter God, love people, and find purpose."
+      graphic="dove"
       image={media.heroes.about}
       imageAlt="Church lobby with people connecting"
       primaryCta={{ label: 'Plan Your Visit', href: '/plan-your-visit' }}
       secondaryCta={{ label: 'Read Our Values', href: '/about-values' }}
     />
 
-    <section class="section page-section">
+    <section class="section page-section surface-dark">
       <div class="container">
-        <div class="split page-module page-module-white page-module-split">
+        <div class="split page-module page-module-ink page-module-split">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Pastor Stone Moss"
@@ -80,7 +81,7 @@ const leadPastor = staff[0];
       </div>
     </section>
 
-    <section class="section page-open-section">
+    <section class="section page-open-section surface-dark">
       <div class="container split">
         <article class="card statement-card">
           <h3>Our Mission</h3>
@@ -147,14 +148,15 @@ const leadPastor = staff[0];
 
   .lead-pastor-card {
     overflow: hidden;
-    border-top: 3px solid rgba(42, 111, 232, 0.55);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.08);
   }
 
   .lead-pastor-card .role {
     font-size: 0.82rem;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #1d56b9;
+    letter-spacing: 0.12em;
+    color: #8eb3ff;
     font-weight: 700;
   }
 
@@ -166,6 +168,16 @@ const leadPastor = staff[0];
   }
 
   .statement-card {
-    border-top: 3px solid rgba(42, 111, 232, 0.55);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .statement-card h3 {
+    color: var(--text);
+  }
+
+  .statement-card p,
+  .lead-pastor-card p {
+    color: var(--text-muted);
   }
 </style>

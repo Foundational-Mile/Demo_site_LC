@@ -20,11 +20,12 @@ const categories = ['All', 'Worship', 'Next Step', 'Family', 'Youth', 'Groups'];
       text="Find upcoming gatherings like First Wednesday, baptism, and New Here Party."
       centered={true}
       textured={true}
+      graphic="flame"
       primaryCta={{ label: 'See Upcoming Events', href: '#upcoming' }}
       secondaryCta={{ label: 'See Visit Info', href: '/plan-your-visit' }}
     />
 
-    <section class="section page-section">
+    <section class="section page-section surface-dark">
       <div class="container">
         <div class="page-module page-module-white page-module-stack">
           <SectionIntro
@@ -37,7 +38,7 @@ const categories = ['All', 'Worship', 'Next Step', 'Family', 'Youth', 'Groups'];
       </div>
     </section>
 
-    <section id="upcoming" class="section page-section">
+    <section id="upcoming" class="section page-section surface-soft">
       <div class="container">
         <div class="page-module page-module-soft page-module-stack">
           <SectionIntro
@@ -75,13 +76,16 @@ const categories = ['All', 'Worship', 'Next Step', 'Family', 'Youth', 'Groups'];
   }
 
   .filter-pill {
-    border: 1px solid rgba(16, 18, 24, 0.15);
-    background: #fff;
+    border: 1px solid rgba(13, 18, 25, 0.14);
+    background: rgba(255, 255, 255, 0.9);
     color: #46536a;
     font-weight: 700;
-    padding: 0.45rem 0.7rem;
+    padding: 0.55rem 0.82rem;
     border-radius: 999px;
     cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .filter-pill.active {

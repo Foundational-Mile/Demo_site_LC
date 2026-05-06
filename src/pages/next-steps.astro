@@ -18,11 +18,12 @@ import { withBase } from '../utils/paths';
       text="Take a clear next step through New Here Party, groups, baptism, and serving."
       centered={true}
       textured={true}
+      graphic="cross"
       primaryCta={{ label: 'Start With New Here', href: '/plan-your-visit' }}
       secondaryCta={{ label: 'Talk To Next Steps Team', href: '/care' }}
     />
 
-    <section id="pathway" class="section page-section">
+    <section id="pathway" class="section page-section surface-soft">
       <div class="container">
         <div class="page-module page-module-white page-module-stack">
           <SectionIntro
@@ -35,7 +36,7 @@ import { withBase } from '../utils/paths';
               <article class="card step-card">
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>
-                <a href={withBase('/next-steps#pathway')} class="btn btn-ghost">{step.cta}</a>
+                <a href={withBase('/next-steps#pathway')} class="editorial-link">{step.cta}</a>
               </article>
             ))}
           </div>
@@ -43,9 +44,9 @@ import { withBase } from '../utils/paths';
       </div>
     </section>
 
-    <section class="section page-section">
+    <section class="section page-section surface-dark">
       <div class="container">
-        <div class="split page-module page-module-soft page-module-split">
+        <div class="split page-module page-module-ink page-module-split">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="How This Helps"
@@ -64,7 +65,7 @@ import { withBase } from '../utils/paths';
       </div>
     </section>
 
-    <section class="section page-section">
+    <section class="section page-section surface-soft">
       <div class="container">
         <div class="page-module page-module-white page-module-stack">
           <SectionIntro
@@ -93,16 +94,12 @@ import { withBase } from '../utils/paths';
 
 <style>
   .step-card {
-    padding: 1.1rem;
+    padding: 1.2rem;
     display: grid;
     gap: 0.7rem;
   }
 
   .step-card p {
     color: #55647d;
-  }
-
-  .step-card .btn {
-    width: fit-content;
   }
 </style>

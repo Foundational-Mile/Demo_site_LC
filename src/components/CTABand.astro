@@ -1,5 +1,6 @@
 ---
 import { withBase } from '../utils/paths';
+import OutlineGraphic from './OutlineGraphic.astro';
 
 interface Props {
   eyebrow?: string;
@@ -27,37 +28,71 @@ const { eyebrow, title, text, primary, secondary, dark = true, embedded = false 
     </div>
   </div>
 ) : (
-  <section class="section-tight">
-    <div class={`container cta-band ${dark ? 'dark' : 'light'}`}>
-      <div class="stack">
-        {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-        <h2 class="title-lg">{title}</h2>
-        <p class="lead">{text}</p>
-      </div>
-      <div class="cluster">
-        <a class="btn btn-primary" href={withBase(primary.href)}>{primary.label}</a>
-        {secondary && <a class="btn btn-secondary" href={withBase(secondary.href)}>{secondary.label}</a>}
+  <section class={`section-tight cta-stage ${dark ? 'dark' : 'light'}`}>
+    <div class="container">
+      <div class={`cta-band ${dark ? 'dark' : 'light'}`}>
+        <OutlineGraphic variant="dove" className="cta-outline" />
+        <div class="stack">
+          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+          <h2 class="title-lg">{title}</h2>
+          <p class="lead">{text}</p>
+        </div>
+        <div class="cluster">
+          <a class="btn btn-primary" href={withBase(primary.href)}>{primary.label}</a>
+          {secondary && <a class="editorial-link cta-link" href={withBase(secondary.href)}>{secondary.label}</a>}
+        </div>
       </div>
     </div>
   </section>
 )}
 
 <style>
+  .cta-stage.dark {
+    background:
+      linear-gradient(180deg, rgba(11, 16, 24, 0.98) 0%, rgba(7, 10, 15, 1) 100%);
+  }
+
+  .cta-stage.light {
+    background: transparent;
+  }
+
   .cta-band {
-    border-radius: var(--radius-lg);
-    padding: clamp(1rem, 3.2vw, 1.8rem);
     display: grid;
-    gap: 0.82rem;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1.1fr) auto;
     align-items: center;
-    grid-template-columns: 1.1fr auto;
-    border-top: 3px solid #2a6fe8;
+    padding: clamp(2rem, 5vw, 3.2rem) 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .cta-outline {
+    right: -4rem;
+    top: auto;
+    bottom: -4rem;
+    width: 20rem;
+    height: 20rem;
+    opacity: 0.08;
+    --outline-rotate: 8deg;
+  }
+
+  .cta-band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at top right, rgba(45, 120, 255, 0.24), transparent 24%);
+    pointer-events: none;
+  }
+
+  .cta-band > * {
+    position: relative;
+    z-index: 1;
   }
 
   .cta-band.dark {
-    background: radial-gradient(circle at right top, rgba(255, 255, 255, 0.12), rgba(12, 15, 22, 1) 40%);
+    background: linear-gradient(180deg, #101722 0%, #080d13 100%);
     color: var(--text);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-top: 3px solid #5d8ff2;
   }
 
   .cta-band.dark h2,
@@ -66,8 +101,15 @@ const { eyebrow, title, text, primary, secondary, dark = true, embedded = false 
   }
 
   .cta-band.light {
-    background: #fff;
-    border: 1px solid rgba(16, 18, 24, 0.13);
+    background: transparent;
+  }
+
+  .cta-band .cluster .btn {
+    width: auto;
+  }
+
+  .cta-link {
+    color: var(--text);
   }
 
   @media (max-width: 880px) {
@@ -77,14 +119,11 @@ const { eyebrow, title, text, primary, secondary, dark = true, embedded = false 
   }
 
   @media (max-width: 700px) {
-    .cta-band {
-      padding: 1.15rem;
-      border-radius: 0.85rem;
-      gap: 1rem;
-    }
-
-    .cta-band .cluster {
-      gap: 0.7rem;
+    .cta-outline {
+      width: 11rem;
+      height: 11rem;
+      right: -2rem;
+      bottom: -2rem;
     }
   }
 </style>

@@ -1,4 +1,6 @@
 ---
+import OutlineGraphic from './OutlineGraphic.astro';
+
 interface Item {
   quote: string;
   name: string;
@@ -14,7 +16,8 @@ const { items, title = 'Stories of life change' } = Astro.props;
 
 <section class="section page-section">
   <div class="container">
-    <div class="page-module page-module-soft stack-lg">
+    <div class="page-module page-module-ink stack-lg testimonial-shell">
+      <OutlineGraphic variant="dove" className="testimonial-outline" />
       <h2 class="title-lg">{title}</h2>
       <div class="grid grid-3">
         {items.map((item) => (
@@ -29,20 +32,33 @@ const { items, title = 'Stories of life change' } = Astro.props;
 </section>
 
 <style>
+  .testimonial-shell {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonial-outline {
+    left: -2rem;
+    bottom: -2rem;
+    width: 14rem;
+    height: 14rem;
+  }
+
   .testimonial {
     padding: 1.2rem;
     display: grid;
     gap: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
   }
 
   .testimonial p {
-    color: #3e4b61;
+    color: #dde5ef;
     font-size: 1.02rem;
   }
 
   .testimonial cite {
     font-style: normal;
     font-weight: 700;
-    color: #0f1115;
+    color: #ffffff;
   }
 </style>

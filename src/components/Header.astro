@@ -1,6 +1,7 @@
 ---
 import { navLinks } from '../data/site';
 import { withBase, withoutBase } from '../utils/paths';
+import OutlineGraphic from './OutlineGraphic.astro';
 
 interface Props {
   pathname: string;
@@ -22,16 +23,17 @@ const isActive = (href: string) => {
   return currentPath === target || currentPath.startsWith(`${target}/`);
 };
 
-const isLinkActive = (link: (typeof navLinks)[number]) => {
-  if (isActive(link.href)) return true;
-  return link.children?.some((child) => isActive(child.href)) ?? false;
-};
-
 const brandLogo = withBase('/images/logo-white.png');
+const visibleLinks = [
+  { label: 'Visit', href: '/plan-your-visit' },
+  { label: 'Messages', href: '/messages' },
+  { label: 'Next Steps', href: '/next-steps' },
+  { label: 'Give', href: '/give' }
+];
 const aboutChildren = navLinks.find((link) => link.label === 'About')?.children ?? [];
 ---
 
-<header class="site-header">
+<header class={`site-header ${enableBladePreview ? 'site-header-home' : ''}`}>
   <div class="container header-inner">
     <a href={withBase('/')} class="brand" style={`--brand-logo-url: url("${brandLogo}")`}>
       <span class="brand-logo" aria-hidden="true"></span>
@@ -41,1097 +43,439 @@ const aboutChildren = navLinks.find((link) => link.label === 'About')?.children 
       </span>
     </a>
 
-    {!enableBladePreview && (
-      <nav class="desktop-nav" aria-label="Main">
-        <ul>
-          {navLinks.map((link) => {
-            const hasChildren = (link.children?.length ?? 0) > 0;
-            const active = isLinkActive(link);
+    <nav class="desktop-nav" aria-label="Primary">
+      {visibleLinks.map((link) => (
+        <a href={withBase(link.href)} class={isActive(link.href) ? 'active' : ''}>{link.label}</a>
+      ))}
+    </nav>
 
-            return (
-              <li class={`nav-item ${hasChildren ? 'has-children' : ''}`}>
-                <a href={withBase(link.href)} class={active ? 'active' : ''}>
-                  {link.label}
-                  {hasChildren && <span class="caret" aria-hidden="true">▾</span>}
-                </a>
-
-                {hasChildren && (
-                  <ul class="dropdown" aria-label={`${link.label} subpages`}>
-                    {link.children?.map((child) => (
-                      <li>
-                        <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>
-                          {child.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
-    )}
-
-    {enableBladePreview ? (
-      <>
-        <div class="blade-preview-launchers" aria-label="Menu blade previews">
-          <button
-            type="button"
-            class="blade-trigger"
-            data-blade-open="homepage-menu-blade-guided"
-            aria-haspopup="dialog"
-            aria-controls="homepage-menu-blade-guided"
-            aria-expanded="false"
-          >
-            Clean
-          </button>
-          <button
-            type="button"
-            class="blade-trigger blade-trigger-alt"
-            data-blade-open="homepage-menu-blade-editorial"
-            aria-haspopup="dialog"
-            aria-controls="homepage-menu-blade-editorial"
-            aria-expanded="false"
-          >
-            Editorial
-          </button>
-          <button
-            type="button"
-            class="blade-trigger blade-trigger-panel"
-            data-blade-open="homepage-menu-blade-panel"
-            aria-haspopup="dialog"
-            aria-controls="homepage-menu-blade-panel"
-            aria-expanded="false"
-          >
-            Panels
-          </button>
-        </div>
-
-        <dialog class="blade-dialog" id="homepage-menu-blade-guided" aria-label="Clean guided menu blade preview">
-          <div class="blade-shell">
-            <div class="blade-head">
-              <div class="blade-head-copy">
-                <p class="blade-preview-label">Blade Preview</p>
-                <h2>Clean guided blade</h2>
-              </div>
-              <p class="blade-head-note">Structured, newcomer-first, and easy to scan.</p>
-              <button type="button" class="blade-close" data-blade-close aria-label="Close menu preview">Close</button>
-            </div>
-
-            <div class="blade-body blade-guided">
-              <a class="blade-primary-link" href={withBase('/plan-your-visit')}>I'm New</a>
-
-              <div class="blade-guided-grid">
-                <section class="blade-group">
-                  <p>Main Navigation</p>
-                  <ul>
-                    {navLinks.map((link) => {
-                      const hasChildren = (link.children?.length ?? 0) > 0;
-                      return (
-                        <li>
-                          <a href={withBase(link.href)} class={isLinkActive(link) ? 'active' : ''}>
-                            <strong>{link.label}</strong>
-                          </a>
-                          {hasChildren && (
-                            <div class="blade-child-links">
-                              {link.children?.map((child) => (
-                                <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>
-                                  {child.label}
-                                </a>
-                              ))}
-                            </div>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </section>
-              </div>
-            </div>
-          </div>
-        </dialog>
-
-        <dialog class="blade-dialog" id="homepage-menu-blade-editorial" aria-label="Editorial feature menu blade preview">
-          <div class="blade-shell">
-            <div class="blade-head">
-              <div class="blade-head-copy">
-                <p class="blade-preview-label">Blade Preview</p>
-                <h2>Editorial feature blade</h2>
-              </div>
-              <p class="blade-head-note">Bolder, more branded, and more statement-driven.</p>
-              <button type="button" class="blade-close" data-blade-close aria-label="Close menu preview">Close</button>
-            </div>
-
-            <div class="blade-body blade-editorial">
-              <div class="blade-editorial-hero">
-                <a class="blade-primary-link blade-primary-link-editorial" href={withBase('/plan-your-visit')}>I'm New</a>
-              </div>
-
-              <div class="blade-editorial-grid">
-                <section class="blade-editorial-links">
-                  <p>Explore</p>
-                  <div>
-                    {navLinks.map((link) => (
-                      <a href={withBase(link.href)} class={isLinkActive(link) ? 'active' : ''}>{link.label}</a>
-                    ))}
-                  </div>
-                </section>
-
-                <section class="blade-editorial-links blade-sub-links">
-                  <p>About</p>
-                  <div>
-                    {aboutChildren.map((child) => (
-                      <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>{child.label}</a>
-                    ))}
-                  </div>
-                </section>
-              </div>
-            </div>
-          </div>
-        </dialog>
-
-        <dialog class="blade-dialog" id="homepage-menu-blade-panel" aria-label="Stacked panel menu blade preview">
-          <div class="blade-shell">
-            <div class="blade-head">
-              <div class="blade-head-copy">
-                <p class="blade-preview-label">Blade Preview</p>
-                <h2>Stacked panel blade</h2>
-              </div>
-              <p class="blade-head-note">Layered, structured, and a little more tactile.</p>
-              <button type="button" class="blade-close" data-blade-close aria-label="Close menu preview">Close</button>
-            </div>
-
-            <div class="blade-body blade-panel">
-              <section class="blade-stack-panel blade-stack-panel-primary">
-                <p>Start Here</p>
-                <a class="blade-primary-link blade-primary-link-panel" href={withBase('/plan-your-visit')}>I'm New</a>
-                <div class="blade-panel-links">
-                  <a href={withBase('/plan-your-visit')} class={isActive('/plan-your-visit') ? 'active' : ''}>Plan Your Visit</a>
-                  <a href={withBase('/next-steps')} class={isActive('/next-steps') ? 'active' : ''}>Next Steps</a>
-                </div>
-              </section>
-
-              <section class="blade-stack-panel blade-stack-panel-main">
-                <p>Main Navigation</p>
-                <div class="blade-panel-grid">
-                  {navLinks.map((link) => (
-                    <a href={withBase(link.href)} class={isLinkActive(link) ? 'active' : ''}>{link.label}</a>
-                  ))}
-                </div>
-              </section>
-
-              <section class="blade-stack-panel blade-stack-panel-sub">
-                <p>About</p>
-                <div class="blade-panel-links">
-                  {aboutChildren.map((child) => (
-                    <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>{child.label}</a>
-                  ))}
-                </div>
-              </section>
-            </div>
-          </div>
-        </dialog>
-      </>
-    ) : (
-      <>
-        <a class="btn btn-primary desktop-visit" href={withBase('/plan-your-visit')}>I'm New</a>
-
-        <details class="mobile-nav">
-          <summary aria-label="Open navigation menu">Menu</summary>
-          <nav aria-label="Mobile">
-            <ul>
-              {navLinks.map((link) => {
-                const hasChildren = (link.children?.length ?? 0) > 0;
-                const active = isLinkActive(link);
-
-                if (!hasChildren) {
-                  return (
-                    <li>
-                      <a href={withBase(link.href)} class={active ? 'active' : ''}>{link.label}</a>
-                    </li>
-                  );
-                }
-
-                return (
-                  <li class="mobile-group">
-                    <details open={active}>
-                      <summary class={active ? 'active' : ''}>{link.label}</summary>
-                      <div class="mobile-group-links">
-                        {link.children?.map((child) => (
-                          <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>
-                            {child.label}
-                          </a>
-                        ))}
-                      </div>
-                    </details>
-                  </li>
-                );
-              })}
-            </ul>
-            <a class="btn btn-primary" href={withBase('/plan-your-visit')}>I'm New</a>
-          </nav>
-        </details>
-      </>
-    )}
+    <button
+      type="button"
+      class="menu-trigger"
+      data-menu-open
+      aria-haspopup="dialog"
+      aria-controls="site-menu-dialog"
+      aria-expanded="false"
+    >
+      Menu
+    </button>
   </div>
 </header>
+
+<dialog class="site-menu-dialog" id="site-menu-dialog" aria-label="Site menu">
+  <div class="site-menu-shell">
+    <OutlineGraphic src="/brand/mission/outline-04.png" className="site-menu-outline site-menu-outline-main" />
+    <div class="site-menu-top">
+      <a href={withBase('/')} class="menu-brand" style={`--brand-logo-url: url("${brandLogo}")`}>
+        <span class="brand-logo" aria-hidden="true"></span>
+        <span class="brand-wordmark">
+          <span>Limitless</span>
+          <small>Church</small>
+        </span>
+      </a>
+      <button type="button" class="menu-close" data-menu-close aria-label="Close menu">
+        <span>Close</span>
+        <span class="menu-close-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <div class="site-menu-grid">
+      <div class="site-menu-primary">
+        {visibleLinks.map((link) => (
+          <a href={withBase(link.href)} class={isActive(link.href) ? 'active' : ''}>{link.label}</a>
+        ))}
+      </div>
+
+      <div class="site-menu-secondary">
+        <section class="menu-column">
+          <p>Start Here</p>
+          <a href={withBase('/plan-your-visit')} class={isActive('/plan-your-visit') ? 'active' : ''}>Plan Your Visit</a>
+          <a href={withBase('/next-steps')} class={isActive('/next-steps') ? 'active' : ''}>Next Steps</a>
+          <a href={withBase('/kids')} class={isActive('/kids') ? 'active' : ''}>Limitless Kids</a>
+          <a href={withBase('/care')} class={isActive('/care') ? 'active' : ''}>Care + Prayer</a>
+        </section>
+
+        <section class="menu-column">
+          <p>Explore</p>
+          {navLinks.map((link) => (
+            <a href={withBase(link.href)} class={isActive(link.href) ? 'active' : ''}>{link.label}</a>
+          ))}
+        </section>
+
+        <section class="menu-column">
+          <p>About</p>
+          {aboutChildren.map((child) => (
+            <a href={withBase(child.href)} class={isActive(child.href) ? 'active' : ''}>{child.label}</a>
+          ))}
+        </section>
+      </div>
+    </div>
+  </div>
+</dialog>
 
 <style>
   .site-header {
     position: sticky;
     top: 0;
-    z-index: 30;
-    background: rgba(9, 11, 14, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 60;
+    background: linear-gradient(180deg, rgba(7, 10, 15, 0.9) 0%, rgba(7, 10, 15, 0.68) 100%);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .site-header-home {
+    background: linear-gradient(180deg, rgba(7, 10, 15, 0.78) 0%, rgba(7, 10, 15, 0.46) 100%);
   }
 
   .header-inner {
-    min-height: 3.75rem;
+    min-height: 5rem;
     display: flex;
     align-items: center;
-    gap: 0.7rem;
+    gap: 0.9rem;
   }
 
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
-    line-height: 1.02;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #f3f4f7;
+    gap: 0.7rem;
+    color: #f4f7fc;
   }
 
   .brand-logo {
-    width: 2.45rem;
-    height: 2.45rem;
-    border-radius: 0.2rem;
-    flex: 0 0 auto;
+    width: 2.65rem;
+    height: 2.65rem;
+    border-radius: 0.5rem;
     background-image: var(--brand-logo-url);
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.22));
   }
 
   .brand-wordmark {
     display: grid;
-    align-content: center;
+    gap: 0.05rem;
+    line-height: 1;
+  }
+
+  .brand-wordmark span,
+  .brand-wordmark small {
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
   }
 
   .brand-wordmark span {
-    font-size: 1.25rem;
+    font-size: 1.34rem;
+    letter-spacing: 0.04em;
   }
 
   .brand-wordmark small {
     font-size: 0.64rem;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: #adb6c4;
-    margin-top: 0.08rem;
+    color: #a9b6ca;
+    letter-spacing: 0.2em;
   }
 
   .desktop-nav {
     margin-left: auto;
-  }
-
-  .desktop-nav > ul {
     display: flex;
     align-items: center;
-    gap: 0.12rem;
-    flex-wrap: nowrap;
-  }
-
-  .nav-item {
-    position: relative;
-    display: block;
+    gap: 1.25rem;
   }
 
   .desktop-nav a {
+    color: #d0d7e2;
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.83rem;
+    font-size: 0.96rem;
     font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    letter-spacing: 0.055em;
-    color: #c6ccd6;
-    padding: 0.34rem 0.5rem;
-    border-radius: 0.2rem;
-    white-space: nowrap;
-    transition: color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
-  }
-
-  .nav-item > a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.28rem;
-  }
-
-  .caret {
-    font-size: 0.6rem;
-    opacity: 0.82;
-    transform: translateY(-1px);
   }
 
   .desktop-nav a:hover,
   .desktop-nav a:focus-visible,
   .desktop-nav a.active {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: inset 0 -2px 0 #2a6fe8;
   }
 
-  .dropdown {
-    position: absolute;
-    left: 0;
-    top: calc(100% - 1px);
-    min-width: 12.8rem;
-    padding: 0.45rem;
-    display: grid;
-    gap: 0.12rem;
-    background: #141922;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-top: 2px solid #2a6fe8;
-    border-radius: 0.45rem;
-    box-shadow: var(--shadow-md);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 120ms ease, visibility 120ms ease;
-    z-index: 40;
-  }
-
-  .dropdown a {
-    display: block;
-    font-size: 0.78rem;
-    letter-spacing: 0.05em;
-    color: #d4dbe8;
-    padding: 0.45rem 0.52rem;
-    border-radius: 0.32rem;
-  }
-
-  .dropdown a:hover,
-  .dropdown a:focus-visible,
-  .dropdown a.active {
-    background: rgba(255, 255, 255, 0.08);
-    color: #ffffff;
-    box-shadow: none;
-  }
-
-  .nav-item.has-children:hover > .dropdown,
-  .nav-item.has-children:focus-within > .dropdown {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-
-  .blade-trigger {
+  .menu-trigger {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.45rem;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.065em;
-    color: #eef1f6;
-    padding: 0.52rem 0.78rem;
-    border: 1px solid rgba(255, 255, 255, 0.24);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.08);
-    transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
-  }
-
-  .blade-trigger::before {
-    content: '';
-    width: 0.85rem;
-    height: 0.6rem;
-    border-top: 2px solid currentColor;
-    border-bottom: 2px solid currentColor;
-    display: inline-block;
-    box-sizing: border-box;
-  }
-
-  .blade-trigger:hover,
-  .blade-trigger:focus-visible {
-    background: rgba(255, 255, 255, 0.14);
-    border-color: rgba(255, 255, 255, 0.34);
-    transform: translateY(-1px);
-  }
-
-  .blade-trigger-alt {
-    background: rgba(42, 111, 232, 0.14);
-    border-color: rgba(91, 145, 242, 0.34);
-  }
-
-  .blade-trigger-panel {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.18);
-  }
-
-  .blade-preview-launchers {
-    margin-left: auto;
-    display: inline-flex;
-    gap: 0.45rem;
-    align-items: center;
-  }
-
-  .blade-dialog {
-    width: min(31rem, calc(100vw - 1rem));
-    max-width: 31rem;
-    height: 100dvh;
-    max-height: 100dvh;
-    margin: 0 0 0 auto;
+    gap: 0.6rem;
+    min-height: 2.7rem;
     padding: 0;
-    border: 0;
-    overflow: hidden;
-    background: transparent;
-    color: inherit;
-  }
-
-  .blade-dialog::backdrop {
-    background: rgba(6, 8, 12, 0.56);
-    backdrop-filter: blur(3px);
-  }
-
-  .blade-shell {
-    height: 100%;
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    background:
-      linear-gradient(180deg, rgba(18, 22, 29, 0.98) 0%, rgba(11, 14, 20, 0.99) 100%);
-    border-left: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: -24px 0 56px rgba(0, 0, 0, 0.28);
-    overflow: hidden;
-    transform: translateX(2.75rem);
-    opacity: 0.01;
-    transition: transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 220ms ease;
-  }
-
-  .blade-dialog.is-mounted .blade-shell {
-    transform: translateX(0);
-    opacity: 1;
-  }
-
-  .blade-head {
-    display: grid;
-    gap: 0.9rem;
-    padding: 1.2rem 1.15rem 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .blade-head-copy h2 {
-    margin: 0.2rem 0 0;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.65rem;
-    letter-spacing: 0.01em;
-    color: #f7f9fc;
-  }
-
-  .blade-head-note {
-    margin: -0.15rem 0 0;
-    color: #c7d0de;
-    line-height: 1.5;
-  }
-
-  .blade-preview-label {
-    margin: 0;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #7c8ca8;
-  }
-
-  .blade-close {
-    justify-self: start;
+    border-radius: 0;
     border: 0;
     background: transparent;
-    color: #cdd6e4;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 0;
-  }
-
-  .blade-body {
-    min-height: 0;
-    overflow: auto;
-    padding: 1.1rem 1.15rem 1.35rem;
-    align-content: start;
-  }
-
-  .blade-guided {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .blade-primary-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 0.9rem 1rem;
-    border-radius: 0.95rem;
-    background: linear-gradient(180deg, #5a8ef0 0%, #4776d8 100%);
-    color: #ffffff;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    box-shadow: 0 14px 28px rgba(42, 111, 232, 0.2);
-  }
-
-  .blade-primary-link-editorial {
-    width: auto;
-    justify-self: start;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: none;
-  }
-
-  .blade-primary-link-panel {
-    width: auto;
-    justify-self: start;
-    padding-inline: 1.15rem;
-    box-shadow: 0 10px 22px rgba(42, 111, 232, 0.18);
-  }
-
-  .blade-guided-grid {
-    display: grid;
-    gap: 0.9rem;
-  }
-
-  .blade-group {
-    display: grid;
-    gap: 0.55rem;
-    padding: 0.95rem 1rem;
-    border-radius: 0.95rem;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .blade-group > p,
-  .blade-editorial-links > p {
-    margin: 0;
-    font-size: 0.73rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #6d88bc;
-  }
-
-  .blade-group ul,
-  .blade-editorial-links div {
-    display: grid;
-    gap: 0.35rem;
-  }
-
-  .blade-group a {
-    display: grid;
-    gap: 0.12rem;
-    padding: 0.65rem 0.7rem;
-    border-radius: 0.45rem;
-    color: #eef3fb;
-    transition: background-color 160ms ease, transform 160ms ease;
-  }
-
-  .blade-group a:hover,
-  .blade-group a:focus-visible,
-  .blade-group a.active {
-    background: rgba(255, 255, 255, 0.05);
-    transform: translateX(2px);
-  }
-
-  .blade-group a strong {
+    color: #f0f4fa;
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 0.96rem;
     font-weight: 700;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
   }
 
-  .blade-child-links {
-    display: grid;
-    gap: 0.12rem;
-    margin-top: 0.35rem;
-    margin-left: 0.75rem;
-    padding-left: 0.85rem;
-    border-left: 1px solid rgba(255, 255, 255, 0.14);
-  }
-
-  .blade-child-links a {
-    display: block;
-    padding: 0.38rem 0;
-    color: #b9c4d6;
-    font-size: 0.86rem;
-    letter-spacing: 0.04em;
-    transition: color 160ms ease, transform 160ms ease;
-  }
-
-  .blade-child-links a:hover,
-  .blade-child-links a:focus-visible,
-  .blade-child-links a.active {
-    color: #ffffff;
-    transform: translateX(2px);
-  }
-
-  .blade-editorial {
-    display: grid;
-    gap: 1rem;
-    background:
-      radial-gradient(circle at top right, rgba(42, 111, 232, 0.22), transparent 34%);
-  }
-
-  .blade-editorial-hero {
-    display: grid;
-    gap: 0.2rem;
-    padding: 1rem;
-    border-radius: 1.05rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .blade-editorial-grid {
-    display: grid;
-    gap: 0.9rem;
-  }
-
-  .blade-editorial-links {
-    display: grid;
-    gap: 0.55rem;
-    padding: 0.95rem 1rem;
-    border-radius: 0.95rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .blade-editorial-links a {
-    display: block;
-    padding: 0.42rem 0;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.18rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #d7deea;
-    transition: color 160ms ease, transform 160ms ease;
-  }
-
-  .blade-editorial-links a:hover,
-  .blade-editorial-links a:focus-visible,
-  .blade-editorial-links a.active {
-    color: #ffffff;
-    transform: translateX(2px);
-  }
-
-  .blade-panel {
-    display: grid;
-    gap: 0.9rem;
-    background:
-      radial-gradient(circle at top right, rgba(42, 111, 232, 0.16), transparent 30%);
-  }
-
-  .blade-stack-panel {
-    display: grid;
-    gap: 0.75rem;
-    padding: 1rem;
-    border-radius: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  }
-
-  .blade-stack-panel > p {
-    margin: 0;
-    font-size: 0.73rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #83a2dd;
-  }
-
-  .blade-stack-panel-primary {
-    background:
-      linear-gradient(180deg, rgba(29, 37, 52, 0.98) 0%, rgba(18, 24, 35, 0.98) 100%);
-  }
-
-  .blade-stack-panel-main {
-    background: rgba(255, 255, 255, 0.04);
-  }
-
-  .blade-stack-panel-sub {
-    background: rgba(93, 143, 242, 0.08);
-    border-color: rgba(93, 143, 242, 0.16);
-  }
-
-  .blade-panel-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.55rem;
-  }
-
-  .blade-panel-grid a,
-  .blade-panel-links a {
-    display: block;
-    padding: 0.72rem 0.8rem;
-    border-radius: 0.8rem;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.045em;
-    color: #eef3fb;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease;
-  }
-
-  .blade-panel-links {
-    display: grid;
-    gap: 0.55rem;
-  }
-
-  .blade-panel-grid a:hover,
-  .blade-panel-grid a:focus-visible,
-  .blade-panel-grid a.active,
-  .blade-panel-links a:hover,
-  .blade-panel-links a:focus-visible,
-  .blade-panel-links a.active {
-    transform: translateX(2px);
-    background: rgba(255, 255, 255, 0.09);
-    border-color: rgba(255, 255, 255, 0.12);
-  }
-
-  .desktop-visit {
-    margin-left: 0.35rem;
-    font-size: 0.84rem;
-    padding: 0.5rem 0.74rem;
-    box-shadow: none;
-  }
-
-  .mobile-nav {
-    display: none;
-    margin-left: auto;
-    position: relative;
-  }
-
-  .mobile-nav > summary {
-    list-style: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    font-weight: 700;
-    font-family: 'Barlow Condensed', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #eef1f6;
-    padding: 0.52rem 0.72rem;
-    border: 1px solid rgba(255, 255, 255, 0.24);
-    border-radius: 999px;
-    font-size: 0.88rem;
-    background: rgba(255, 255, 255, 0.08);
-    transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
-  }
-
-  .mobile-nav > summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .mobile-nav > summary::before {
+  .menu-trigger::before {
     content: '';
-    width: 0.85rem;
-    height: 0.6rem;
-    border-top: 2px solid currentColor;
-    border-bottom: 2px solid currentColor;
-    display: inline-block;
-    box-sizing: border-box;
+    width: 1.1rem;
+    height: 0.62rem;
+    border-top: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
   }
 
-  .mobile-nav[open] > summary {
-    background: rgba(255, 255, 255, 0.14);
-    border-color: rgba(255, 255, 255, 0.34);
-  }
-
-  .mobile-nav nav {
-    position: absolute;
-    right: 0;
-    top: calc(100% + 0.5rem);
-    width: min(21rem, calc(100vw - 1.5rem));
-    max-height: min(70vh, 34rem);
-    overflow: auto;
-    background: #141922;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 0.85rem;
-    box-shadow: var(--shadow-md);
-    padding: 0.95rem;
-    display: grid;
-    gap: 0.95rem;
-  }
-
-  .mobile-nav ul {
-    display: grid;
-    gap: 0.2rem;
-  }
-
-  .mobile-nav a {
-    display: block;
-    padding: 0.62rem 0.68rem;
-    border-radius: 0.5rem;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.92rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #d5dbe6;
-  }
-
-  .mobile-nav a.active,
-  .mobile-nav a:hover,
-  .mobile-nav a:focus-visible {
-    background: rgba(255, 255, 255, 0.08);
+  .menu-trigger:hover,
+  .menu-trigger:focus-visible,
+  .menu-trigger[aria-expanded='true'] {
     color: #ffffff;
   }
 
-  .mobile-group details {
-    border-radius: 0.55rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.04);
-    padding: 0.24rem;
+  .site-menu-dialog {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
   }
 
-  .mobile-group summary {
-    list-style: none;
-    cursor: pointer;
+  .site-menu-dialog::backdrop {
+    background: rgba(5, 8, 12, 0.7);
+    backdrop-filter: blur(3px);
+  }
+
+  .site-menu-shell {
+    position: relative;
+    min-height: 100dvh;
+    padding: max(1.2rem, env(safe-area-inset-top)) 1.4rem 1.6rem;
+    background:
+      radial-gradient(circle at 70% 65%, rgba(45, 120, 255, 0.12), transparent 22%),
+      linear-gradient(180deg, rgba(10, 12, 17, 0.99) 0%, rgba(6, 8, 12, 1) 100%);
+  }
+
+  .site-menu-outline {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .site-menu-outline-main {
+    right: clamp(1rem, 6vw, 4rem);
+    bottom: -2rem;
+    width: clamp(13rem, 25vw, 21rem);
+    height: clamp(13rem, 25vw, 21rem);
+    opacity: 0.13;
+    --outline-rotate: -4deg;
+  }
+
+  .site-menu-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 0.55rem;
-    border-radius: 0.42rem;
+    gap: 1rem;
+  }
+
+  .menu-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: #f4f7fc;
+  }
+
+  .menu-close {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #edf2f8;
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.96rem;
     font-weight: 700;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #d5dbe6;
   }
 
-  .mobile-group summary::-webkit-details-marker {
-    display: none;
+  .menu-close-icon {
+    position: relative;
+    width: 1.25rem;
+    height: 1.25rem;
+    display: inline-block;
   }
 
-  .mobile-group summary::after {
-    content: '▾';
-    font-size: 0.62rem;
-    opacity: 0.8;
-    transition: transform 120ms ease;
+  .menu-close-icon::before,
+  .menu-close-icon::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1.2rem;
+    height: 1px;
+    background: currentColor;
+    transform-origin: center;
   }
 
-  .mobile-group details[open] summary::after {
-    transform: rotate(180deg);
+  .menu-close-icon::before {
+    transform: translate(-50%, -50%) rotate(45deg);
   }
 
-  .mobile-group summary.active,
-  .mobile-group summary:hover,
-  .mobile-group summary:focus-visible {
-    background: rgba(255, 255, 255, 0.07);
+  .menu-close-icon::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  .site-menu-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+    gap: clamp(2rem, 8vw, 7rem);
+    align-items: start;
+    padding: clamp(3rem, 9vw, 7rem) 0 2rem;
+  }
+
+  .site-menu-primary,
+  .site-menu-secondary {
+    display: grid;
+  }
+
+  .site-menu-primary {
+    gap: 0.38rem;
+  }
+
+  .site-menu-primary a {
+    color: #ffffff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(3rem, 6vw, 5.8rem);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    text-transform: none;
+  }
+
+  .site-menu-secondary {
+    gap: 2rem 2.6rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .menu-column {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .menu-column p {
+    margin: 0 0 0.35rem;
+    color: #8eb3ff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .menu-column a {
+    color: #edf2f8;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(1.3rem, 2.2vw, 2.1rem);
+    font-weight: 700;
+    line-height: 1.06;
+  }
+
+  .site-menu-primary a.active,
+  .menu-column a.active,
+  .site-menu-primary a:hover,
+  .menu-column a:hover {
     color: #ffffff;
   }
 
-  .mobile-group-links {
-    display: grid;
-    gap: 0.18rem;
-    margin-top: 0.26rem;
-    padding-left: 0.45rem;
-    border-left: 1px solid rgba(255, 255, 255, 0.16);
-  }
-
-  .mobile-group-links a {
-    font-size: 0.82rem;
-    letter-spacing: 0.05em;
-    color: #cfd6e3;
-    padding: 0.46rem 0.5rem;
-  }
-
   @media (max-width: 1080px) {
-    .brand-logo {
-      width: 2.2rem;
-      height: 2.2rem;
-    }
-
-    .brand-wordmark span {
-      font-size: 1.12rem;
-    }
-
-    .desktop-nav,
-    .desktop-visit {
+    .desktop-nav {
       display: none;
-    }
-
-    .blade-trigger {
-      margin-left: auto;
-    }
-
-    .blade-preview-launchers {
-      margin-left: auto;
-    }
-
-    .mobile-nav {
-      display: block;
     }
   }
 
   @media (max-width: 700px) {
-    .site-header {
-      background: rgba(9, 11, 14, 0.92);
-    }
-
     .header-inner {
-      min-height: 4.15rem;
-    }
-
-    .brand {
-      gap: 0.65rem;
+      min-height: 4.5rem;
     }
 
     .brand-logo {
-      width: 2.35rem;
-      height: 2.35rem;
+      width: 2.3rem;
+      height: 2.3rem;
     }
 
     .brand-wordmark span {
       font-size: 1.18rem;
     }
 
-    .brand-wordmark small {
-      font-size: 0.62rem;
-      letter-spacing: 0.18em;
+    .site-menu-shell {
+      padding-inline: 1rem;
     }
 
-    .mobile-nav nav {
-      top: calc(100% + 0.6rem);
-      width: min(22rem, calc(100vw - 1rem));
-      padding: 0.9rem;
+    .site-menu-outline-main {
+      right: -1rem;
+      width: 12rem;
+      height: 12rem;
+      bottom: 1rem;
     }
 
-    .blade-dialog {
-      width: min(100vw, 29rem);
-    }
-
-    .blade-preview-launchers {
-      gap: 0.35rem;
-    }
-
-    .blade-trigger {
-      padding-left: 0.68rem;
-      padding-right: 0.68rem;
-      font-size: 0.82rem;
-    }
-
-    .blade-panel-grid {
+    .site-menu-grid,
+    .site-menu-secondary {
       grid-template-columns: 1fr;
-    }
-
-    .blade-head,
-    .blade-body {
-      padding-left: 1rem;
-      padding-right: 1rem;
     }
   }
 </style>
 
 <script is:inline>
-  const initBladePreview = () => {
-    const triggerButtons = Array.from(document.querySelectorAll('[data-blade-open]'));
-    if (triggerButtons.length === 0) return;
+  const initSiteMenu = () => {
+    const dialog = document.getElementById('site-menu-dialog');
+    const openButton = document.querySelector('[data-menu-open]');
+    if (!(dialog instanceof HTMLDialogElement) || !(openButton instanceof HTMLButtonElement)) return;
 
-    const closeDialog = (dialog) => {
-      if (!(dialog instanceof HTMLDialogElement)) return;
-      if (!dialog.open) return;
-      dialog.classList.remove('is-mounted');
-      window.setTimeout(() => {
-        if (dialog.open) dialog.close();
-      }, 220);
-      triggerButtons.forEach((button) => {
-        const expanded = button.getAttribute('data-blade-open') === dialog.id ? 'false' : button.getAttribute('aria-expanded') ?? 'false';
-        button.setAttribute('aria-expanded', expanded);
-      });
+    const closeButtons = dialog.querySelectorAll('[data-menu-close]');
+    const menuLinks = dialog.querySelectorAll('a');
+
+    const setPageScroll = (locked) => {
+      document.documentElement.style.overflow = locked ? 'hidden' : '';
+      document.body.style.overflow = locked ? 'hidden' : '';
     };
 
-    const openDialog = (dialogId) => {
-      const dialog = document.getElementById(dialogId);
-      if (!(dialog instanceof HTMLDialogElement)) return;
+    const closeMenu = () => {
+      openButton.setAttribute('aria-expanded', 'false');
+       setPageScroll(false);
+      if (dialog.open) dialog.close();
+    };
 
-      document.querySelectorAll('.blade-dialog[open]').forEach((openDialogEl) => {
-        if (openDialogEl instanceof HTMLDialogElement && openDialogEl.id !== dialogId) {
-          openDialogEl.classList.remove('is-mounted');
-          openDialogEl.close();
-        }
-      });
-
+    openButton.addEventListener('click', () => {
+      openButton.setAttribute('aria-expanded', 'true');
+      setPageScroll(true);
       if (!dialog.open) dialog.showModal();
-      requestAnimationFrame(() => {
-        dialog.classList.add('is-mounted');
-      });
-
-      triggerButtons.forEach((button) => {
-        const active = button.getAttribute('data-blade-open') === dialogId;
-        button.setAttribute('aria-expanded', active ? 'true' : 'false');
-      });
-
-      document.documentElement.classList.add('blade-preview-open');
-    };
-
-    triggerButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const dialogId = button.getAttribute('data-blade-open');
-        if (dialogId) openDialog(dialogId);
-      });
     });
 
-    document.querySelectorAll('.blade-dialog').forEach((dialog) => {
-      if (!(dialog instanceof HTMLDialogElement)) return;
+    closeButtons.forEach((button) => {
+      button.addEventListener('click', closeMenu);
+    });
 
-      dialog.querySelectorAll('[data-blade-close]').forEach((button) => {
-        button.addEventListener('click', () => closeDialog(dialog));
-      });
+    menuLinks.forEach((link) => {
+      link.addEventListener('click', () => closeMenu());
+    });
 
-      dialog.addEventListener('click', (event) => {
-        const rect = dialog.getBoundingClientRect();
-        const within =
-          event.clientX >= rect.left &&
-          event.clientX <= rect.right &&
-          event.clientY >= rect.top &&
-          event.clientY <= rect.bottom;
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) closeMenu();
+    });
 
-        if (!within) closeDialog(dialog);
-      });
+    dialog.addEventListener('cancel', () => {
+      setPageScroll(false);
+    });
 
-      dialog.addEventListener('close', () => {
-        dialog.classList.remove('is-mounted');
-        triggerButtons.forEach((button) => {
-          if (button.getAttribute('data-blade-open') === dialog.id) {
-            button.setAttribute('aria-expanded', 'false');
-          }
-        });
-
-        if (!document.querySelector('.blade-dialog[open]')) {
-          document.documentElement.classList.remove('blade-preview-open');
-        }
-      });
+    dialog.addEventListener('close', () => {
+      openButton.setAttribute('aria-expanded', 'false');
+      setPageScroll(false);
     });
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initBladePreview, { once: true });
+    document.addEventListener('DOMContentLoaded', initSiteMenu, { once: true });
   } else {
-    initBladePreview();
+    initSiteMenu();
   }
 </script>

@@ -1,0 +1,135 @@
+---
+import { withBase } from '../utils/paths';
+
+interface Props {
+  variant?:
+    | 'praying-hands'
+    | 'open-bible'
+    | 'cross'
+    | 'cross-rays'
+    | 'dove'
+    | 'flame'
+    | 'worship-hands'
+    | 'doorway-path'
+    | 'abstract-wave';
+  src?: string;
+  className?: string;
+  label?: string;
+}
+
+const { variant, src, className = '', label = '' } = Astro.props;
+const resolvedSrc = src ? withBase(src) : '';
+
+const variants = {
+  'praying-hands': `
+    <path d="M125 66c10-18 26-34 43-48 8-6 19 4 14 13l-28 54m-29-19c8-21 22-40 40-55 7-6 18 2 15 11l-19 64m-39-9c2-24 11-47 26-67 6-8 18-2 17 8l-3 65m-41 3c-4-21-4-44 1-65 3-11 18-11 19 1l7 64m-48 8c-7-18-11-37-11-57 0-12 16-16 21-5l20 56m-46 31 14 35c7 18 21 33 39 42l26 13c13 6 28-1 32-15l8-28c5-17 3-35-5-51l-15-32" />
+  `,
+  'open-bible': `
+    <path d="M34 63c25-16 53-24 84-24 21 0 42 4 62 11 13 5 27 5 40 0 21-7 42-11 64-11 28 0 55 8 80 24v131c-24-15-51-22-79-22-24 0-48 5-71 15-16 7-35 7-51 0-23-10-47-15-71-15-28 0-56 7-80 22V63Z" />
+    <path d="M199 47v140m-150-99c23 0 46 4 68 12m82-12c23 0 46 4 68 12" />
+  `,
+  'cross': `
+    <path d="M196 26v68h67v48h-67v164h-52V142H77V94h67V26h52Z" />
+  `,
+  'cross-rays': `
+    <path d="M196 40v74h70v44h-70v122h-44V158h-70v-44h70V40h44Z" />
+    <path d="M174 10v20m0 252v20m-124-148H30m288 0h-20M77 55l14 14m165 165 14 14M271 55l-14 14M92 248l-14 14" />
+  `,
+  dove: `
+    <path d="M49 188c45-4 73-22 97-51 17-21 28-44 38-69 7-17 16-33 29-46 20-20 49-30 79-27-14 11-23 24-28 40 25 4 49 18 65 39-25 3-46 12-63 27-13 11-23 25-31 40-16 31-39 60-71 79-33 20-74 27-115 21Z" />
+    <path d="M132 150c15 4 31 5 48 3" />
+  `,
+  flame: `
+    <path d="M190 32c11 23 11 44 1 61-11 18-17 28-8 47 8 19 28 34 28 66 0 42-31 74-74 74-49 0-87-37-87-88 0-47 28-78 57-108 18-18 29-34 35-52 10 12 19 28 22 43 8-8 19-23 26-43Z" />
+    <path d="M147 152c8 12 13 24 13 39 0 23-15 39-39 39-26 0-42-18-42-45 0-24 14-41 28-56 6 8 10 18 11 27 7-7 18-19 29-34Z" />
+  `,
+  'worship-hands': `
+    <path d="M78 284V117c0-11 15-14 19-3l31 93m16 77V82c0-11 15-14 19-3l23 106m13 99V67c0-11 15-13 19-2l16 122m11 97V92c0-10 14-13 19-3l25 110m-183 84 21 18c17 15 39 23 62 23h26c22 0 43-9 58-25l13-15c14-15 21-34 21-54v-31c0-12-14-18-22-9l-32 33" />
+  `,
+  'doorway-path': `
+    <path d="M252 301H108V54c0-13 9-24 22-27l71-17 71 17c13 3 22 14 22 27v247H252" />
+    <path d="M144 300c9-37 30-70 62-98 16-14 35-27 57-39" />
+    <path d="M185 64v142m-37 0h74" />
+  `,
+  'abstract-wave': `
+    <path d="M18 171c45-52 92-73 142-63 45 9 73 47 116 52 51 7 80-23 113-62 32-38 67-69 119-71" />
+    <path d="M8 238c57-35 104-44 145-30 40 13 72 45 119 50 54 6 95-20 142-49 40-25 70-33 98-29" />
+  `
+} as const;
+
+const svgViewBox =
+  variant === 'open-bible'
+    ? '0 0 400 240'
+    : variant === 'cross'
+      ? '0 0 340 330'
+      : variant === 'cross-rays'
+        ? '0 0 340 330'
+        : variant === 'doorway-path'
+          ? '0 0 360 320'
+      : variant === 'worship-hands'
+        ? '0 0 360 360'
+        : '0 0 360 320';
+---
+
+<span class={`outline-graphic ${className}`.trim()} aria-hidden={label ? undefined : 'true'}>
+  {resolvedSrc ? (
+    <img src={resolvedSrc} alt={label ? label : ''} role={label ? 'img' : undefined} aria-label={label || undefined} />
+  ) : variant ? (
+    <svg viewBox={svgViewBox} role={label ? 'img' : undefined} aria-label={label || undefined}>
+      <g set:html={variants[variant]} />
+    </svg>
+  ) : null}
+</span>
+
+<style>
+  .outline-graphic {
+    position: absolute;
+    inset: auto;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.12;
+    transform: rotate(var(--outline-rotate, 0deg));
+    animation: outlineFloat var(--outline-duration, 20s) ease-in-out infinite;
+  }
+
+  .outline-graphic svg,
+  .outline-graphic img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .outline-graphic img {
+    object-fit: contain;
+  }
+
+  .outline-graphic :global(path) {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.34);
+    stroke-width: 4.25;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  @keyframes outlineFloat {
+    0% {
+      transform: translate3d(0, 0, 0) rotate(var(--outline-rotate, 0deg));
+    }
+
+    50% {
+      transform: translate3d(0, -10px, 0) rotate(calc(var(--outline-rotate, 0deg) + 2deg));
+    }
+
+    100% {
+      transform: translate3d(0, 0, 0) rotate(var(--outline-rotate, 0deg));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .outline-graphic {
+      animation: none;
+      transform: rotate(var(--outline-rotate, 0deg));
+    }
+  }
+</style>

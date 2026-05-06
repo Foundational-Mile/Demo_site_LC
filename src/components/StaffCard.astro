@@ -24,6 +24,8 @@ const { name, role, bio, image, team } = Astro.props;
   .staff-card {
     overflow: hidden;
     display: grid;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.08);
   }
 
   .staff-card img {
@@ -37,13 +39,20 @@ const { name, role, bio, image, team } = Astro.props;
   }
 
   .role {
-    color: #101218;
+    color: #8eb3ff;
     font-weight: 700;
     margin-top: -0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.82rem;
   }
 
   .content p {
-    color: #516078;
+    color: #d0d9e6;
     font-size: 0.95rem;
+  }
+
+  .staff-card h3 {
+    color: #f4f7fc;
   }
 </style>

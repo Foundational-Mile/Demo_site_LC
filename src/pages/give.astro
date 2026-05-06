@@ -4,6 +4,7 @@ import HeroSection from '../components/HeroSection.astro';
 import SectionIntro from '../components/SectionIntro.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import CTABand from '../components/CTABand.astro';
+import OutlineGraphic from '../components/OutlineGraphic.astro';
 import { giveFaqs, impactHighlights } from '../data/content';
 import { media } from '../data/media';
 ---
@@ -14,15 +15,16 @@ import { media } from '../data/media';
       eyebrow="Give"
       title="Give With Confidence"
       text="Your generosity helps people encounter God, love people, and find purpose."
+      graphic="flame"
       image={media.heroes.give}
       imageAlt="People serving community together"
       primaryCta={{ label: 'Give Online', href: '#giving-faq' }}
       secondaryCta={{ label: 'Giving FAQ', href: '#giving-faq' }}
     />
 
-    <section class="section page-section">
+    <section class="section page-section surface-dark">
       <div class="container">
-        <div class="split page-module page-module-white page-module-split">
+        <div class="split page-module page-module-ink page-module-split">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Why We Give"
@@ -42,15 +44,16 @@ import { media } from '../data/media';
               Limitless Church is a registered non-profit, and giving statements are provided annually. We are committed to
               stewarding every dollar with integrity.
             </p>
-            <a class="btn btn-secondary" href="#giving-faq">View Stewardship FAQ</a>
+            <a class="editorial-link" href="#giving-faq">View Stewardship FAQ</a>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section page-section">
+    <section class="section page-section surface-soft">
       <div class="container">
-        <div class="page-module page-module-soft page-module-stack">
+        <div class="page-module page-module-soft page-module-stack impact-shell">
+          <OutlineGraphic variant="open-bible" className="impact-outline" />
           <SectionIntro
             eyebrow="Impact"
             title="What your generosity makes possible"
@@ -101,12 +104,25 @@ import { media } from '../data/media';
     gap: 0.7rem;
   }
 
+  .impact-shell {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .impact-outline {
+    right: -3rem;
+    top: -1.5rem;
+    width: 15rem;
+    height: 15rem;
+    opacity: 0.12;
+  }
+
   .stewardship-card p,
   .impact-card p {
     color: #55647d;
   }
 
-  .stewardship-card .btn {
-    width: fit-content;
+  .stewardship-card .editorial-link {
+    color: var(--text);
   }
 </style>

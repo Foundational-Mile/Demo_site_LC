@@ -15,15 +15,16 @@ import { media } from '../data/media';
       eyebrow="Care + Prayer"
       title="Care and Prayer Support"
       text="If you are carrying something heavy, our team is here for you."
+      graphic="praying-hands"
       image={media.heroes.care}
       imageAlt="Two people praying together"
       primaryCta={{ label: 'Request Prayer', href: '#care-form' }}
       secondaryCta={{ label: 'Share A Need', href: '#care-form' }}
     />
 
-    <section class="section page-section">
+    <section class="section page-section surface-dark">
       <div class="container">
-        <div class="split page-module page-module-white page-module-split">
+        <div class="split page-module page-module-ink page-module-split">
           <div class="stack-lg">
             <SectionIntro
               eyebrow="Our Heart"
@@ -46,7 +47,7 @@ import { media } from '../data/media';
       </div>
     </section>
 
-    <section class="section page-section">
+    <section class="section page-section surface-soft">
       <div class="container">
         <div class="page-module page-module-soft page-module-stack">
           <SectionIntro
@@ -66,7 +67,7 @@ import { media } from '../data/media';
       </div>
     </section>
 
-    <section class="section page-section" id="care-form">
+    <section class="section page-section surface-white" id="care-form">
       <div class="container">
         <div class="split page-module page-module-white page-module-split">
           <div class="stack-lg">
@@ -114,13 +115,17 @@ import { media } from '../data/media';
 
   .calm-note {
     align-content: center;
-    background: linear-gradient(180deg, #ffffff 0%, #f0f2f6 100%);
-    border: 1px solid #d9dde4;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     display: grid;
     gap: 1rem;
   }
 
   .calm-note strong {
-    color: #0f1115;
+    color: #ffffff;
+  }
+
+  .calm-note p {
+    color: var(--text-muted);
   }
 </style>
