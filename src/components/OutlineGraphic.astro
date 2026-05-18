@@ -19,6 +19,7 @@ interface Props {
 
 const { variant, src, className = '', label = '' } = Astro.props;
 const resolvedSrc = src ? withBase(src) : '';
+const isOutline05 = resolvedSrc.includes('outline-05');
 
 const variants = {
   'praying-hands': `
@@ -71,7 +72,10 @@ const svgViewBox =
         : '0 0 360 320';
 ---
 
-<span class={`outline-graphic ${className}`.trim()} aria-hidden={label ? undefined : 'true'}>
+<span
+  class={`outline-graphic ${isOutline05 ? 'outline-graphic-scroll-rotate' : ''} ${className}`.trim()}
+  aria-hidden={label ? undefined : 'true'}
+>
   {resolvedSrc ? (
     <img src={resolvedSrc} alt={label ? label : ''} role={label ? 'img' : undefined} aria-label={label || undefined} />
   ) : variant ? (
@@ -90,9 +94,27 @@ const svgViewBox =
     opacity: 0.12;
     transform:
       translate3d(var(--outline-scroll-x, 0px), var(--outline-scroll-y, 0px), 0)
-      rotate(var(--outline-rotate, 0deg));
+      rotate(calc(var(--outline-base-rotate, var(--outline-rotate, 0deg)) + var(--outline-scroll-rotate, 0deg)));
     animation: outlineFloat var(--outline-duration, 20s) ease-in-out infinite;
     will-change: transform;
+  }
+
+  .outline-graphic-scroll-rotate {
+    --outline-base-rotate: 0deg;
+    --outline-scroll-rotate: 0deg;
+    --outline-duration: 26s;
+  }
+
+  .outline-graphic-scroll-rotate {
+    transform:
+      translate3d(var(--outline-scroll-x, 0px), var(--outline-scroll-y, 0px), 0)
+      rotate(var(--outline-scroll-rotate, 0deg));
+  }
+
+  .outline-graphic-scroll-rotate img,
+  .outline-graphic-scroll-rotate svg {
+    transform: rotate(0deg);
+    transform-origin: center center;
   }
 
   .outline-graphic svg,
@@ -119,7 +141,7 @@ const svgViewBox =
     0% {
       transform:
         translate3d(var(--outline-scroll-x, 0px), var(--outline-scroll-y, 0px), 0)
-        rotate(var(--outline-rotate, 0deg));
+        rotate(calc(var(--outline-base-rotate, var(--outline-rotate, 0deg)) + var(--outline-scroll-rotate, 0deg)));
     }
 
     50% {
@@ -129,13 +151,41 @@ const svgViewBox =
           calc(var(--outline-scroll-y, 0px) - 10px),
           0
         )
-        rotate(calc(var(--outline-rotate, 0deg) + 2deg));
+        rotate(calc(var(--outline-base-rotate, var(--outline-rotate, 0deg)) + var(--outline-scroll-rotate, 0deg)));
     }
 
     100% {
       transform:
         translate3d(var(--outline-scroll-x, 0px), var(--outline-scroll-y, 0px), 0)
-        rotate(var(--outline-rotate, 0deg));
+        rotate(calc(var(--outline-base-rotate, var(--outline-rotate, 0deg)) + var(--outline-scroll-rotate, 0deg)));
+    }
+  }
+
+  .outline-graphic-scroll-rotate {
+    animation: outlineFloatScrollRotate var(--outline-duration, 26s) ease-in-out infinite;
+  }
+
+  @keyframes outlineFloatScrollRotate {
+    0% {
+      transform:
+        translate3d(var(--outline-scroll-x, 0px), var(--outline-scroll-y, 0px), 0)
+        rotate(var(--outline-scroll-rotate, 0deg));
+    }
+
+    50% {
+      transform:
+        translate3d(
+          var(--outline-scroll-x, 0px),
+          calc(var(--outline-scroll-y, 0px) - 10px),
+          0
+        )
+        rotate(var(--outline-scroll-rotate, 0deg));
+    }
+
+    100% {
+      transform:
+        translate3d(var(--outline-scroll-x, 0px), var(--outline-scroll-y, 0px), 0)
+        rotate(var(--outline-scroll-rotate, 0deg));
     }
   }
 
@@ -144,7 +194,54 @@ const svgViewBox =
       animation: none;
       transform:
         translate3d(var(--outline-scroll-x, 0px), var(--outline-scroll-y, 0px), 0)
-        rotate(var(--outline-rotate, 0deg));
+        rotate(calc(var(--outline-base-rotate, var(--outline-rotate, 0deg)) + var(--outline-scroll-rotate, 0deg)));
     }
   }
 </style>
+
+<script is:inline>
+  (() => {
+    if (window.__outline05ScrollInit) return;
+    window.__outline05ScrollInit = true;
+
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let ticking = false;
+
+    const updateOutlineRotation = () => {
+      ticking = false;
+      const outlines = document.querySelectorAll('.outline-graphic-scroll-rotate');
+
+      outlines.forEach((outline) => {
+        if (outline instanceof HTMLElement) {
+          if (mediaQuery.matches) {
+            outline.style.setProperty('--outline-scroll-rotate', '0deg');
+            return;
+          }
+
+          const rect = outline.getBoundingClientRect();
+          const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+          const rectCenter = rect.top + rect.height / 2;
+          const viewportCenter = viewportHeight / 2;
+          const maxDistance = Math.max((viewportHeight + rect.height) / 2, 1);
+          const normalized = Math.max(-1, Math.min(1, (rectCenter - viewportCenter) / maxDistance));
+          const rotation = normalized * -45;
+
+          outline.style.setProperty('--outline-scroll-rotate', `${rotation}deg`);
+        }
+      });
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateOutlineRotation);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', onScroll);
+    }
+    updateOutlineRotation();
+  })();
+</script>

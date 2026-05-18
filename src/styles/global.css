@@ -411,8 +411,8 @@ main {
   text-transform: uppercase;
   color: var(--ink);
   text-decoration: underline;
-  text-decoration-thickness: 0.12rem;
-  text-underline-offset: 0.26rem;
+  text-decoration-thickness: 0.15rem;
+  text-underline-offset: 0.32rem;
 }
 
 .editorial-link::after {
@@ -434,8 +434,8 @@ main {
   position: relative;
   background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(13, 18, 25, 0.04);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 20px 42px rgba(6, 10, 16, 0.08);
+  border-radius: 0.4rem;
+  box-shadow: 0 14px 28px rgba(6, 10, 16, 0.06);
   transition:
     transform var(--transition),
     box-shadow var(--transition),
@@ -443,9 +443,9 @@ main {
 }
 
 .card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   border-color: rgba(13, 18, 25, 0.08);
-  box-shadow: 0 30px 60px rgba(6, 10, 16, 0.12);
+  box-shadow: 0 22px 42px rgba(6, 10, 16, 0.1);
 }
 
 .card-dark {
@@ -667,7 +667,7 @@ main {
   }
 
   .card {
-    border-radius: 1.1rem;
+    border-radius: 0.35rem;
   }
 }
 

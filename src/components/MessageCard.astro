@@ -35,7 +35,7 @@ const { title, speaker, date, series, duration, summary, image, featured = false
 <style>
   .message-card {
     overflow: hidden;
-    min-height: 32rem;
+    min-height: 26rem;
     background: linear-gradient(180deg, #0a1119 0%, #060a10 100%);
   }
 
@@ -47,7 +47,7 @@ const { title, speaker, date, series, duration, summary, image, featured = false
   .message-media img {
     width: 100%;
     height: 100%;
-    min-height: 19rem;
+    min-height: 15rem;
     object-fit: cover;
   }
 
@@ -64,7 +64,7 @@ const { title, speaker, date, series, duration, summary, image, featured = false
   }
 
   .message-card h3 {
-    font-size: 2.15rem;
+    font-size: 1.85rem;
     line-height: 0.92;
     color: inherit;
   }
@@ -105,12 +105,16 @@ const { title, speaker, date, series, duration, summary, image, featured = false
   }
 
   @media (max-width: 700px) {
+    .message-card {
+      min-height: 23rem;
+    }
+
     .message-card .content {
       padding: 0.95rem;
     }
 
     .message-card h3 {
-      font-size: 1.85rem;
+      font-size: 1.6rem;
     }
 
     .message-footer {

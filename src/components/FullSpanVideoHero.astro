@@ -159,8 +159,9 @@ const hasFrame = Boolean(serviceSummary || location);
 
   .hero-scrim {
     background:
-      linear-gradient(90deg, rgba(5, 8, 13, 0.9) 0%, rgba(5, 8, 13, 0.72) 32%, rgba(5, 8, 13, 0.18) 70%, rgba(5, 8, 13, 0.08) 100%),
-      linear-gradient(180deg, rgba(5, 8, 13, 0.08) 0%, rgba(5, 8, 13, 0.18) 46%, rgba(5, 8, 13, 0.82) 100%);
+      radial-gradient(circle at 18% 18%, rgba(52, 109, 255, 0.12), transparent 22%),
+      linear-gradient(90deg, rgba(5, 8, 13, 0.96) 0%, rgba(5, 8, 13, 0.8) 30%, rgba(5, 8, 13, 0.24) 66%, rgba(5, 8, 13, 0.1) 100%),
+      linear-gradient(180deg, rgba(5, 8, 13, 0.08) 0%, rgba(5, 8, 13, 0.22) 44%, rgba(5, 8, 13, 0.9) 100%);
   }
 
   .hero-content {
@@ -172,7 +173,7 @@ const hasFrame = Boolean(serviceSummary || location);
     align-items: end;
     min-height: 100%;
     padding-top: clamp(2.4rem, 5vw, 4rem);
-    padding-bottom: clamp(4.2rem, 8vw, 6rem);
+    padding-bottom: clamp(4.8rem, 9vw, 6.8rem);
   }
 
   .hero-grid {
@@ -189,6 +190,18 @@ const hasFrame = Boolean(serviceSummary || location);
 
   .hero-primary {
     max-width: 10ch;
+  }
+
+  .full-hero .eyebrow {
+    width: fit-content;
+    padding: 0.15rem 0 0.1rem;
+    color: #f4f7fc;
+  }
+
+  .full-hero .eyebrow::after {
+    width: 3.8rem;
+    height: 0.14rem;
+    background: #7ea9ff;
   }
 
   .pillar-heading {
@@ -255,7 +268,7 @@ const hasFrame = Boolean(serviceSummary || location);
 
   .hero-frame {
     position: relative;
-    margin-top: -2.2rem;
+    margin-top: -2.8rem;
     padding: 0 0 1.5rem;
     background:
       linear-gradient(180deg, rgba(9, 12, 18, 0.96) 0%, rgba(7, 10, 15, 1) 100%);
@@ -270,7 +283,7 @@ const hasFrame = Boolean(serviceSummary || location);
   }
 
   .hero-detail-card {
-    padding: 1rem 0 0;
+    padding: 1.15rem 0 0;
     border-radius: 0;
     background: transparent;
     border: 0;
